@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="primaryColor">#01704F</color>
+    <color name="MainTextColor">#DE000000</color>
+    <color name="SecondaryTextColor">#99000000</color>
+    <color name="ThirdTextColor">#80000000</color>
+    <color name="TextColorWhite">#FFFFFFFF</color>
+    <color name="InProgressColor">#418E77</color>
+    <color name="Background">#F1F1F1</color>
+    <color name="TodoColor">#7FBAA9</color>
+    <color name="DoneColor">#93CB80</color>
+    <color name="FirstStrokeColor">#EBEBEB</color>
+    <color name="SecondStrokeColor">#F0F0F0</color>
+    <color name="CardColor">#FAFAFA</color>
+    <color name="LoadingCardBackground">#E7E6E6</color>
+    <color name="LoadingCardContent">#DDDDDD</color>
+    <color name="SearchText">#4D49454F</color>
+    <color name="SearchCardStroke">#FAFAFA</color>
+    <color name="SearchIcon">#8049454F</color>
+
 </resources>
