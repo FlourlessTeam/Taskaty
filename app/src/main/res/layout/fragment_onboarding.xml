@@ -33,8 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_onborading_title"
-            android:textColor="#DE000000"
-            android:lineSpacingExtra="4dp"
+            android:textColor="@color/text_color_87"
+            android:fontFamily="@font/poppins_bold"
             android:textStyle="bold"
             android:lines="2"
             android:textSize="24sp" />
@@ -43,8 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="#80000000"
-            android:lineSpacingExtra="2dp"
+            android:textColor="@color/text_color_50"
+            android:fontFamily="@font/poppins"
             android:text="@string/text_onborading_discreption"
             android:textSize="14sp"
             android:layout_marginTop="16dp" />
