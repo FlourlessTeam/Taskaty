@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <color name="primaryColor">#01704F</color>
-    <color name="MainTextColor">#DEFFFFFF</color>
-    <color name="SecondaryTextColor">#99FFFFFF</color>
-    <color name="ThirdTextColor">#80FFFFFF</color>
-    <color name="TextColorWhite">#FFFFFFFF</color>
-    <color name="InProgressColor">#418E77</color>
-    <color name="Background">#1F1F1F</color>
-    <color name="TodoColor">#7FBAA9</color>
-    <color name="DoneColor">#93CB80</color>
-    <color name="FirstStrokeColor">#BEBEBE</color>
-    <color name="SecondStrokeColor">#1F1F1F</color>
-    <color name="CardColor">#242424</color>
-    <color name="LoadingCardBackground">#242424</color>
-    <color name="LoadingCardContent">#2F2F2F</color>
-    <color name="SearchText">#80FFFFFF</color>
-    <color name="SearchCardStroke">#F5F5F5</color>
-    <color name="SearchIcon">#80FFFFFF</color>
+    <color name="primary_color">#01704F</color>
+    <color name="primary_variant">#1F1F1F</color>
+    <color name="text_color_87">#DEFFFFFF</color>
+    <color name="text_color_60">#99FFFFFF</color>
+    <color name="text_color_50">#80FFFFFF</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="in_progress_color">#418E77</color>
+    <color name="background_color">#1F1F1F</color>
+    <color name="todo_color">#7FBAA9</color>
+    <color name="done_color">#93CB80</color>
+    <color name="text_field_stroke_color">#BEBEBE</color>
+    <color name="task_card_stroke_color">#1F1F1F</color>
+    <color name="task_card_color">#242424</color>
+    <color name="loading_card_background_color">#242424</color>
+    <color name="loading_card_content_color">#2F2F2F</color>
+    <color name="search_hint_text_color">#80FFFFFF</color>
+    <color name="search_bar_stroke_color">#F5F5F5</color>
 </resources>
