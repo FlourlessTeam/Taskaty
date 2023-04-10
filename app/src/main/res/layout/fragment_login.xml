@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     android:paddingHorizontal="16dp"
-    android:background="#F1F1F1"
     tools:context=".app.ui.fragments.LoginFragment">
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:textSize="24sp"
         android:lineSpacingExtra="4dp"
-        android:textColor="#DE000000"
-        android:text="Hello Again!\nWelcome Back"
+        android:textColor="@color/text_color_87"
+        android:text="@string/text_login_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,47 +26,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Login to your Account"
-        android:textColor="#80000000"
+        android:text="@string/text_login_description"
+        android:textColor="@color/text_color_50"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/edit_text_user"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="56dp"
         android:layout_marginBottom="32dp"
-        android:hint="username"
-        android:paddingStart="16dp"
-        android:textColorHint="#99000000"
+        android:hint="@string/hint_user_name"
+        android:paddingHorizontal="16dp"
+        android:textColorHint="@color/text_color_60"
         android:gravity="center_vertical"
         android:background="@drawable/edit_text_background"
         app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/edit_text_password"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_background"
         android:gravity="center_vertical"
-        android:hint="password"
-        android:paddingStart="16dp"
-        android:textColorHint="#99000000"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4"
-        tools:layout_editor_absoluteX="16dp" />
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        android:paddingHorizontal="16dp"
+        android:textColorHint="@color/text_color_60"
+        app:layout_constraintEnd_toEndOf="@+id/edit_text_user"
+        app:layout_constraintStart_toStartOf="@+id/edit_text_user"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_user" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:background="@drawable/button_background"
         android:layout_marginTop="24dp"
-        android:text="Login"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        android:textSize="16sp"
+        android:text="@string/text_button_login"
+        app:layout_constraintEnd_toEndOf="@+id/edit_text_password"
+        app:layout_constraintStart_toStartOf="@+id/edit_text_password"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
