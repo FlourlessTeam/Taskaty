@@ -7,4 +7,6 @@
     <string name="text_button_login">Login</string>
     <string name="text_login_title">Hello Again!\nWelcome Back</string>
     <string name="text_login_description">Login to your Account</string>
+    <string name="text_have_an_account">Don’t have an account? </string>
+    <string name="text_signup">Signup</string>
 </resources>
