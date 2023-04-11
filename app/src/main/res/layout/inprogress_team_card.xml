@@ -2,32 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="313dp"
+    android:layout_width="wrap_content"
     android:layout_height="145dp">
 
     <TextView
         android:id="@+id/timeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:textColor="@color/text_color_50"
+        android:drawableStart="@drawable/baseline_access_time_24"
+        android:drawablePadding="8dp"
         android:text="3 : 30"
         android:textSize="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetails"
-        app:layout_constraintVertical_bias="0.145" />
+        app:layout_constraintStart_toEndOf="@+id/dateText"
+        app:layout_constraintTop_toBottomOf="@+id/taskDetails" />
 
     <TextView
+        android:textColor="@color/text_color_87"
         android:id="@+id/taskCardHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="The Title of the task Given"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/text_color_60"
         android:lines="2"
         android:text="Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,67 +44,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskCardHeader" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/outline_calendar_month_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetails"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/dateText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="8dp"
+        android:textColor="@color/text_color_50"
+        android:drawableStart="@drawable/outline_calendar_month_24"
         android:text="5 april 2023"
         android:textSize="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetails"
-        app:layout_constraintVertical_bias="0.163" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:src="@drawable/baseline_access_time_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.362"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetails"
-        app:layout_constraintVertical_bias="0.166" />
+        app:layout_constraintTop_toBottomOf="@+id/taskDetails" />
 
     <TextView
         android:id="@+id/inProgressText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:padding="4dp"
-        android:textColor="#ffffff"
-        android:text="In progress"
-        android:textSize="8sp"
         android:background="@drawable/rounded_text"
+        android:padding="4dp"
+        android:text="In progress"
+        android:textColor="@color/white"
+        android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.407" />
+        app:layout_constraintTop_toBottomOf="@+id/dateText" />
 
     <TextView
         android:layout_width="18dp"
         android:layout_height="18dp"
 
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/circle"
         android:paddingLeft="3dp"
@@ -113,7 +85,5 @@
         android:textColor="@color/white"
         android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.93"
-        app:layout_constraintStart_toEndOf="@+id/inProgressText" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
