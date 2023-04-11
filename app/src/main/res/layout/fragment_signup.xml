@@ -93,5 +93,33 @@
         app:layout_constraintEnd_toEndOf="@+id/edit_text_password"
         app:layout_constraintStart_toStartOf="@+id/edit_text_password"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonNamee" />
+    <TextView
+        android:id="@+id/text_go_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/text_login"
+        android:textSize="14sp"
+        android:fontFamily="@font/poppins"
+        android:textColor="@color/primary_color"
+        app:layout_constraintBottom_toBottomOf="@+id/text_have_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_have_account"
+        app:layout_constraintTop_toTopOf="@+id/text_have_account" />
+
+    <TextView
+        android:id="@+id/text_have_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:textSize="14sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:text="@string/already_have_an_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_go_signup"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatButton"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
