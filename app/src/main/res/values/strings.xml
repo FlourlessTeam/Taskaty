@@ -9,4 +9,6 @@
     <string name="right_bracket">)</string>
     <string name="view_all">View all</string>
     <string name="upcoming_task">Upcoming task</string>
+    <string name="create_personal_task">Create Personal Task</string>
+    <string name="create_team_task">Create Team Task</string>
 </resources>
