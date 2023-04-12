@@ -2,15 +2,6 @@
     <string name="app_name">Taskaty</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="taskaty">Taskaty</string>
-    <string name="tabs">tabs</string>
-    <string name="in_progress">In Progress</string>
-    <string name="left_bracket">(</string>
-    <string name="right_bracket">)</string>
-    <string name="view_all">View all</string>
-    <string name="upcoming_task">Upcoming task</string>
-    <string name="create_personal_task">Create Personal Task</string>
-    <string name="create_team_task">Create Team Task</string>
     <string name="hint_user_name">username</string>
     <string name="hint_password">password</string>
     <string name="text_login">Login</string>
@@ -27,6 +18,4 @@
     <string name="text_signup_description">Create your Account</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="text_button_login">Login</string>
-    <string name="team">Team</string>
-    <string name="personal">Personal</string>
 </resources>
