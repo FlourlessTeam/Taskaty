@@ -10,11 +10,12 @@
     <string name="text_have_an_account">Don’t have an account? </string>
     <string name="text_signup">Sign up</string>
     <string name="text_get_started">Get Started</string>
-    <string name="text_onborading_discreption">Your future is created by what you\n do today, not tomorrow. \nby Robert Kiyosaki</string>
-    <string name="text_onborading_title">Manage Your Daily\nTasks with Taskaty</string>
-    <string name="onboarding_imge">onboarding imge</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="text_onboarding_description">Your future is created by what you\n do today, not tomorrow. \nby Robert Kiyosaki</string>
+    <string name="text_onboarding_title">Manage Your Daily\nTasks with Taskaty</string>
+    <string name="onboarding_image">onboarding image</string>
+    <string name="confirm_password">confirm Password</string>
     <string name="text_signup_title">Hello! Sign up\nto Get Started</string>
     <string name="text_signup_description">Create your Account</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="text_button_login">Login</string>
 </resources>

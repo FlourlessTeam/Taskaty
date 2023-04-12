@@ -13,7 +13,7 @@
         android:id="@+id/image_onboarding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/onboarding_imge"
+        android:contentDescription="@string/onboarding_image"
         android:src="@drawable/image_onboarding"
         app:layout_constraintBottom_toTopOf="@+id/text_onbording"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_onborading_title"
+            android:text="@string/text_onboarding_title"
             android:textColor="@color/text_color_87"
             android:fontFamily="@font/poppins_bold"
             android:textStyle="bold"
@@ -45,7 +45,7 @@
             android:gravity="center"
             android:textColor="@color/text_color_50"
             android:fontFamily="@font/poppins"
-            android:text="@string/text_onborading_discreption"
+            android:text="@string/text_onboarding_description"
             android:textSize="14sp"
             android:layout_marginTop="16dp" />
     </LinearLayout>

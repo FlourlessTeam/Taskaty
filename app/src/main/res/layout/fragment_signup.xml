@@ -46,7 +46,8 @@
         android:textColorHint="@color/text_color_60"
         android:background="@drawable/edit_text_background"
         app:layout_constraintStart_toStartOf="@+id/text_discription"
-        app:layout_constraintTop_toBottomOf="@+id/text_discription" />
+        app:layout_constraintTop_toBottomOf="@+id/text_discription"
+        android:autofillHints="username" />
 
     <EditText
         android:id="@+id/edit_text_password"
@@ -61,10 +62,11 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_color_87"
         android:textColorHint="@color/text_color_60"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_user" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_user"
+        android:autofillHints="password" />
 
     <EditText
-        android:id="@+id/editTextTextPersonNamee"
+        android:id="@+id/edit_text_confirm_password"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
@@ -77,10 +79,10 @@
         android:textColor="@color/text_color_87"
         android:textColorHint="@color/text_color_60"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_password"
-        />
+        android:autofillHints="password" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton"
+        android:id="@+id/button_app_compact"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
@@ -92,7 +94,7 @@
         android:text="@string/text_signup"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_password"
         app:layout_constraintStart_toStartOf="@+id/edit_text_password"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonNamee" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_confirm_password" />
     <TextView
         android:id="@+id/text_go_signup"
         android:layout_width="wrap_content"
@@ -119,7 +121,7 @@
         app:layout_constraintEnd_toStartOf="@+id/text_go_signup"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatButton"
+        app:layout_constraintTop_toBottomOf="@+id/button_app_compact"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
