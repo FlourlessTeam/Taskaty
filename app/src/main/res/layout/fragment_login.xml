@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/text_sign_to_your_acc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -46,8 +46,9 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_color_87"
         android:textColorHint="@color/text_color_60"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/text_sign_to_your_acc"
+        app:layout_constraintTop_toBottomOf="@+id/text_sign_to_your_acc"
+        android:autofillHints="username" />
 
     <EditText
         android:id="@+id/edit_text_password"
@@ -64,10 +65,11 @@
         android:textColorHint="@color/text_color_60"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_user"
         app:layout_constraintStart_toStartOf="@+id/edit_text_user"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_user" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_user"
+        android:autofillHints="password" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton"
+        android:id="@+id/button_app_compact"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
@@ -107,7 +109,7 @@
         app:layout_constraintEnd_toStartOf="@+id/text_go_signup"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatButton"
+        app:layout_constraintTop_toBottomOf="@+id/button_app_compact"
         app:layout_constraintVertical_bias="1.0" />
 
 
