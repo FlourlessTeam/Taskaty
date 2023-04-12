@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamUpcomingBinding
 
@@ -12,6 +13,15 @@ class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
+            0 -> {
+                val view = ChildRecyclerHomeChartBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                return ChartViewHolder(view.root)
+            }
+
             1 -> {
                 val view = ChildRecyclerHomeTeamInprogressBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -64,5 +74,9 @@ class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     class UpcomingViewHolder(view: View) : BaseViewHolder(view) {
         val binding = ChildRecyclerHomeTeamUpcomingBinding.bind(view)
+    }
+
+    class ChartViewHolder(view: View) : BaseViewHolder(view) {
+
     }
 }
