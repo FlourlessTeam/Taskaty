@@ -18,6 +18,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 else -> getString(R.string.team)
             }
         }.attach()
-
     }
 }
