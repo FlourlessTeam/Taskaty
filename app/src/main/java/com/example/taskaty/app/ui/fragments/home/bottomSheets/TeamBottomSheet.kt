@@ -1,10 +1,9 @@
-package com.example.taskaty.app.ui.fragments.home
+package com.example.taskaty.app.ui.fragments.home.bottomSheets
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.taskaty.databinding.FragmentPersonalBottomSheetBinding
 import com.example.taskaty.databinding.FragmentTeamBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -17,7 +16,7 @@ class TeamBottomSheet() : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTeamBottomSheetBinding.inflate(inflater,container,false)
+        binding = FragmentTeamBottomSheetBinding.inflate(inflater, container, false)
 
         return binding!!.root
     }
@@ -25,5 +24,10 @@ class TeamBottomSheet() : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    override fun onDestroy() {
+        binding = null
+        super.onDestroy()
     }
 }

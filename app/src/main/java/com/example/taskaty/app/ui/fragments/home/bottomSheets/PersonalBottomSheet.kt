@@ -1,4 +1,4 @@
-package com.example.taskaty.app.ui.fragments.home
+package com.example.taskaty.app.ui.fragments.home.bottomSheets
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,5 +24,10 @@ class PersonalBottomSheet() : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    override fun onDestroy() {
+        binding = null
+        super.onDestroy()
     }
 }
