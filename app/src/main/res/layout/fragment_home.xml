@@ -14,12 +14,25 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/taskaty"
-        android:textSize="22sp"
+        android:textColor="@color/primary_color"
+        android:textSize="@dimen/size_22"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23.5dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/logout_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/TaskatyText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/ActiveTasksCount"
@@ -27,13 +40,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="23 Active Tasks"
-        android:textSize="12sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_medium"
+        android:text="@string/active_tasks_count"
+        android:textColor="@color/text_color_50"
+        android:textSize="@dimen/size_12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TaskatyText" />
+        app:layout_constraintTop_toBottomOf="@+id/TaskatyText"
+        tools:ignore="TextContrastCheck" />
 
     <SearchView
         android:id="@+id/search_view_home"
