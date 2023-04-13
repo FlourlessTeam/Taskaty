@@ -1,75 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="145dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="4dp"
+    android:background="@color/task_card_color"
+    android:elevation="0dp"
+    app:cardCornerRadius="8dp">
 
-    <TextView
-        android:id="@+id/timeText"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:textColor="@color/text_color_50"
-        android:drawableStart="@drawable/baseline_access_time_24"
-        android:drawablePadding="8dp"
-        android:text="3 : 30"
-        android:textSize="8sp"
-        app:layout_constraintStart_toEndOf="@+id/dateText"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetails" />
+        tools:ignore="TextSizeCheck">
 
-    <TextView
-        android:textColor="@color/text_color_87"
-        android:id="@+id/taskCardHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="The Title of the task Given"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/timeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="8dp"
+            android:text="@string/inProgress_time_text"
+            android:textColor="@color/text_color_50"
+            android:textSize="@dimen/text_size_8"
+            app:drawableStartCompat="@drawable/baseline_access_time_24"
+            app:layout_constraintStart_toEndOf="@+id/dateText"
+            app:layout_constraintTop_toBottomOf="@+id/taskDetails"
+            tools:ignore="TextContrastCheck" />
 
-    <TextView
-        android:id="@+id/taskDetails"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/text_color_60"
-        android:lines="2"
-        android:text="Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskCardHeader" />
+        <TextView
+            android:id="@+id/taskCardHeader_inProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_medium"
+            android:lines="1"
+            android:text="@string/Todo_title"
+            android:textColor="@color/text_color_87"
+            android:textSize="@dimen/text_size_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/dateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:drawablePadding="8dp"
-        android:textColor="@color/text_color_50"
-        android:drawableStart="@drawable/outline_calendar_month_24"
-        android:text="5 april 2023"
-        android:textSize="8sp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDetails" />
+        <TextView
+            android:id="@+id/taskDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/text_size_8"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins"
+            android:lines="2"
+            android:text="@string/inProgress_body_Text"
+            android:textColor="@color/text_color_60"
+            android:textSize="@dimen/size_11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskCardHeader_inProgress"
+            tools:ignore="VisualLintBounds,VisualLintLongText" />
 
-    <TextView
-        android:id="@+id/inProgressText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/rounded_text"
-        android:padding="4dp"
-        android:text="In progress"
-        android:textColor="@color/white"
-        android:textSize="8sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dateText" />
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/dateTextExample"
+            android:textColor="@color/text_color_50"
+            android:textSize="@dimen/text_size_8"
+            app:drawableStartCompat="@drawable/outline_calendar_month_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/taskDetails"
+            tools:ignore="TextContrastCheck" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/inProgressText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_text"
+            android:fontFamily="@font/poppins_medium"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3dp"
+            android:text="@string/green_inProgress_status"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateText"
+            tools:ignore="TextContrastCheck" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
