@@ -6,7 +6,7 @@ import com.example.taskaty.domain.repositories.remote.RemoteAuthDataSource
 
 class AuthInteractor(
     private val application: Application,
-    private val localDataSource: LocalAuthDataSource,
+    private val localAuthDataSource: LocalAuthDataSource,
     private val remoteAuthDataSource: RemoteAuthDataSource
 ) {
 

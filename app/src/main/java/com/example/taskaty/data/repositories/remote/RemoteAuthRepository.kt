@@ -1,4 +1,4 @@
-package com.example.taskaty.data.repositories
+package com.example.taskaty.data.repositories.remote
 
 import com.example.taskaty.data.api.UserApiClient
 import com.example.taskaty.data.response.RepoCallback

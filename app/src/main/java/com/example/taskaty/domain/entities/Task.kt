@@ -14,13 +14,7 @@ data class Task(
     val creationTime: Timestamp
 ) :
     Parcelable {
-    constructor(jsonObject: JSONObject) : this(
-        id = jsonObject.getInt("id"),
-        title = jsonObject.getString("title"),
-        description = jsonObject.getString("description"),
-        status = jsonObject.getInt("status"),
-        creationTime = Timestamp(jsonObject.getLong("creationTime"))
-    )
+
     fun toJson(): String {
         val jsonObject = JSONObject()
         jsonObject.put("id", id)
