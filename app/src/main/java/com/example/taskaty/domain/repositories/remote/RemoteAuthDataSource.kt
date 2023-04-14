@@ -1,4 +1,4 @@
-package com.example.taskaty.domain.repositories
+package com.example.taskaty.domain.repositories.remote
 
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.domain.entities.User

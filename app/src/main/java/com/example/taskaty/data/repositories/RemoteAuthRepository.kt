@@ -4,7 +4,7 @@ import com.example.taskaty.data.api.UserApiClient
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.User
-import com.example.taskaty.domain.repositories.RemoteAuthDataSource
+import com.example.taskaty.domain.repositories.remote.RemoteAuthDataSource
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import okhttp3.Call

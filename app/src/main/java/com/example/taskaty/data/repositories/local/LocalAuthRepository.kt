@@ -2,9 +2,9 @@ package com.example.taskaty.data.repositories.local
 
 import android.app.Application
 import android.content.Context
-import com.example.taskaty.domain.repositories.AuthDataSource
+import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
 
-class LocalAuthRepository(private val application: Application) : AuthDataSource {
+class LocalAuthRepository(private val application: Application) : LocalAuthDataSource {
     private var token: String? = null
     override fun getToken(): String {
         if (token == null) {

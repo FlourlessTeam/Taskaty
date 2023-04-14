@@ -1,12 +1,12 @@
 package com.example.taskaty.domain.interactors
 
 import android.app.Application
-import com.example.taskaty.domain.repositories.AuthDataSource
-import com.example.taskaty.domain.repositories.RemoteAuthDataSource
+import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
+import com.example.taskaty.domain.repositories.remote.RemoteAuthDataSource
 
 class AuthInteractor(
     private val application: Application,
-    private val localDataSource: AuthDataSource,
+    private val localDataSource: LocalAuthDataSource,
     private val remoteAuthDataSource: RemoteAuthDataSource
 ) {
 

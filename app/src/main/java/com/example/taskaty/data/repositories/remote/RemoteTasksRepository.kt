@@ -6,8 +6,8 @@ import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
-import com.example.taskaty.domain.repositories.TasksDataSource
-import com.example.taskaty.domain.repositories.TeamTasksDataSource
+import com.example.taskaty.domain.repositories.remote.TasksDataSource
+import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
