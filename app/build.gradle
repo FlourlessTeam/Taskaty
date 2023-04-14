@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -15,6 +16,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"https://team-todo-62dmq.ondigitalocean.app\"")
+        buildConfigField("String", "TEAM_ID", "\"c2c02507-9968-486b-9bf0-4c3860fe1f2d\"")
     }
     buildFeatures {
         viewBinding true
@@ -42,6 +45,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
     //
     testImplementation 'junit:junit:4.13.2'
