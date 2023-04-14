@@ -13,7 +13,7 @@ class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
-            0 -> {
+            FIRST_ITEM -> {
                 val view = ChildRecyclerHomeChartBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -22,7 +22,7 @@ class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
                 return ChartViewHolder(view.root)
             }
 
-            1 -> {
+            SECOND_ITEM -> {
                 val view = ChildRecyclerHomeTeamInprogressBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
@@ -43,9 +43,9 @@ class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
-            0 -> 0
-            1 -> 1
-            else -> 2
+            FIRST_ITEM -> FIRST_ITEM
+            SECOND_ITEM -> SECOND_ITEM
+            else -> THIRD_ITEM
         }
     }
 
@@ -64,7 +64,7 @@ class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     }
 
-    override fun getItemCount() = 2
+    override fun getItemCount() = THIRD_ITEM + 1
 
     abstract class BaseViewHolder(view: View) : ViewHolder(view)
 
@@ -78,5 +78,11 @@ class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     class ChartViewHolder(view: View) : BaseViewHolder(view) {
 
+    }
+
+    companion object {
+        const val FIRST_ITEM = 0
+        const val SECOND_ITEM = 1
+        const val THIRD_ITEM = 2
     }
 }
