@@ -26,7 +26,6 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))
             }
-
             override fun onResponse(call: Call, response: Response) {
                 callback.onSuccess(RepoResponse.Success(extractTokenFromResponse(response.body.toString())))
             }

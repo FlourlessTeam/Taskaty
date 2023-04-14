@@ -4,7 +4,8 @@ import android.app.Application
 import android.content.Context
 import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
 
-class LocalAuthRepository(private val application: Application) : LocalAuthDataSource {
+class LocalAuthRepository private constructor(private val application: Application) :
+    LocalAuthDataSource {
     private var token: String? = null
     override fun getToken(): String {
         if (token == null) {
@@ -15,9 +16,9 @@ class LocalAuthRepository(private val application: Application) : LocalAuthDataS
     }
 
     override fun updateToken(token: String) {
-
         val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("token", token).apply()
+        this.token = sharedPreferences.getString("token", "")!!
     }
 
     companion object {
