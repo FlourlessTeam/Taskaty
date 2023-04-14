@@ -2,8 +2,8 @@
     <string name="app_name">Taskaty</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="hint_user_name">username</string>
-    <string name="hint_password">password</string>
+    <string name="hint_user_name">Username</string>
+    <string name="hint_password">Password</string>
     <string name="text_login">Login</string>
     <string name="text_login_title">Hello Again!\nWelcome Back</string>
     <string name="text_login_description">Login to your Account</string>
@@ -13,7 +13,7 @@
     <string name="text_onboarding_description">Your future is created by what you\n do today, not tomorrow. \nby Robert Kiyosaki</string>
     <string name="text_onboarding_title">Manage Your Daily\nTasks with Taskaty</string>
     <string name="onboarding_image">onboarding image</string>
-    <string name="confirm_password">confirm Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="text_signup_title">Hello! Sign up\nto Get Started</string>
     <string name="text_signup_description">Create your Account</string>
     <string name="already_have_an_account">Already have an account?</string>
