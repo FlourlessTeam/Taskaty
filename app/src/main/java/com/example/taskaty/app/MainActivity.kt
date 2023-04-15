@@ -1,7 +1,7 @@
 package com.example.taskaty.app
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.taskaty.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -10,4 +10,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
     }
+
 }
