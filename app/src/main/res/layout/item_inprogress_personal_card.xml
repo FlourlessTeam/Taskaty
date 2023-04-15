@@ -16,7 +16,7 @@
         tools:ignore="TextSizeCheck">
 
         <TextView
-            android:id="@+id/timeText"
+            android:id="@+id/timeTextInProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -26,8 +26,8 @@
             android:textColor="@color/text_color_50"
             android:textSize="@dimen/text_size_8"
             app:drawableStartCompat="@drawable/baseline_access_time_24"
-            app:layout_constraintStart_toEndOf="@+id/dateText"
-            app:layout_constraintTop_toBottomOf="@+id/taskDetails"
+            app:layout_constraintStart_toEndOf="@+id/taskCardDateInProgress"
+            app:layout_constraintTop_toBottomOf="@+id/taskCardDescriptionInProgress"
             tools:ignore="TextContrastCheck" />
 
         <TextView
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/taskDetails"
+            android:id="@+id/taskCardDescriptionInProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -69,7 +69,7 @@
             tools:ignore="VisualLintBounds,VisualLintLongText" />
 
         <TextView
-            android:id="@+id/dateText"
+            android:id="@+id/taskCardDateInProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -81,7 +81,7 @@
             android:textSize="@dimen/text_size_8"
             app:drawableStartCompat="@drawable/outline_calendar_month_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskDetails"
+            app:layout_constraintTop_toBottomOf="@+id/taskCardDescriptionInProgress"
             tools:ignore="TextContrastCheck" />
 
         <TextView
@@ -100,7 +100,7 @@
             android:textSize="@dimen/text_size_8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateText"
+            app:layout_constraintTop_toBottomOf="@+id/taskCardDateInProgress"
             tools:ignore="TextContrastCheck" />
 
 
