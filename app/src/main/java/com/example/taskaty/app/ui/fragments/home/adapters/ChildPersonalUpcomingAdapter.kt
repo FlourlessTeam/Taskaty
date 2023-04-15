@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.taskaty.databinding.ItemInprogressPersonalCardBinding
+import com.example.taskaty.app.ui.fragments.home.PersonalTasksFragment
 import com.example.taskaty.databinding.ItemUpcomingPersonalCardBinding
+import com.example.taskaty.domain.entities.Task
 
-class ChildPersonalUpcomingAdapter(val items: List<Any>) :
+class ChildPersonalUpcomingAdapter(private val items: List<Task>) :
     Adapter<ChildPersonalUpcomingAdapter.UpcomingViewHolder>() {
 
 

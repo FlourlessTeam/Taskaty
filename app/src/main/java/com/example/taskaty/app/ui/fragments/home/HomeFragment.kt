@@ -9,6 +9,14 @@ import com.example.taskaty.databinding.FragmentHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
+    private val fragmentList by lazy {
+        listOf(
+            PersonalTasksFragment(), TeamTasksFragment()
+        )
+    }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewPager.adapter = HomePagerAdapter(this)
@@ -18,5 +26,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 else -> getString(R.string.team)
             }
         }.attach()
+
     }
 }

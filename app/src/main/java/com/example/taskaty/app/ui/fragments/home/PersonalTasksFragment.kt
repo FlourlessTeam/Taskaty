@@ -13,5 +13,4 @@ class PersonalTasksFragment :
         super.onViewCreated(view, savedInstanceState)
     }
 
-
 }
