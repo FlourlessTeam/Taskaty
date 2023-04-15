@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.taskaty.databinding.FragmentLoginBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
@@ -23,7 +24,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun setup() {
-        presenter.login("ahmed","123456")
+        binding.buttonLogin.setOnClickListener {
+            binding.apply {
+                presenter.login(editTextUsername.text.toString(),editTextPassword.text.toString())
+            }
+        }
     }
 
     override fun showLoading() {
@@ -35,7 +40,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun showErrorMessage(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(requireContext(),message, Toast.LENGTH_LONG).show()
     }
 
     override fun successLogin() {
