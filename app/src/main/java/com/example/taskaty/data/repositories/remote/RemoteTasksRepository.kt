@@ -54,6 +54,7 @@ class RemoteTasksRepository private constructor(private val userToken: String) :
 
             override fun onResponse(call: Call, response: Response) {
                 callback.onSuccess(RepoResponse.Success(Unit))
+                //cachedPersonalTasks.add(task)
             }
         }, task)
     }
