@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingHorizontal="16dp"
     android:background="@color/background_color"
-    tools:context=".app.ui.fragments.SignupFragment">
+    tools:context=".app.auth.signup.SignupFragment">
 
     <TextView
         android:id="@+id/text_title"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_title" />
 
     <EditText
-        android:id="@+id/edit_text_user"
+        android:id="@+id/edit_text_username"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="56dp"
@@ -62,7 +62,7 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_color_87"
         android:textColorHint="@color/text_color_60"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_user"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_username"
         android:autofillHints="password" />
 
     <EditText
@@ -82,7 +82,7 @@
         android:autofillHints="password" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_app_compact"
+        android:id="@+id/button_signup"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="24dp"
@@ -121,7 +121,7 @@
         app:layout_constraintEnd_toStartOf="@+id/text_go_signup"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_app_compact"
+        app:layout_constraintTop_toBottomOf="@+id/button_signup"
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
