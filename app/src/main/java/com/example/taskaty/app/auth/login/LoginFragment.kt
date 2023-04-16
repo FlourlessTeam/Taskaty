@@ -1,5 +1,6 @@
 package com.example.taskaty.app.auth.login
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,18 +12,25 @@ import com.example.taskaty.data.repositories.remote.RemoteAuthRepository
 import com.example.taskaty.domain.interactors.AuthInteractor
 
 
-class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) , LoginContract.View{
+class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate),
+    LoginContract.View {
     private lateinit var presenter: LoginContract.Presenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = LoginPresenter(AuthInteractor(LocalAuthRepository.getInstance(requireContext()),RemoteAuthRepository.getInstance()),this)
+        presenter = LoginPresenter(
+            AuthInteractor(
+                LocalAuthRepository.getInstance(Application()), RemoteAuthRepository.getInstance()
+            ), this
+        )
         setup()
     }
 
     private fun setup() {
         binding.buttonLogin.setOnClickListener {
             binding.apply {
-                presenter.onLogin(editTextUsername.text.toString(),editTextPassword.text.toString())
+                presenter.onLogin(
+                    editTextUsername.text.toString(), editTextPassword.text.toString()
+                )
             }
         }
     }
@@ -32,7 +40,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun hideLoading() {
-       Log.d("TAG", "hideLoading: ")
+        Log.d("TAG", "hideLoading: ")
     }
 
     override fun showErrorMessage(message: String) {
@@ -46,6 +54,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun showValidationError(message: String) {
         showToast(message)
     }
+
     private fun showToast(message: String) {
         activity?.runOnUiThread {
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
