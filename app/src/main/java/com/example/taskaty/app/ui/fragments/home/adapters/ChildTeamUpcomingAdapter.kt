@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ItemInprogressPersonalCardBinding
 import com.example.taskaty.databinding.ItemUpcomingPersonalCardBinding
 import com.example.taskaty.databinding.ItemUpcomingTeamCardBinding
+import com.example.taskaty.domain.entities.Task
 
-class ChildTeamUpcomingAdapter(val items: List<Any>) :
+class ChildTeamUpcomingAdapter(val items: List<Task>) :
     Adapter<ChildTeamUpcomingAdapter.UpcomingViewHolder>() {
 
 
