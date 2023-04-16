@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
 
-class LocalAuthRepository private constructor(private val application: Context) :
+class LocalAuthRepository private constructor(private val application: Application) :
     LocalAuthDataSource {
     private var token: String? = null
     override fun getToken(): String {
@@ -24,7 +24,7 @@ class LocalAuthRepository private constructor(private val application: Context) 
     companion object {
         private var instance: LocalAuthRepository? = null
 
-        fun getInstance(application: Context): LocalAuthRepository {
+        fun getInstance(application: Application): LocalAuthRepository {
             if (instance == null) {
                 instance = LocalAuthRepository(application)
             }
