@@ -9,21 +9,29 @@ class SignupPresenter(
     private val authInteractor: AuthInteractor,
     private val view: SignupContract.View
 ) : SignupContract.Presenter {
-    override fun signup(uesr: User) {
+
+    override fun onSignup(userName: String, password: String, confirmPassword: String) {
+        if (!authInteractor.checkValidField(userName, password, confirmPassword)) {
+            view.showValidationError("Please fill all fields")
+            return
+        }
+
+        if (!authInteractor.checkValidPassword(password, confirmPassword)) {
+            view.showValidationError("Passwords do not match")
+            return
+        }
+
         view.showLoading()
-        authInteractor.signup(uesr, object : RepoCallback<User> {
-            override fun onSuccess(response: RepoResponse.Success<User>) {
+        authInteractor.signup(User(userName, password), object : RepoCallback<String> {
+            override fun onSuccess(response: RepoResponse.Success<String>) {
                 view.hideLoading()
-                view.successSignup(response.data)
+                view.navigateToLoginScreen(response.data)
             }
 
-            override fun onError(response: RepoResponse.Error<User>) {
+            override fun onError(response: RepoResponse.Error<String>) {
                 view.hideLoading()
                 view.showErrorMessage(response.message)
             }
-
         })
     }
-
-
 }
