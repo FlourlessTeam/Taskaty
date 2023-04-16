@@ -67,6 +67,9 @@ class AuthInteractor(
     fun checkValidField(userName: String, password: String,confirmPassword:String=password): Boolean {
         return userName.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
     }
+    fun checkValidPassword(password: String,confirmPassword:String): Boolean {
+        return password==confirmPassword
+    }
 }
 
 
