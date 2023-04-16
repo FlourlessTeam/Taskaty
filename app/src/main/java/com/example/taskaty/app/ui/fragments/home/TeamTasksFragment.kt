@@ -19,16 +19,14 @@ class TeamTasksFragment :
 
 
         val interactor = CardDataInteractor(RemoteTasksRepository.getInstance("token"))
-        getTeamTasksData(interactor, 0)
-        getTeamTasksData(interactor, 1)
-        getTeamTasksData(interactor, 2)
+        getTeamTasksData(interactor)
     }
 
 
-    private fun getTeamTasksData(interactor: CardDataInteractor, statusType: Int) {
-        interactor.getTeamTasksData(statusType, object : RepoCallback<List<TeamTask>> {
+    private fun getTeamTasksData(interactor: CardDataInteractor) {
+        interactor.getTeamTasksData(object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-                val tasks = response.data.filter { it.task.status == statusType }
+                val tasks = response.data
                 //...
 
             }

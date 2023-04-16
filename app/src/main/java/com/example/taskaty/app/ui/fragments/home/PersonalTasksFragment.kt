@@ -12,32 +12,27 @@ import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.interactors.CardDataInteractor
 
 
-class PersonalTasksFragment :
-    BaseFragment<FragmentPersonalTasksBinding>(FragmentPersonalTasksBinding::inflate) {
+class PersonalTasksFragment : BaseFragment<FragmentPersonalTasksBinding>(FragmentPersonalTasksBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val interactor = CardDataInteractor(RemoteTasksRepository.getInstance("token"))
-        getPersonalTasksData(interactor, 0)
-        getPersonalTasksData(interactor, 1)
-        getPersonalTasksData(interactor, 2)
+        val interactor = CardDataInteractor(RemoteTasksRepository.getInstance("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6ImMyMzY0MzdmLTZiMDktNGMyNC1iZDhmLTFmZmFhYmY5ZWVmZSIsInRlYW1JZCI6ImMyYzAyNTA3LTk5NjgtNDg2Yi05YmYwLTRjMzg2MGZlMWYyZCIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxODUzMjcyfQ.p02yBvXNP7npFkiegLO6aJTSrXjPtk91Urfwsuza-sQ"))
+        getPersonalTasksData(interactor)
     }
 
 
-    private fun getPersonalTasksData(interactor: CardDataInteractor, statusType: Int) {
-        interactor.getPersonalTasksData(statusType, object : RepoCallback<List<Task>> {
+    private fun getPersonalTasksData(interactor: CardDataInteractor) {
+        interactor.getPersonalTasksData( object : RepoCallback<List<Task>> {
             override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
-                val tasks = response.data.filter { it.status == statusType }
-                //...
+                val tasks = response.data
+
 
             }
-
             override fun onError(response: RepoResponse.Error<List<Task>>) {
                 Log.d("tag", "getPersonalTasksData onError: ${response.message}")
 
             }
-
         })
 
     }
