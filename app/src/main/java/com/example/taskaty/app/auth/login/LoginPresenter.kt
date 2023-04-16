@@ -26,4 +26,12 @@ class LoginPresenter(
 
         })
     }
+
+    override fun onLoginWithSaveToken(userName: String, password: String) {
+        if (!authInteractor.checkValidField(userName, password))
+            return view.showValidationError("Please fill all fields")
+        view.showLoading()
+        if (authInteractor.getTokenFromLocal().isNotEmpty())
+            return view.navigateToHomeScreen()
+    }
 }

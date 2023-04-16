@@ -10,5 +10,6 @@ interface LoginContract {
     }
     interface Presenter {
         fun onLogin(userName: String, password: String)
+        fun onLoginWithSaveToken(userName: String, password: String)
     }
 }
