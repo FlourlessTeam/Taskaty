@@ -1,10 +1,11 @@
 package com.example.taskaty.app.auth.login
 
-import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
+import com.example.taskaty.R
+import com.example.taskaty.app.auth.signup.SignupFragment
 import com.example.taskaty.databinding.FragmentLoginBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
@@ -19,28 +20,39 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         super.onViewCreated(view, savedInstanceState)
         presenter = LoginPresenter(
             AuthInteractor(
-                LocalAuthRepository.getInstance(Application()), RemoteAuthRepository.getInstance()
+                LocalAuthRepository.getInstance(requireContext().applicationContext),
+                RemoteAuthRepository.getInstance()
             ), this
         )
         setup()
     }
 
     private fun setup() {
-        binding.buttonLogin.setOnClickListener {
-            binding.apply {
+        with(binding) {
+            buttonLogin.setOnClickListener {
                 presenter.onLogin(
-                    editTextUsername.text.toString(), editTextPassword.text.toString()
+                    editTextUsername.text.toString(),
+                    editTextPassword.text.toString()
                 )
+            }
+            textGoSignup.setOnClickListener {
+                navigateToSignupScreen()
             }
         }
     }
 
     override fun showLoading() {
-        Log.d("TAG", "showLoading: ")
+        activity?.runOnUiThread {
+            setVisibility(true)
+            binding.buttonLogin.text = ""
+        }
     }
 
     override fun hideLoading() {
-        Log.d("TAG", "hideLoading: ")
+        activity?.runOnUiThread {
+            setVisibility(false)
+            binding.buttonLogin.text = getString(R.string.text_button_login)
+        }
     }
 
     override fun showErrorMessage(message: String) {
@@ -57,8 +69,24 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private fun showToast(message: String) {
         activity?.runOnUiThread {
-            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
     }
+
+    private fun navigateToSignupScreen() {
+        val signupFragment = SignupFragment()
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, signupFragment)
+        transaction.addToBackStack("LoginFragment")
+        transaction.commit()
+    }
+
+    private fun setVisibility(isVisible: Boolean) {
+        with(binding) {
+            progressBar.isVisible = isVisible
+            buttonLogin.isEnabled = !isVisible
+        }
+    }
+
 
 }
