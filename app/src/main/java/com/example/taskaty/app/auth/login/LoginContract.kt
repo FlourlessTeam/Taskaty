@@ -5,9 +5,10 @@ interface LoginContract {
         fun showLoading()
         fun hideLoading()
         fun showErrorMessage(message: String)
-        fun successLogin()
+        fun navigateToHomeScreen()
+        fun showValidationError(message: String)
     }
     interface Presenter {
-        fun login(userName: String, password: String)
+        fun onLogin(userName: String, password: String)
     }
 }
