@@ -10,8 +10,10 @@ class LoginPresenter(
 ) : LoginContract.Presenter {
 
     override fun onLogin(userName: String, password: String) {
-        if (!authInteractor.checkValidField(userName, password))
-            return view.showValidationError("Please fill all fields")
+        if (!authInteractor.checkValidField(userName, password)){
+            view.showValidationError("Please fill all fields")
+            return
+        }
         view.showLoading()
         authInteractor.login(userName, password, object : RepoCallback<String> {
             override fun onSuccess(response: RepoResponse.Success<String>) {
@@ -27,11 +29,12 @@ class LoginPresenter(
         })
     }
 
-    override fun onLoginWithSaveToken(userName: String, password: String) {
-        if (!authInteractor.checkValidField(userName, password))
-            return view.showValidationError("Please fill all fields")
-        view.showLoading()
-        if (authInteractor.getTokenFromLocal().isNotEmpty())
-            return view.navigateToHomeScreen()
+    override fun onLoginWithSaveToken() {
+        val token = authInteractor.getTokenFromLocal()
+        if (token.isNotEmpty()) {
+            view.navigateToHomeScreen()
+        } else {
+            view.showValidationError("Token not found. Please login again.")
+        }
     }
 }
