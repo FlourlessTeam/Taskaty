@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.taskaty.R
 import com.example.taskaty.app.auth.signup.SignupFragment
+import com.example.taskaty.app.ui.fragments.ViewAllFragment
 import com.example.taskaty.databinding.FragmentLoginBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
@@ -28,6 +29,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun setup() {
+        presenter.onLoginWithSaveToken()
         with(binding) {
             buttonLogin.setOnClickListener {
                 presenter.onLogin(
@@ -60,7 +62,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun navigateToHomeScreen() {
-        showToast("Hi, ${binding.editTextUsername.text}")
+        //remember to remove this lines
+        val signupFragment = ViewAllFragment()
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, signupFragment)
+        transaction.commit()
     }
 
     override fun showValidationError(message: String) {
