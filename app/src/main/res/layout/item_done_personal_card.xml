@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/timeText_todo"
+            android:id="@+id/time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -25,13 +25,13 @@
             android:textColor="@color/text_color_50"
             android:textSize="@dimen/text_size_8"
             app:drawableStartCompat="@drawable/baseline_access_time_24"
-            app:layout_constraintStart_toEndOf="@+id/dateText_todo"
-            app:layout_constraintTop_toBottomOf="@+id/taskCardHeader_ToDo"
+            app:layout_constraintStart_toEndOf="@+id/date_text"
+            app:layout_constraintTop_toBottomOf="@+id/task_header"
             tools:ignore="TextContrastCheck" />
 
 
         <TextView
-            android:id="@+id/taskCardHeader_ToDo"
+            android:id="@+id/task_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/dateText_todo"
+            android:id="@+id/date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
             android:textSize="@dimen/text_size_8"
             app:drawableStartCompat="@drawable/outline_calendar_month_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskCardHeader_ToDo"
+            app:layout_constraintTop_toBottomOf="@+id/task_header"
             tools:ignore="TextContrastCheck" />
 
         <TextView
@@ -78,7 +78,7 @@
             android:textSize="@dimen/text_size_8"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateText_todo"
+            app:layout_constraintTop_toBottomOf="@+id/date_text"
             tools:ignore="TextContrastCheck" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

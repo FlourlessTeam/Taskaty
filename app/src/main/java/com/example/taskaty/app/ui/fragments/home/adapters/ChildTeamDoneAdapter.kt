@@ -23,7 +23,11 @@ class ChildTeamDoneAdapter(val items: List<Task>) :
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: DoneViewHolder, position: Int) {
-
+        val item = items[position]
+        holder.binding.apply {
+            timeText.text = item.creationTime
+            taskHeader.text = item.title
+        }
     }
 
     class DoneViewHolder(val binding: ItemDoneTeamCardBinding) :

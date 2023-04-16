@@ -23,7 +23,11 @@ class ChildPersonalDoneAdapter(private val items: List<Task>) :
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: DoneViewHolder, position: Int) {
-
+        val item = items[position]
+        holder.binding.apply {
+            taskHeader.text = item.title
+            timeText.text = item.creationTime
+        }
     }
 
     class DoneViewHolder(val binding: ItemDonePersonalCardBinding) :
