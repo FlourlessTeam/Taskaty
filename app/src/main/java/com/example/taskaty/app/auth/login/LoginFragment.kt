@@ -77,7 +77,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         val signupFragment = SignupFragment()
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.container_fragment, signupFragment)
-        transaction.addToBackStack("LoginFragment")
         transaction.commit()
     }
 
