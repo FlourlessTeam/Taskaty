@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingHorizontal="16dp"
     android:background="@color/background_color"
+    android:paddingHorizontal="16dp"
     tools:context=".app.auth.signup.SignupFragment">
 
     <TextView
@@ -13,10 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:textSize="24sp"
         android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/text_color_87"
         android:text="@string/text_signup_title"
+        android:textColor="@color/text_color_87"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="56dp"
+        android:autofillHints="username"
+        android:background="@drawable/edit_text_background"
         android:fontFamily="@font/roboto"
         android:gravity="center_vertical"
         android:hint="@string/hint_user_name"
@@ -44,16 +46,15 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_color_87"
         android:textColorHint="@color/text_color_60"
-        android:background="@drawable/edit_text_background"
         app:layout_constraintStart_toStartOf="@+id/text_discription"
-        app:layout_constraintTop_toBottomOf="@+id/text_discription"
-        android:autofillHints="username" />
+        app:layout_constraintTop_toBottomOf="@+id/text_discription" />
 
     <EditText
         android:id="@+id/edit_text_password"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
+        android:autofillHints="password"
         android:background="@drawable/edit_text_background"
         android:fontFamily="@font/roboto"
         android:gravity="center_vertical"
@@ -62,14 +63,14 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_color_87"
         android:textColorHint="@color/text_color_60"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_username"
-        android:autofillHints="password" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_username" />
 
     <EditText
         android:id="@+id/edit_text_confirm_password"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
+        android:autofillHints="password"
         android:background="@drawable/edit_text_background"
         android:fontFamily="@font/roboto"
         android:gravity="center_vertical"
@@ -78,8 +79,7 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_color_87"
         android:textColorHint="@color/text_color_60"
-        app:layout_constraintTop_toBottomOf="@+id/edit_text_password"
-        android:autofillHints="password" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_password" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_signup"
@@ -88,21 +88,36 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/poppins"
+        android:text="@string/text_signup"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:text="@string/text_signup"
         app:layout_constraintEnd_toEndOf="@+id/edit_text_password"
         app:layout_constraintStart_toStartOf="@+id/edit_text_password"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_confirm_password" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/button_signup"
+        app:layout_constraintEnd_toEndOf="@+id/button_signup"
+        app:layout_constraintStart_toStartOf="@+id/button_signup"
+        app:layout_constraintTop_toTopOf="@+id/button_signup"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/progress_bar"
+        app:lottie_speed="1.5" />
+
     <TextView
-        android:id="@+id/text_go_signup"
+        android:id="@+id/text_go_login"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:text="@string/text_login"
-        android:textSize="14sp"
         android:fontFamily="@font/poppins"
+        android:text="@string/text_login"
         android:textColor="@color/primary_color"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/text_have_account"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -114,12 +129,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:textSize="14sp"
-        app:layout_constraintHorizontal_chainStyle="packed"
         android:text="@string/already_have_an_account"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_go_signup"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/text_go_login"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_signup"
         app:layout_constraintVertical_bias="1.0" />
