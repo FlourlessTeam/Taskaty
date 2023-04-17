@@ -3,6 +3,7 @@ package com.example.taskaty.app.ui.fragments.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.ParentPersonalAdapter
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
@@ -38,6 +39,7 @@ class PersonalTasksFragment :
 
             override fun onError(response: RepoResponse.Error<List<Task>>) {
                 Log.d("tag", "getPersonalTasksData onError: ${response.message}")
+                showErrorMessage(response.message)
             }
         })
     }
@@ -46,6 +48,28 @@ class PersonalTasksFragment :
         inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
         upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }.take(LIMIT)
         doneTasks = tasks.filter { it.status == DONE_STATUS }.take(LIMIT)
+        initViews()
+    }
+
+    private fun initViews() {
+        val adapter = ParentPersonalAdapter(inProgressTasks, upcomingTasks, doneTasks)
+        binding.PersonalTasksRecycler.adapter = adapter
+        showTasks()
+    }
+
+    private fun showTasks() {
+        binding.apply {
+            progressBar.isVisible = false
+            PersonalTasksRecycler.isVisible = true
+        }
+    }
+
+    private fun showErrorMessage(message: String) {
+        binding.apply {
+            progressBar.isVisible = false
+            errorText.isVisible = true
+            errorText.text = message
+        }
     }
 
     companion object {
