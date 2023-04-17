@@ -27,5 +27,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }.attach()
 
+        binding.newTaskFAB.setOnClickListener {
+            val bottomSheet  = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
+            bottomSheet.show(childFragmentManager , "tag")
+        }
+
     }
 }
