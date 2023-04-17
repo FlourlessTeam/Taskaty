@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.taskaty.R
 import com.example.taskaty.app.auth.signup.SignupFragment
-import com.example.taskaty.app.ui.fragments.ViewAllFragment
 import com.example.taskaty.databinding.FragmentLoginBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
