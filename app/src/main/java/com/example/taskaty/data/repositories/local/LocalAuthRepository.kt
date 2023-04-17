@@ -4,9 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
 
-class LocalAuthRepository private constructor(private val application: Application) :
+class LocalAuthRepository private constructor(private val application: Context) :
     LocalAuthDataSource {
     private var token: String? = null
+    private var expireAt: String? = null
     override fun getToken(): String {
         if (token == null) {
             val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
@@ -15,16 +16,27 @@ class LocalAuthRepository private constructor(private val application: Applicati
         return token!!
     }
 
-    override fun updateToken(token: String) {
+    override fun getExpireAt(): String {
+        if (expireAt == null) {
+            val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
+            expireAt = sharedPreferences.getString("expireAt", "")
+        }
+        return expireAt!!
+    }
+
+
+    override fun updateToken(token: String, expireAt: String) {
         val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("token", token).apply()
-        this.token = sharedPreferences.getString("token", "")!!
+        sharedPreferences.edit().putString("expireAt", expireAt).apply()
+        this.token = sharedPreferences.getString("token", "")
+        this.expireAt = sharedPreferences.getString("expireAt", "")
     }
 
     companion object {
         private var instance: LocalAuthRepository? = null
 
-        fun getInstance(application: Application): LocalAuthRepository {
+        fun getInstance(application: Context): LocalAuthRepository {
             if (instance == null) {
                 instance = LocalAuthRepository(application)
             }
