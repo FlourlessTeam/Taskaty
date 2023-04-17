@@ -1,25 +1,37 @@
 package com.example.taskaty.app.auth.signup
 
+import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.User
 import com.example.taskaty.domain.interactors.AuthInteractor
 
-class SignupPresenter(private val authInteractor: AuthInteractor,private val view: SignupContract.View) : SignupContract.Presenter {
-    override fun signup(uesr: User) {
+class SignupPresenter(
+    private val authInteractor: AuthInteractor,
+    private val view: SignupContract.View
+) : SignupContract.Presenter {
+
+    override fun onSignup(userName: String, password: String, confirmPassword: String) {
+        if (!authInteractor.checkValidField(userName, password, confirmPassword)) {
+            view.showValidationError("Please fill all fields")
+            return
+        }
+
+        if (!authInteractor.checkValidPassword(password, confirmPassword)) {
+            view.showValidationError("Passwords do not match")
+            return
+        }
+
         view.showLoading()
-        authInteractor.signup(uesr,object : com.example.taskaty.data.response.RepoCallback<User>{
-            override fun onSuccess(response: RepoResponse.Success<User>) {
+        authInteractor.signup(User(userName, password), object : RepoCallback<String> {
+            override fun onSuccess(response: RepoResponse.Success<String>) {
                 view.hideLoading()
-                view.successSignup(response.data)
+                view.navigateToLoginScreen(response.data)
             }
 
-            override fun onError(response:RepoResponse.Error<User>) {
+            override fun onError(response: RepoResponse.Error<String>) {
                 view.hideLoading()
                 view.showErrorMessage(response.message)
             }
-
         })
     }
-
-
 }

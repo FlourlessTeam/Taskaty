@@ -4,14 +4,21 @@ import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.interactors.AuthInteractor
 
-class LoginPresenter(private val authInteractor: AuthInteractor, private val view: LoginContract.View): LoginContract.Presenter {
+class LoginPresenter(
+    private val authInteractor: AuthInteractor,
+    private val view: LoginContract.View
+) : LoginContract.Presenter {
 
-    override fun login(userName: String, password: String) {
+    override fun onLogin(userName: String, password: String) {
+        if (!authInteractor.checkValidField(userName, password)) {
+            view.showValidationError("Please fill all fields")
+            return
+        }
         view.showLoading()
-        authInteractor.login(userName,password,object:RepoCallback<String>{
+        authInteractor.login(userName, password, object : RepoCallback<String> {
             override fun onSuccess(response: RepoResponse.Success<String>) {
                 view.hideLoading()
-                view.successLogin()
+                view.navigateToHomeScreen()
             }
 
             override fun onError(response: RepoResponse.Error<String>) {
@@ -20,5 +27,11 @@ class LoginPresenter(private val authInteractor: AuthInteractor, private val vie
             }
 
         })
+    }
+
+    override fun onLoginWithSaveToken() {
+        if (authInteractor.checkExpireToken()) {
+            view.navigateToHomeScreen()
+        }
     }
 }
