@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
+import com.example.taskaty.databinding.ChildRecyclerHomePersonalDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalUpcomingBinding
 
@@ -30,8 +31,16 @@ class ParentPersonalAdapter() : Adapter<ParentPersonalAdapter.BaseViewHolder>() 
                 )
                 return InProgressViewHolder(view.root)
             }
-            else -> {
+            THIRD_ITEM -> {
                 val view = ChildRecyclerHomePersonalUpcomingBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                return UpcomingViewHolder(view.root)
+            }
+            else -> {
+                val view = ChildRecyclerHomePersonalDoneBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
@@ -45,7 +54,8 @@ class ParentPersonalAdapter() : Adapter<ParentPersonalAdapter.BaseViewHolder>() 
         return when (position) {
             FIRST_ITEM -> FIRST_ITEM
             SECOND_ITEM -> SECOND_ITEM
-            else -> THIRD_ITEM
+            THIRD_ITEM -> THIRD_ITEM
+            else -> FOURTH_ITEM
         }
     }
 
@@ -53,6 +63,7 @@ class ParentPersonalAdapter() : Adapter<ParentPersonalAdapter.BaseViewHolder>() 
         when (holder) {
             is InProgressViewHolder -> bindInProgress(holder)
             is UpcomingViewHolder -> bindUpcoming(holder)
+            is DoneViewHolder -> bindDone(holder)
         }
     }
 
@@ -64,7 +75,11 @@ class ParentPersonalAdapter() : Adapter<ParentPersonalAdapter.BaseViewHolder>() 
 
     }
 
-    override fun getItemCount() = THIRD_ITEM + 1
+    private fun bindDone(holder: DoneViewHolder) {
+
+    }
+
+    override fun getItemCount() = FOURTH_ITEM + 1
 
     abstract class BaseViewHolder(view: View) : ViewHolder(view)
 
@@ -80,9 +95,14 @@ class ParentPersonalAdapter() : Adapter<ParentPersonalAdapter.BaseViewHolder>() 
 
     }
 
+    class DoneViewHolder(view: View) : BaseViewHolder(view) {
+        val binding = ChildRecyclerHomePersonalDoneBinding.bind(view)
+    }
+
     companion object {
         const val FIRST_ITEM = 0
         const val SECOND_ITEM = 1
         const val THIRD_ITEM = 2
+        const val FOURTH_ITEM = 3
     }
 }
