@@ -6,6 +6,7 @@
     <color name="text_color_87">#DE000000</color>
     <color name="text_color_60">#99000000</color>
     <color name="text_color_50">#80000000</color>
+    <color name="task_card_text_color">#80000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
     <color name="in_progress_color">#418E77</color>
@@ -19,4 +20,5 @@
     <color name="loading_card_content_color">#DDDDDD</color>
     <color name="search_hint_text_color">#4D49454F</color>
     <color name="search_bar_stroke_color">#FAFAFA</color>
+    <color name="submit_text_color">#01704F</color>
 </resources>
