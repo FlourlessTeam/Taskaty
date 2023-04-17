@@ -19,14 +19,15 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
     private lateinit var presenter: SignupContract.Presenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primary_variant)
         presenter = SignupPresenter(
             AuthInteractor(
-                LocalAuthRepository.getInstance(requireContext().applicationContext), RemoteAuthRepository.getInstance()
+                LocalAuthRepository.getInstance(requireContext().applicationContext),
+                RemoteAuthRepository.getInstance()
             ), this
         )
         setup()
     }
+
     private fun setup() {
         with(binding) {
             buttonSignup.setOnClickListener {
@@ -68,6 +69,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
     override fun showValidationError(message: String) {
         showToast(message)
     }
+
     private fun navigateToLoginScreen() {
         val loginFragment = LoginFragment()
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -80,6 +82,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
     }
+
     private fun setVisibility(isVisible: Boolean) {
         with(binding) {
             progressBar.isVisible = isVisible

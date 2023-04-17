@@ -8,7 +8,8 @@ interface SignupContract {
         fun navigateToLoginScreen(user: String)
         fun showValidationError(message: String)
     }
+
     interface Presenter {
-        fun onSignup(userName: String, password: String, confirmPassword:String)
+        fun onSignup(userName: String, password: String, confirmPassword: String)
     }
 }
