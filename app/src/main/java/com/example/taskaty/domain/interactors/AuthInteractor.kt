@@ -44,8 +44,21 @@ class AuthInteractor(
         return localAuthDataSource.getToken()
     }
 
+    private fun convertExpireAt(expireAt: String): Long {
+        if (expireAt.isEmpty())
+            return 0
+        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
+        val expireAtDate = dateFormat.parse(expireAt)
+        return expireAtDate!!.time
+    }
+
     fun checkExpireAt(): Boolean {
-       return localAuthDataSource.getExpireAt() > System.currentTimeMillis()
+        return if (convertExpireAt(localAuthDataSource.getExpireAt()) > System.currentTimeMillis()){
+            true
+        } else{
+            localAuthDataSource.updateToken("", "")
+            false
+        }
     }
 
     private fun getTokenFromRemote(
@@ -80,7 +93,7 @@ class AuthInteractor(
         password: String,
         confirmPassword: String = password
     ): Boolean {
-        return userName.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
+        return userName.isNotEmpty() || password.isNotEmpty() || confirmPassword.isNotEmpty()
     }
 
     fun checkValidPassword(password: String, confirmPassword: String): Boolean {
