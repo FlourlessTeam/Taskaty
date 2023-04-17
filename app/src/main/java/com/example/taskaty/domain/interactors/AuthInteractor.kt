@@ -3,9 +3,14 @@ package com.example.taskaty.domain.interactors
 
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
+import com.example.taskaty.domain.entities.LoginResponse
+import com.example.taskaty.domain.entities.SignupResponse
 import com.example.taskaty.domain.entities.User
 import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
 import com.example.taskaty.domain.repositories.remote.RemoteAuthDataSource
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Locale
 
 
 class AuthInteractor(
@@ -14,29 +19,46 @@ class AuthInteractor(
 ) {
 
     fun login(userName: String, password: String, callback: RepoCallback<String>) {
-        val token = getToken()
-        if (token.isNotEmpty()) {
-            callback.onSuccess(RepoResponse.Success(token))
-        } else {
-            getTokenFromRemote(userName, password, callback)
-        }
+        getTokenFromRemote(userName, password, callback)
     }
 
-    fun signup(user: User, callback: RepoCallback<User>) {
-        remoteAuthDataSource.signup(user, object : RepoCallback<User> {
-            override fun onSuccess(response: RepoResponse.Success<User>) {
-                callback.onSuccess(response)
+    fun signup(user: User, callback: RepoCallback<String>) {
+        remoteAuthDataSource.signup(user, object : RepoCallback<SignupResponse> {
+            override fun onSuccess(response: RepoResponse.Success<SignupResponse>) {
+                if (response.data.isSuccess) {
+                    callback.onSuccess(RepoResponse.Success(response.data.value.username))
+                } else {
+                    callback.onError(RepoResponse.Error(response.data.message.toString()))
+                }
             }
 
-            override fun onError(response: RepoResponse.Error<User>) {
-                callback.onError(response)
+            override fun onError(response: RepoResponse.Error<SignupResponse>) {
+                callback.onError(RepoResponse.Error(response.message))
             }
+
 
         })
     }
 
-    private fun getToken(): String {
-        return localAuthDataSource.getToken() ?: ""
+    fun getTokenFromLocal(): String {
+        return localAuthDataSource.getToken()
+    }
+
+    private fun convertExpireAt(expireAt: String): Long {
+        if (expireAt.isEmpty())
+            return 0
+        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
+        val expireAtDate = dateFormat.parse(expireAt)
+        return expireAtDate!!.time
+    }
+
+    fun checkExpireAt(): Boolean {
+        return if (convertExpireAt(localAuthDataSource.getExpireAt()) > System.currentTimeMillis()){
+            true
+        } else{
+            localAuthDataSource.updateToken("", "")
+            false
+        }
     }
 
     private fun getTokenFromRemote(
@@ -44,19 +66,39 @@ class AuthInteractor(
         password: String,
         callback: RepoCallback<String>,
     ) {
-        remoteAuthDataSource.fetchTokenByLogin(userName, password, object : RepoCallback<String> {
-            override fun onSuccess(response: RepoResponse.Success<String>) {
-                val token = response.data
-                localAuthDataSource.updateToken(token)
-                callback.onSuccess(RepoResponse.Success(token))
-            }
+        remoteAuthDataSource.fetchTokenByLogin(
+            userName,
+            password,
+            object : RepoCallback<LoginResponse> {
 
-            override fun onError(response: RepoResponse.Error<String>) {
-                callback.onError(response)
-            }
-        })
+                override fun onSuccess(response: RepoResponse.Success<LoginResponse>) {
+                    if (response.data.isSuccess) {
+                        val token = response.data.value.token
+                        val expireAt = response.data.value.expireAt
+                        callback.onSuccess(RepoResponse.Success(token))
+                        localAuthDataSource.updateToken(token, expireAt)
+                    } else {
+                        callback.onError(RepoResponse.Error(response.data.message.toString()))
+                    }
+                }
+
+                override fun onError(response: RepoResponse.Error<LoginResponse>) {
+                    callback.onError(RepoResponse.Error(response.message))
+                }
+            })
     }
 
+    fun checkValidField(
+        userName: String,
+        password: String,
+        confirmPassword: String = password
+    ): Boolean {
+        return userName.isNotEmpty() || password.isNotEmpty() || confirmPassword.isNotEmpty()
+    }
+
+    fun checkValidPassword(password: String, confirmPassword: String): Boolean {
+        return password == confirmPassword
+    }
 }
 
 
