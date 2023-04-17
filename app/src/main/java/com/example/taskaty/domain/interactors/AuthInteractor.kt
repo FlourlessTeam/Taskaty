@@ -9,7 +9,6 @@ import com.example.taskaty.domain.entities.User
 import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
 import com.example.taskaty.domain.repositories.remote.RemoteAuthDataSource
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.Locale
 
 
@@ -19,55 +18,7 @@ class AuthInteractor(
 ) {
 
     fun login(userName: String, password: String, callback: RepoCallback<String>) {
-        getTokenFromRemote(userName, password, callback)
-    }
-
-    fun signup(user: User, callback: RepoCallback<String>) {
-        remoteAuthDataSource.signup(user, object : RepoCallback<SignupResponse> {
-            override fun onSuccess(response: RepoResponse.Success<SignupResponse>) {
-                if (response.data.isSuccess) {
-                    callback.onSuccess(RepoResponse.Success(response.data.value.username))
-                } else {
-                    callback.onError(RepoResponse.Error(response.data.message.toString()))
-                }
-            }
-
-            override fun onError(response: RepoResponse.Error<SignupResponse>) {
-                callback.onError(RepoResponse.Error(response.message))
-            }
-
-
-        })
-    }
-
-    fun getTokenFromLocal(): String {
-        return localAuthDataSource.getToken()
-    }
-
-    private fun convertExpireAt(expireAt: String): Long {
-        if (expireAt.isEmpty())
-            return 0
-        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
-        val expireAtDate = dateFormat.parse(expireAt)
-        return expireAtDate!!.time
-    }
-
-    fun checkExpireAt(): Boolean {
-        return if (convertExpireAt(localAuthDataSource.getExpireAt()) > System.currentTimeMillis()){
-            true
-        } else{
-            localAuthDataSource.updateToken("", "")
-            false
-        }
-    }
-
-    private fun getTokenFromRemote(
-        userName: String,
-        password: String,
-        callback: RepoCallback<String>,
-    ) {
-        remoteAuthDataSource.fetchTokenByLogin(
-            userName,
+        remoteAuthDataSource.fetchTokenByLogin(userName,
             password,
             object : RepoCallback<LoginResponse> {
 
@@ -88,12 +39,50 @@ class AuthInteractor(
             })
     }
 
+    fun signup(user: User, callback: RepoCallback<String>) {
+        remoteAuthDataSource.signup(user, object : RepoCallback<SignupResponse> {
+            override fun onSuccess(response: RepoResponse.Success<SignupResponse>) {
+                if (response.data.isSuccess) {
+                    callback.onSuccess(RepoResponse.Success(response.data.value.username))
+                } else {
+                    callback.onError(RepoResponse.Error(response.data.message.toString()))
+                }
+            }
+
+            override fun onError(response: RepoResponse.Error<SignupResponse>) {
+                callback.onError(RepoResponse.Error(response.message))
+            }
+
+
+        })
+    }
+
+    private fun convertExpireTokenTime(expireAt: String): Long {
+        if (expireAt.isEmpty()) return 0
+        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
+        val expireAtDate = dateFormat.parse(expireAt)
+        return expireAtDate!!.time
+    }
+
+    fun checkExpireToken(): Boolean {
+        return if (convertExpireTokenTime(localAuthDataSource.getExpireAt()) > System.currentTimeMillis()) {
+            true
+        } else {
+            removeTokenFromLocal()
+            false
+        }
+    }
+
+    private fun removeTokenFromLocal() {
+        localAuthDataSource.updateToken("", "")
+    }
+
     fun checkValidField(
         userName: String,
         password: String,
         confirmPassword: String = password
     ): Boolean {
-        return userName.isNotEmpty() || password.isNotEmpty() || confirmPassword.isNotEmpty()
+        return userName.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()
     }
 
     fun checkValidPassword(password: String, confirmPassword: String): Boolean {
