@@ -36,8 +36,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         with(binding) {
             buttonLogin.setOnClickListener {
                 presenter.onLogin(
-                    editTextUsername.text.toString(),
-                    editTextPassword.text.toString()
+                    editTextUsername.text.toString(), editTextPassword.text.toString()
                 )
             }
             textGoSignup.setOnClickListener {
@@ -67,10 +66,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     override fun navigateToHomeScreen() {
         showToast("Login Success")
-        val signupFragment = ViewAllFragment()
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container_fragment, signupFragment)
-        transaction.commit()
     }
 
     override fun showValidationError(message: String) {
