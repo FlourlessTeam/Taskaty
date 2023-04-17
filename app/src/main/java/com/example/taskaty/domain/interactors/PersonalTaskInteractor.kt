@@ -3,7 +3,6 @@ package com.example.taskaty.domain.interactors
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.Task
-import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
 import com.example.taskaty.domain.repositories.remote.TasksDataSource
 
 class PersonalTaskInteractor(
@@ -30,7 +29,8 @@ class PersonalTaskInteractor(
 			}
 
 			override fun onError(response: RepoResponse.Error<Unit>) {
-				callback.onSuccess(RepoResponse.Success(Unit))
+				val message = response.message
+				callback.onError(RepoResponse.Error(message))
 			}
 		})
 	}

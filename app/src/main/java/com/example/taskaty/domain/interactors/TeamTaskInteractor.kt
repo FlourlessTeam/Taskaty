@@ -22,15 +22,23 @@ class TeamTaskInteractor(
 		})
 	}
 
-	fun updateTeamTaskStatus(teamTaskId: String, teamTaskStatus: Int, callback: RepoCallback<Unit>) {
-		teamTasksDataSource.updateTeamTaskState(teamTaskId, teamTaskStatus, object : RepoCallback<Unit> {
-			override fun onSuccess(response: RepoResponse.Success<Unit>) {
-				callback.onSuccess(RepoResponse.Success(Unit))
-			}
+	fun updateTeamTaskStatus(
+		teamTaskId: String,
+		teamTaskStatus: Int,
+		callback: RepoCallback<Unit>
+	) {
+		teamTasksDataSource.updateTeamTaskState(
+			teamTaskId,
+			teamTaskStatus,
+			object : RepoCallback<Unit> {
+				override fun onSuccess(response: RepoResponse.Success<Unit>) {
+					callback.onSuccess(RepoResponse.Success(Unit))
+				}
 
-			override fun onError(response: RepoResponse.Error<Unit>) {
-				callback.onSuccess(RepoResponse.Success(Unit))
-			}
-		})
+				override fun onError(response: RepoResponse.Error<Unit>) {
+					val message = response.message
+					callback.onError(RepoResponse.Error(message))
+				}
+			})
 	}
 }
