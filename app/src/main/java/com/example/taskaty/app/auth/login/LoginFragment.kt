@@ -65,7 +65,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun navigateToHomeScreen() {
-        Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
+        showToast("Login Success")
     }
 
     override fun showValidationError(message: String) {
