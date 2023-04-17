@@ -37,7 +37,6 @@
     <string name="green_inProgress_status">In progress</string>
     <string name="inProgress_time_text">3 : 30</string>
     <string name="active_tasks_count">23 Active Tasks</string>
-    <string name="in_progress">in Progress</string>
     <string name="text_time">3:22 AM</string>
     <string name="text_date">5 April 2023</string>
     <string name="text_content">Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</string>

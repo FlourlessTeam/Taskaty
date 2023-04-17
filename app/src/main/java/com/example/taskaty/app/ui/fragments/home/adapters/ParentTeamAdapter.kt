@@ -9,8 +9,14 @@ import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamUpcomingBinding
+import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.TeamTask
 
-class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
+class ParentTeamAdapter(
+    val InProgress: List<TeamTask>,
+    val Upcoming: List<TeamTask>,
+    val Done: List<TeamTask>
+) : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
@@ -68,15 +74,27 @@ class ParentTeamAdapter() : Adapter<ParentTeamAdapter.BaseViewHolder>() {
     }
 
     private fun bindInProgress(holder: InProgressViewHolder) {
-
+        val adapter = ChildTeamInProgressAdapter(InProgress)
+        holder.binding.apply {
+            childRecycler.adapter = adapter
+            tasksNumber.text = InProgress.size.toString()
+        }
     }
 
     private fun bindUpcoming(holder: UpcomingViewHolder) {
-
+        val adapter = ChildTeamUpcomingAdapter(Upcoming)
+        holder.binding.apply {
+            childRecycler.adapter = adapter
+            tasksNumber.text = Upcoming.size.toString()
+        }
     }
 
     private fun bindDone(holder: DoneViewHolder) {
-
+        val adapter = ChildTeamDoneAdapter(Done)
+        holder.binding.apply {
+            childRecycler.adapter = adapter
+            tasksNumber.text = Done.size.toString()
+        }
     }
 
     override fun getItemCount() = FOURTH_ITEM + 1
