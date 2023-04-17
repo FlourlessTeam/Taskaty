@@ -30,8 +30,7 @@ class LoginPresenter(
     }
 
     override fun onLoginWithSaveToken() {
-        val token = authInteractor.getTokenFromLocal()
-        if (token.isNotEmpty() && authInteractor.checkExpireAt()) {
+        if (authInteractor.checkExpireToken()) {
             view.navigateToHomeScreen()
         }
     }

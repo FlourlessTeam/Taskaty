@@ -62,10 +62,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     override fun showErrorMessage(message: String) {
         showToast(message)
+
     }
 
     override fun navigateToHomeScreen() {
         showToast("Login Success")
+        val signupFragment = ViewAllFragment()
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, signupFragment)
+        transaction.commit()
     }
 
     override fun showValidationError(message: String) {
