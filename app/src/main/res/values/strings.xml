@@ -23,4 +23,8 @@
     <string name="text_date">5 April 2023</string>
     <string name="text_content">Vorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</string>
     <string name="title_text">Title afldnhfjkadfn adlkfn dalfk adlf nadlf afd fsfd sd fds fs df sd</string>
+    <string name="task_details">Task Details</string>
+    <string name="done">Done</string>
+    <string name="description">Description</string>
+    <string name="submit"><u>Submit</u></string>
 </resources>
