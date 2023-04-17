@@ -10,7 +10,7 @@ class LoginPresenter(
 ) : LoginContract.Presenter {
 
     override fun onLogin(userName: String, password: String) {
-        if (!authInteractor.checkValidField(userName, password)){
+        if (!authInteractor.checkValidField(userName, password)) {
             view.showValidationError("Please fill all fields")
             return
         }
@@ -33,8 +33,6 @@ class LoginPresenter(
         val token = authInteractor.getTokenFromLocal()
         if (token.isNotEmpty() && authInteractor.checkExpireAt()) {
             view.navigateToHomeScreen()
-        } else {
-            view.showValidationError("Token not found. Please login again.")
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.taskaty.app.auth.login
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.taskaty.R
 import com.example.taskaty.app.auth.signup.SignupFragment
@@ -19,6 +20,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private lateinit var presenter: LoginContract.Presenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity?.window?.statusBarColor =
+            ContextCompat.getColor(requireContext(), R.color.background_color)
         presenter = LoginPresenter(
             AuthInteractor(
                 LocalAuthRepository.getInstance(requireContext().applicationContext),
@@ -62,11 +65,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun navigateToHomeScreen() {
-        //remember to remove this lines
-        val signupFragment = ViewAllFragment()
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container_fragment, signupFragment)
-        transaction.commit()
+        Toast.makeText(requireContext(), "Login Success", Toast.LENGTH_SHORT).show()
     }
 
     override fun showValidationError(message: String) {

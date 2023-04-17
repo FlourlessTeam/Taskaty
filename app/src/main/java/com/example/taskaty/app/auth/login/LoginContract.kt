@@ -8,6 +8,7 @@ interface LoginContract {
         fun navigateToHomeScreen()
         fun showValidationError(message: String)
     }
+
     interface Presenter {
         fun onLogin(userName: String, password: String)
         fun onLoginWithSaveToken()
