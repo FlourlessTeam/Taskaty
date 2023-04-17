@@ -31,7 +31,7 @@ class LoginPresenter(
 
     override fun onLoginWithSaveToken() {
         val token = authInteractor.getTokenFromLocal()
-        if (token.isNotEmpty()) {
+        if (token.isNotEmpty() && authInteractor.checkExpireAt()) {
             view.navigateToHomeScreen()
         } else {
             view.showValidationError("Token not found. Please login again.")
