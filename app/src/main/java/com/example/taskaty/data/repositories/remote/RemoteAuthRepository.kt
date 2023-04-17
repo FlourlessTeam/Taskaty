@@ -42,7 +42,7 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                callback.onSuccess(RepoResponse.Success(jsonSignupParser(response.body.string())))
+                callback.onSuccess(RepoResponse.Success(extractSignupResponse(response.body.string())))
             }
         }
         userClient.signup(user, apiCallBack)
@@ -50,13 +50,11 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
 
     private fun extractTokenFromResponse(jsonString: String): LoginResponse {
         val gson = Gson()
-        val jsonObject = gson.fromJson(jsonString, LoginResponse::class.java)
-        return jsonObject
+        return gson.fromJson(jsonString, LoginResponse::class.java)
     }
-    private fun jsonSignupParser(jsonString: String): SignupResponse {
+    private fun extractSignupResponse(jsonString: String): SignupResponse {
         val gson = Gson()
-        val jsonObject = gson.fromJson(jsonString, SignupResponse::class.java)
-        return jsonObject
+        return gson.fromJson(jsonString, SignupResponse::class.java)
     }
 
     companion object {
