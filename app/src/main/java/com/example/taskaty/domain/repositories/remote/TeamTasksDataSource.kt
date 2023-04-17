@@ -1,9 +1,7 @@
 package com.example.taskaty.domain.repositories.remote
 
 import com.example.taskaty.data.response.RepoCallback
-import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
-import okhttp3.Callback
 
 interface TeamTasksDataSource{
     fun getAllTeamTasks(callback: RepoCallback<List<TeamTask>>)

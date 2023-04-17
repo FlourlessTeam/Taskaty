@@ -5,12 +5,8 @@ import com.example.taskaty.domain.entities.User
 import okhttp3.Callback
 import okhttp3.Credentials
 import okhttp3.FormBody
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 
 class UserApiClient(private val okHttpClient: OkHttpClient) {
     private val baseURl = BuildConfig.BASE_URL
