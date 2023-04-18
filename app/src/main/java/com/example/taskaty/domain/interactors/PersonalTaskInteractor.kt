@@ -6,32 +6,49 @@ import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.repositories.remote.TasksDataSource
 
 class PersonalTaskInteractor(
-	private val tasksDataSource: TasksDataSource,
+    private val tasksDataSource: TasksDataSource,
 ) {
-	fun getTaskById(taskId: String, callback: RepoCallback<PersonalTask>) {
-		tasksDataSource.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {
-			override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
-				val task = response.data.find { it.id == taskId }!!
-				callback.onSuccess(RepoResponse.Success(task))
-			}
+    fun getTaskById(taskId: String, callback: RepoCallback<PersonalTask>) {
+        tasksDataSource.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {
+            override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
+                val task = response.data.find { it.id == taskId }!!
+                callback.onSuccess(RepoResponse.Success(task))
+            }
 
-			override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
-				val message = response.message
-				callback.onError(RepoResponse.Error(message))
-			}
-		})
-	}
+            override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
+                val message = response.message
+                callback.onError(RepoResponse.Error(message))
+            }
+        })
+    }
 
-	fun updateTaskStatus(taskId: String, taskStatus: Int, callback: RepoCallback<Unit>) {
-		tasksDataSource.updatePersonalTaskState(taskId, taskStatus, object : RepoCallback<Unit> {
-			override fun onSuccess(response: RepoResponse.Success<Unit>) {
-				callback.onSuccess(RepoResponse.Success(Unit))
-			}
+    fun updateTaskStatus(taskId: String, taskStatus: Int, callback: RepoCallback<Unit>) {
+        tasksDataSource.updatePersonalTaskState(taskId, taskStatus, object : RepoCallback<Unit> {
+            override fun onSuccess(response: RepoResponse.Success<Unit>) {
+                callback.onSuccess(RepoResponse.Success(Unit))
+            }
 
-			override fun onError(response: RepoResponse.Error<Unit>) {
-				val message = response.message
-				callback.onError(RepoResponse.Error(message))
-			}
-		})
-	}
+            override fun onError(response: RepoResponse.Error<Unit>) {
+                val message = response.message
+                callback.onError(RepoResponse.Error(message))
+            }
+        })
+    }
+
+    fun filterPersonalTasksStatus(state: Int, callback: RepoCallback<List<PersonalTask>>) {
+        tasksDataSource.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {
+            override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
+                val task = filterSates(state, response.data)
+                callback.onSuccess(RepoResponse.Success(task))
+            }
+
+            override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
+                callback.onError(RepoResponse.Error(response.message))
+            }
+        })
+    }
+    fun filterSates(state: Int, personalTask: List<PersonalTask>): List<PersonalTask> {
+        return personalTask.filter { it.status == state }
+    }
 }
+

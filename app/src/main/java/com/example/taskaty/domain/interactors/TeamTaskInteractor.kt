@@ -8,20 +8,6 @@ import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
 class TeamTaskInteractor(
     private val teamTasksDataSource: TeamTasksDataSource,
 ) {
-    fun getTeamTaskData(callback: RepoCallback<List<TeamTask>>) {
-        teamTasksDataSource.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
-            override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-                val teamTask = response.data
-                callback.onSuccess(RepoResponse.Success(teamTask))
-            }
-
-            override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
-                val message = response.message
-                callback.onError(RepoResponse.Error(message))
-            }
-        })
-    }
-
     fun getTeamTaskById(teamTaskId: String, callback: RepoCallback<TeamTask>) {
         teamTasksDataSource.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
@@ -54,5 +40,21 @@ class TeamTaskInteractor(
                     callback.onError(RepoResponse.Error(message))
                 }
             })
+    }
+    fun filterTeamTaskData(status: Int,callback: RepoCallback<List<TeamTask>>) {
+        teamTasksDataSource.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
+            override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
+                val teamTask = filterSates(status,response.data)
+                callback.onSuccess(RepoResponse.Success(teamTask))
+            }
+
+            override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
+                val message = response.message
+                callback.onError(RepoResponse.Error(message))
+            }
+        })
+    }
+    fun filterSates(status: Int,teamTask: List<TeamTask>): List<TeamTask> {
+        return teamTask.filter { it.status == status }
     }
 }
