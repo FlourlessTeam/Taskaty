@@ -5,7 +5,7 @@ import com.example.taskaty.data.api.interceptors.AuthInterceptor
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
 import com.example.taskaty.domain.repositories.remote.TasksDataSource
@@ -27,11 +27,11 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
         OkHttpClient.Builder().addInterceptor(AuthInterceptor(userToken)).build()
     }
     private val tasksApiClient by lazy { TasksApiClient(okHttpClient) }
-    private var cachedPersonalTasks: List<Task> = listOf()
+    private var cachedPersonalTasks: List<PersonalTask> = listOf()
     private var cachedTeamTasks: List<TeamTask> = listOf()
 
     //
-    override fun getAllPersonalTasks(callback: RepoCallback<List<Task>>) {
+    override fun getAllPersonalTasks(callback: RepoCallback<List<PersonalTask>>) {
 
         if (cachedPersonalTasks.isEmpty())
             tasksApiClient.getPersonalTasks(object : Callback {
@@ -48,7 +48,7 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
             callback.onSuccess(RepoResponse.Success(cachedPersonalTasks))
     }
 
-    override fun createPersonalTask(task: Task, callback: RepoCallback<Unit>) {
+    override fun createPersonalTask(task: PersonalTask, callback: RepoCallback<Unit>) {
         tasksApiClient.addPersonalTask(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))
@@ -119,13 +119,6 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
     }
 
 
-    private fun jsonToTeamTask(json: JsonObject): TeamTask {
-        return TeamTask(
-            task = jsonToTask(json.toString()),
-            assignee = json.get("assignee").asString
-        )
-    }
-
     private fun jsonToTeamTasks(jsonString: String): List<TeamTask> {
         val gson = Gson()
         val jsonObject = gson.fromJson(jsonString, JsonObject::class.java)
@@ -138,12 +131,38 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
         }
         return tasks
     }
-
-    private fun jsonToTask(json: String): Task {
+    private fun jsonToTeamTask(json: JsonObject): TeamTask {
         val gson = Gson()
-        val taskJson = gson.fromJson(json, Task::class.java)
+        val taskJson = gson.fromJson(json, TeamTask::class.java)
 
-        return Task(
+        return TeamTask(
+            taskJson.id,
+            taskJson.title,
+            taskJson.description,
+            taskJson.status,
+            taskJson.creationTime,
+            taskJson.assignee
+        )
+
+    }
+    private fun jsonToTasks(json: String): List<PersonalTask> {
+        val gson = Gson()
+        val tasksJson = gson.fromJson(json, JsonElement::class.java)
+        val tasksArray = tasksJson.asJsonObject.getAsJsonArray("value")
+        val tasksList = mutableListOf<PersonalTask>()
+
+        tasksArray.forEach { taskJson ->
+            tasksList.add(jsonToTask(taskJson.toString()))
+        }
+
+        return tasksList
+    }
+
+    private fun jsonToTask(json: String): PersonalTask {
+        val gson = Gson()
+        val taskJson = gson.fromJson(json, PersonalTask::class.java)
+
+        return PersonalTask(
             taskJson.id,
             taskJson.title,
             taskJson.description,
@@ -152,18 +171,6 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
         )
     }
 
-    private fun jsonToTasks(json: String): List<Task> {
-        val gson = Gson()
-        val tasksJson = gson.fromJson(json, JsonElement::class.java)
-        val tasksArray = tasksJson.asJsonObject.getAsJsonArray("value")
-        val tasksList = mutableListOf<Task>()
-
-        tasksArray.forEach { taskJson ->
-            tasksList.add(jsonToTask(taskJson.toString()))
-        }
-
-        return tasksList
-    }
 
     companion object {
         private var instance: RemoteTasksRepository? = null

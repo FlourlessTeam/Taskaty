@@ -11,7 +11,7 @@ class TeamTaskInteractor(
 	fun getTeamTaskById(teamTaskId: String, callback: RepoCallback<TeamTask>) {
 		teamTasksDataSource.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
 			override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-				val teamTask = response.data.find { it.task.id == teamTaskId }!!
+				val teamTask = response.data.find { it.id == teamTaskId }!!
 				callback.onSuccess(RepoResponse.Success(teamTask))
 			}
 

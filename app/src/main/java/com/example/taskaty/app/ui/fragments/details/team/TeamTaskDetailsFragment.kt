@@ -36,7 +36,7 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 		super.onViewCreated(view, savedInstanceState)
 		teamTaskId = arguments?.getString(ARGUMENT_KEY, "")!!
 
-		val token = LocalAuthRepository.getInstance(requireActivity().application).getToken()
+		LocalAuthRepository.getInstance(requireActivity().application).getToken()
 
 		val remoteTasksRepository = RemoteTasksRepository.getInstance()
 		presenter = TeamTaskDetailsPresenter(
@@ -83,11 +83,11 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 	override fun updateUiData(task: TeamTask) {
 		requireActivity().runOnUiThread {
 			with(binding) {
-				taskTitle.text = task.task.title
-				taskStatusButton.text = statusMap[task.task.status]
-				taskDate.text = task.task.creationTime.toDateFormat()
-				taskTime.text = task.task.creationTime.toTimeFormat()
-				taskDescriptionContent.text = task.task.description
+				taskTitle.text = task.title
+				taskStatusButton.text = statusMap[task.status]
+				taskDate.text = task.creationTime.toDateFormat()
+				taskTime.text = task.creationTime.toTimeFormat()
+				taskDescriptionContent.text = task.description
 				taskTeam.text = task.assignee
 			}
 		}
