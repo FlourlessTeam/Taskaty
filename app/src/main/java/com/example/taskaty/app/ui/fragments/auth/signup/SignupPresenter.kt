@@ -1,4 +1,4 @@
-package com.example.taskaty.app.auth.signup
+package com.example.taskaty.app.ui.fragments.auth.signup
 
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
@@ -7,10 +7,10 @@ import com.example.taskaty.domain.interactors.AuthInteractor
 
 class SignupPresenter(
     private val authInteractor: AuthInteractor,
-    private val view: SignupContract.View
-) : SignupContract.Presenter {
+    private val view: SignupView
+) {
 
-    override fun onSignup(userName: String, password: String, confirmPassword: String) {
+    fun onSignup(userName: String, password: String, confirmPassword: String) {
         if (!authInteractor.checkValidField(userName, password, confirmPassword)) {
             view.showValidationError("Please fill all fields")
             return
