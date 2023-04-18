@@ -1,4 +1,4 @@
-package com.example.taskaty.app.ui.fragments.home
+package com.example.taskaty.app.ui.fragments.home.bottomSheet
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.taskaty.R
-import com.example.taskaty.app.ui.fragments.home.bottomSheet.NewTaskPresenter
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentAddTaskBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-enum class Tabs {
 
-}
 
-class NewTaskBottomSheetFragment(val selectedTabPosition: Int) : BottomSheetDialogFragment(),
+class NewTaskBottomSheetFragment(private val selectedTabPosition: Int) : BottomSheetDialogFragment(),
     RepoCallback<Unit> {
 
     private lateinit var binding: FragmentAddTaskBottomSheetBinding
@@ -32,9 +29,9 @@ class NewTaskBottomSheetFragment(val selectedTabPosition: Int) : BottomSheetDial
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupPersonalOrTeamBottomSheet()
+        setupAddTaskBottomSheet()
     }
-    private fun setupPersonalOrTeamBottomSheet() {
+    private fun setupAddTaskBottomSheet() {
         //selectedTabPosition when equal 0 means we in personal task fragment
         //selectedTabPosition when equal 1 means we in team task fragment
 

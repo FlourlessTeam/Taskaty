@@ -20,11 +20,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private lateinit var presenter: LoginContract.Presenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.window?.statusBarColor =
+        requireActivity().window?.statusBarColor =
             ContextCompat.getColor(requireContext(), R.color.background_color)
         presenter = LoginPresenter(
             AuthInteractor(
-                LocalAuthRepository.getInstance(requireContext().applicationContext),
+                LocalAuthRepository.getInstance(),
                 RemoteAuthRepository.getInstance()
             ), this
         )
