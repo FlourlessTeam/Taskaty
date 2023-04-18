@@ -48,13 +48,11 @@ class ViewAllTeamTasksAdapter() :
             textContent.text = item.description
             textState.text = getStatusNames(item.status)
             textState.backgroundTintList = ContextCompat.getColorStateList(
-                holder.itemView.context,
-                getStatusColors(item.status)
+                holder.itemView.context, getStatusColors(item.status)
             )
             textAssignee.text = item.assignee.subSequence(0, 1).toString().uppercase()
             textAssignee.backgroundTintList = ContextCompat.getColorStateList(
-                holder.itemView.context,
-                getStatusColors(item.status)
+                holder.itemView.context, getStatusColors(item.status)
             )
             val inputDateString = item.creationTime
             textCalender.text = inputDateString.outputDateFormat()
