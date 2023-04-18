@@ -121,15 +121,15 @@ class ParentTeamAdapter(
         holder.binding.apply {
             tasksNumber.text = Done.size.toString()
             if (Upcoming.size == 1) {
-                val firstItem = Done[FIRST_ITEM]
+                val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
             } else if (Upcoming.size >= 2) {
-                val firstItem = Done[FIRST_ITEM]
-                val secondItem = Done[SECOND_ITEM]
+                val firstItem = Upcoming[FIRST_ITEM]
+                val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))

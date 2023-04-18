@@ -1,12 +1,12 @@
 package com.example.taskaty.app.ui.fragments.home.adapters
 
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ItemInprogressTeamCardBinding
 import com.example.taskaty.domain.entities.TeamTask
-import java.text.SimpleDateFormat
 import java.util.*
 
 class ChildTeamInProgressAdapter(private val items: List<TeamTask>) :
@@ -32,13 +32,11 @@ class ChildTeamInProgressAdapter(private val items: List<TeamTask>) :
         val inputDateFormat = SimpleDateFormat(inputDatePattern, Locale.getDefault())
         val outputDateFormat = SimpleDateFormat(outputDatePattern, Locale.getDefault())
         val outputTimeFormat = SimpleDateFormat(outputTimePattern, Locale.getDefault())
-
         holder.binding.apply {
             timeTextTeam.text = item.creationTime
             taskCardHeaderInProgressTeam.text = item.title
-            taskDetailsTeam.text = item.description
-            dateTextTeam.text = outputDateFormat.format(inputDateFormat.parse(item.creationTime)!!)
-            timeTextTeam.text = outputTimeFormat.format(inputDateFormat.parse(item.creationTime)!!)
+            dateTextTeam.text = outputDateFormat.format(inputDateFormat.parse(item.creationTime))
+            timeTextTeam.text = outputTimeFormat.format(inputDateFormat.parse(item.creationTime))
         }
     }
 
