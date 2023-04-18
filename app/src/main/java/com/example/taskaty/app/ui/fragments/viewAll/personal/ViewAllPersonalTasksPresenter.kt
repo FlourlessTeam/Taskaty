@@ -8,9 +8,9 @@ import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 
 class ViewAllPersonalTasksPresenter(
     private val personalTaskInteractor: PersonalTaskInteractor,
-    private val view: ViewAllPersonalTasksContract.View
-) : ViewAllPersonalTasksContract.Presenter {
-    override fun getPersonalTasks(state:Int) {
+    private val view: ViewAllPersonalTasksView
+)  {
+     fun getPersonalTasks(state:Int) {
         view.showLoading()
         personalTaskInteractor.filterPersonalTasksStatus(state,object : RepoCallback<List<PersonalTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
