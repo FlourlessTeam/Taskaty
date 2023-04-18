@@ -10,8 +10,8 @@ import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
 class NewTaskPresenter {
     private val token =
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6IjIyMjg4N2RiLWExNDAtNDZhZi1hNTc2LWM5NDhjN2E3NjhkMyIsInRlYW1JZCI6ImMyYzAyNTA3LTk5NjgtNDg2Yi05YmYwLTRjMzg2MGZlMWYyZCIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxNjczMDQ0fQ.pDGoQvavAJVrorD6RiOX-09pYq2_qnxisLz30CrgY-k"
-    private val personalTaskDataSource: TasksDataSource = RemoteTasksRepository.getInstance(token)
-    private val teamTaskDataSource: TeamTasksDataSource = RemoteTasksRepository.getInstance(token)
+    private val personalTaskDataSource: TasksDataSource = RemoteTasksRepository.getInstance()
+    private val teamTaskDataSource: TeamTasksDataSource = RemoteTasksRepository.getInstance()
 
 
     fun onCreateBtnClicked(

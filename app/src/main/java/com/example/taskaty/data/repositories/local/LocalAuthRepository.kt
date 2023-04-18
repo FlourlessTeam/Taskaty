@@ -1,8 +1,8 @@
 package com.example.taskaty.data.repositories.local
 
-import android.app.Application
 import android.content.Context
 import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
+import com.example.taskaty.global.GlobalState
 
 class LocalAuthRepository private constructor(private val application: Context) :
     LocalAuthDataSource {
@@ -36,7 +36,7 @@ class LocalAuthRepository private constructor(private val application: Context) 
     companion object {
         private var instance: LocalAuthRepository? = null
 
-        fun getInstance(application: Context): LocalAuthRepository {
+        fun getInstance(application: Context = GlobalState.appContext): LocalAuthRepository {
             if (instance == null) {
                 instance = LocalAuthRepository(application)
             }

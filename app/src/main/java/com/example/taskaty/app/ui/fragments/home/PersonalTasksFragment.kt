@@ -20,7 +20,7 @@ class PersonalTasksFragment :
     private val token =
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6ImMyMzY0MzdmLTZiMDktNGMyNC1iZDhmLTFmZmFhYmY5ZWVmZSIsInRlYW1JZCI6ImMyYzAyNTA3LTk5NjgtNDg2Yi05YmYwLTRjMzg2MGZlMWYyZCIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxODUzMjcyfQ.p02yBvXNP7npFkiegLO6aJTSrXjPtk91Urfwsuza-sQ"
     private val interactor =
-        CardDataInteractor(RemoteTasksRepository.getInstance(token))
+        CardDataInteractor(RemoteTasksRepository.getInstance())
     private var inProgressTasks = listOf<Task>()
     private var upcomingTasks = listOf<Task>()
     private var doneTasks = listOf<Task>()

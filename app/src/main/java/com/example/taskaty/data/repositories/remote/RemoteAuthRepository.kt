@@ -25,7 +25,7 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
         val userClient = UserApiClient(OkHttpClient())
         val apiCallBack = object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                callback.onError(RepoResponse.Error(e.toString()))
+                callback.onError(RepoResponse.Error("No internet connection"))
             }
             override fun onResponse(call: Call, response: Response) {
                 callback.onSuccess(RepoResponse.Success(extractTokenFromResponse(response.body.string())))
@@ -38,7 +38,7 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
         val userClient = UserApiClient(OkHttpClient())
         val apiCallBack = object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                callback.onError(RepoResponse.Error(e.toString()))
+                callback.onError(RepoResponse.Error("No internet connection"))
             }
 
             override fun onResponse(call: Call, response: Response) {
