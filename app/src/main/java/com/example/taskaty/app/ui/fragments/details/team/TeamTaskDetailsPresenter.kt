@@ -6,9 +6,9 @@ import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
 
 class TeamTaskDetailsPresenter(
-	private val view: IContract.IView,
-	private val teamTaskInteractor: TeamTaskInteractor
-) : IContract.IPresenter {
+    private val view: TeamTaskDetailsContract.IView,
+    private val teamTaskInteractor: TeamTaskInteractor
+) : TeamTaskDetailsContract.IPresenter {
 
 	override fun getTeamTask(teamTaskId: String) {
 		view.showGetTeamTaskLoading()
