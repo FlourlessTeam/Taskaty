@@ -31,13 +31,17 @@ class TeamTasksFragment :
     private fun getTeamTasksData(interactor: CardDataInteractor) {
         interactor.getTeamTasksData(object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-                val tasks = response.data
-                filterTasks(tasks)
+                requireActivity().runOnUiThread {
+                    val tasks = response.data
+                    filterTasks(tasks)
+                }
+
             }
 
             override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
                 Log.d("tag", "getTeamTasksData onError: ${response.message}")
-                showErrorMessage(response.message)
+                requireActivity().runOnUiThread { showErrorMessage(response.message) }
+
             }
 
         })
@@ -45,9 +49,9 @@ class TeamTasksFragment :
     }
 
     private fun filterTasks(tasks: List<TeamTask>) {
-        inProgressTasks = tasks.filter { it.task.status == IN_PROGRESS_STATUS }
-        upcomingTasks = tasks.filter { it.task.status == UPCOMING_STATUS }.take(LIMIT)
-        doneTasks = tasks.filter { it.task.status == DONE_STATUS }.take(LIMIT)
+        inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
+        upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }.take(LIMIT)
+        doneTasks = tasks.filter { it.status == DONE_STATUS }.take(LIMIT)
         initViews()
     }
 
