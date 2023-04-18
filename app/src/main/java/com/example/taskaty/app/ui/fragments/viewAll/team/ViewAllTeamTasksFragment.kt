@@ -1,12 +1,9 @@
-package com.example.taskaty.app.ui.fragments
+package com.example.taskaty.app.ui.fragments.viewAll.team
 
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksAdapter
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
-import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksContract
-import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksPresenter
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 
 import com.example.taskaty.databinding.FragmentViewAllTeamTasksBinding
