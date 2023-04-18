@@ -17,8 +17,6 @@ import com.example.taskaty.domain.interactors.CardDataInteractor
 class PersonalTasksFragment :
     BaseFragment<FragmentPersonalTasksBinding>(FragmentPersonalTasksBinding::inflate) {
 
-    private val token =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6ImMyMzY0MzdmLTZiMDktNGMyNC1iZDhmLTFmZmFhYmY5ZWVmZSIsInRlYW1JZCI6ImMyYzAyNTA3LTk5NjgtNDg2Yi05YmYwLTRjMzg2MGZlMWYyZCIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxODUzMjcyfQ.p02yBvXNP7npFkiegLO6aJTSrXjPtk91Urfwsuza-sQ"
     private val interactor =
         CardDataInteractor(RemoteTasksRepository.getInstance())
     private var inProgressTasks = listOf<PersonalTask>()
@@ -54,8 +52,8 @@ class PersonalTasksFragment :
 
     private fun filterTasks(tasks: List<PersonalTask>) {
         inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
-        upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }.take(LIMIT)
-        doneTasks = tasks.filter { it.status == DONE_STATUS }.take(LIMIT)
+        upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }
+        doneTasks = tasks.filter { it.status == DONE_STATUS }
         initViews()
     }
 
@@ -84,6 +82,5 @@ class PersonalTasksFragment :
         const val IN_PROGRESS_STATUS = 0
         const val UPCOMING_STATUS = 1
         const val DONE_STATUS = 2
-        const val LIMIT = 2
     }
 }

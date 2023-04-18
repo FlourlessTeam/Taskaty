@@ -1,5 +1,6 @@
 package com.example.taskaty.app.ui.fragments.home.adapters
 
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.example.taskaty.databinding.ChildRecyclerHomePersonalDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalUpcomingBinding
 import com.example.taskaty.domain.entities.PersonalTask
+import java.util.*
 
 class ParentPersonalAdapter(
     val InProgress: List<PersonalTask>,
@@ -82,18 +84,66 @@ class ParentPersonalAdapter(
     }
 
     private fun bindUpcoming(holder: UpcomingViewHolder) {
-        val adapter = ChildPersonalUpcomingAdapter(Upcoming)
+        val inputDateFormat = SimpleDateFormat(INPUT_DATE_PATTERN, Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
+        val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
+
         holder.binding.apply {
-            childRecycler.adapter = adapter
             tasksNumber.text = Upcoming.size.toString()
+            if (Upcoming.size == 1) {
+                val firstItem = Upcoming[FIRST_ITEM]
+                taskHeaderFirst.text = firstItem.title
+                dateTextFirst.text =
+                    outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                timeTextFirst.text =
+                    outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+            } else if (Upcoming.size >= 2) {
+                val firstItem = Upcoming[FIRST_ITEM]
+                val secondItem = Upcoming[SECOND_ITEM]
+                taskHeaderFirst.text = firstItem.title
+                dateTextFirst.text =
+                    outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                timeTextFirst.text =
+                    outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                taskHeaderSecond.text = secondItem.title
+                dateTextSecond.text =
+                    outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
+                timeTextSecond.text =
+                    outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
+            }
         }
     }
 
     private fun bindDone(holder: DoneViewHolder) {
-        val adapter = ChildPersonalDoneAdapter(Done)
+        val inputDateFormat = SimpleDateFormat(INPUT_DATE_PATTERN, Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
+        val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
+
         holder.binding.apply {
-            childRecycler.adapter = adapter
             tasksNumber.text = Done.size.toString()
+
+            if (Upcoming.size == 1) {
+                val firstItem = Done[FIRST_ITEM]
+                taskHeaderFirst.text = firstItem.title
+                dateTextFirst.text =
+                    outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                timeTextFirst.text =
+                    outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+            } else if (Upcoming.size >= 2) {
+                val firstItem = Done[FIRST_ITEM]
+                val secondItem = Done[SECOND_ITEM]
+                taskHeaderFirst.text = firstItem.title
+                dateTextFirst.text =
+                    outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                timeTextFirst.text =
+                    outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                taskHeaderSecond.text = secondItem.title
+                dateTextSecond.text =
+                    outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
+                timeTextSecond.text =
+                    outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
+            }
+
         }
     }
 
@@ -122,5 +172,8 @@ class ParentPersonalAdapter(
         const val SECOND_ITEM = 1
         const val THIRD_ITEM = 2
         const val FOURTH_ITEM = 3
+        const val INPUT_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        const val OUTPUT_DATE_PATTERN = "yyyy-MM-dd"
+        const val OUTPUT_TIME_PATTERN = "HH:mm"
     }
 }
