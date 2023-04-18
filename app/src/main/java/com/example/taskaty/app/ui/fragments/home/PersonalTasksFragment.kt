@@ -10,7 +10,7 @@ import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentPersonalTasksBinding
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.interactors.CardDataInteractor
 
 
@@ -21,9 +21,9 @@ class PersonalTasksFragment :
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6ImMyMzY0MzdmLTZiMDktNGMyNC1iZDhmLTFmZmFhYmY5ZWVmZSIsInRlYW1JZCI6ImMyYzAyNTA3LTk5NjgtNDg2Yi05YmYwLTRjMzg2MGZlMWYyZCIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxODUzMjcyfQ.p02yBvXNP7npFkiegLO6aJTSrXjPtk91Urfwsuza-sQ"
     private val interactor =
         CardDataInteractor(RemoteTasksRepository.getInstance())
-    private var inProgressTasks = listOf<Task>()
-    private var upcomingTasks = listOf<Task>()
-    private var doneTasks = listOf<Task>()
+    private var inProgressTasks = listOf<PersonalTask>()
+    private var upcomingTasks = listOf<PersonalTask>()
+    private var doneTasks = listOf<PersonalTask>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,20 +31,28 @@ class PersonalTasksFragment :
     }
 
     private fun getPersonalTasksData(interactor: CardDataInteractor) {
-        interactor.getPersonalTasksData(object : RepoCallback<List<Task>> {
-            override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
-                val tasks = response.data
-                filterTasks(tasks)
+        interactor.getPersonalTasksData(object : RepoCallback<List<PersonalTask>> {
+            override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
+                requireActivity().runOnUiThread {
+                    val tasks = response.data
+                    filterTasks(tasks)
+
+                }
+
             }
 
-            override fun onError(response: RepoResponse.Error<List<Task>>) {
-                Log.d("tag", "getPersonalTasks onError: ${response.message}")
-                showErrorMessage(response.message)
+            override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
+                Log.d("tag", "getPersonalTasksData onError: ${response.message}")
+                requireActivity().runOnUiThread {
+                    showErrorMessage(response.message)
+
+                }
+
             }
         })
     }
 
-    private fun filterTasks(tasks: List<Task>) {
+    private fun filterTasks(tasks: List<PersonalTask>) {
         inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
         upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }.take(LIMIT)
         doneTasks = tasks.filter { it.status == DONE_STATUS }.take(LIMIT)

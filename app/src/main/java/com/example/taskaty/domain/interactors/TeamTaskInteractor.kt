@@ -8,10 +8,10 @@ import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
 class TeamTaskInteractor(
 	private val teamTasksDataSource: TeamTasksDataSource,
 ) {
-	fun getTeamTaskData( callback: RepoCallback<List<TeamTask>>) {
+	fun getTeamTaskById(teamTaskId: String, callback: RepoCallback<TeamTask>) {
 		teamTasksDataSource.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
 			override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-				val teamTask = response.data
+				val teamTask = response.data.find { it.id == teamTaskId }!!
 				callback.onSuccess(RepoResponse.Success(teamTask))
 			}
 
@@ -21,7 +21,6 @@ class TeamTaskInteractor(
 			}
 		})
 	}
-
 
 	fun updateTeamTaskStatus(
 		teamTaskId: String,

@@ -3,19 +3,19 @@ package com.example.taskaty.domain.interactors
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.TeamTask
 
 class CardDataInteractor(private val repo: RemoteTasksRepository) {
 
-    fun getPersonalTasksData(callback: RepoCallback<List<Task>>) {
-        repo.getAllPersonalTasks(object : RepoCallback<List<Task>> {
-            override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
+    fun getPersonalTasksData(callback: RepoCallback<List<PersonalTask>>) {
+        repo.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {
+            override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
                 val task = response.data
                 callback.onSuccess(RepoResponse.Success(task))
             }
 
-            override fun onError(response: RepoResponse.Error<List<Task>>) {
+            override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
                 callback.onError(RepoResponse.Error(response.message))
             }
         })

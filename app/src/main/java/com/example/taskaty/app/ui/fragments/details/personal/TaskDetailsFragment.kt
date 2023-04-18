@@ -12,7 +12,7 @@ import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.databinding.FragmentTaskDetailsBinding
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 import java.text.SimpleDateFormat
 import java.util.*
@@ -80,7 +80,7 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
 		}
 	}
 
-	override fun updateUiData(task: Task) {
+	override fun updateUiData(task: PersonalTask) {
 		requireActivity().runOnUiThread {
 			with(binding) {
 				taskTitle.text = task.title

@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ItemInprogressTeamCardBinding
-import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 
-class ChildTeamInProgressAdapter(val items: List<TeamTask>) :
+class ChildTeamInProgressAdapter(private val items: List<TeamTask>) :
     Adapter<ChildTeamInProgressAdapter.InProgressViewHolder>() {
 
 
@@ -24,7 +23,7 @@ class ChildTeamInProgressAdapter(val items: List<TeamTask>) :
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: InProgressViewHolder, position: Int) {
-        val item = items[position].task
+        val item = items[position]
         holder.binding.apply {
             timeTextTeam.text = item.creationTime
             taskCardHeaderInProgressTeam.text = item.title
@@ -33,6 +32,5 @@ class ChildTeamInProgressAdapter(val items: List<TeamTask>) :
     }
 
     class InProgressViewHolder(val binding: ItemInprogressTeamCardBinding) :
-        ViewHolder(binding.root) {
-    }
+        ViewHolder(binding.root)
 }
