@@ -18,6 +18,4 @@ class TasksOfSpecifiedStateFragment :
     ): View {
         return binding.root
     }
-
-
 }

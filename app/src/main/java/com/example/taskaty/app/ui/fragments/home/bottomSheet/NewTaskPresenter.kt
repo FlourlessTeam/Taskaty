@@ -6,6 +6,7 @@ import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.repositories.remote.TasksDataSource
 import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
+import kotlinx.coroutines.withContext
 
 class NewTaskPresenter {
     private val token =
@@ -31,6 +32,7 @@ class NewTaskPresenter {
             creationTime = ""
         )
         if (selectedTabPosition == 0) {
+
             personalTaskDataSource.createPersonalTask(task, repo)
         } else {
             val teamTask = TeamTask(task, assignee)

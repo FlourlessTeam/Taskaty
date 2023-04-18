@@ -3,6 +3,7 @@ package com.example.taskaty.app.ui.fragments.home
 import android.os.Bundle
 import android.view.View
 import com.example.taskaty.R
+import com.example.taskaty.app.ui.fragments.SearchFragment
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.HomePagerAdapter
 import com.example.taskaty.databinding.FragmentHomeBinding
@@ -31,6 +32,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             val bottomSheet  = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
             bottomSheet.show(childFragmentManager , "tag")
         }
-
+       binding.searchViewHome.setOnQueryTextFocusChangeListener { _, _ ->
+              requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.container_fragment, SearchFragment())
+                .addToBackStack(null)
+                .commit()
+       }
     }
 }
