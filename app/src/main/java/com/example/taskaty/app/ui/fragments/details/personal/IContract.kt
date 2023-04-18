@@ -1,12 +1,12 @@
 package com.example.taskaty.app.ui.fragments.details.personal
 
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 
 
 interface IContract {
 	interface IView {
 		fun showMessage(message: String)
-		fun updateUiData(task: Task)
+		fun updateUiData(task: PersonalTask)
 		fun showGetTaskLoading()
 		fun hideGetTaskLoading()
 		fun showUpdateTaskLoading()

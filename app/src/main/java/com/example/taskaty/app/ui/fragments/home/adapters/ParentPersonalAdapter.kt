@@ -9,12 +9,12 @@ import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalUpcomingBinding
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 
 class ParentPersonalAdapter(
-    val InProgress: List<Task>,
-    val Upcoming: List<Task>,
-    val Done: List<Task>
+    val InProgress: List<PersonalTask>,
+    val Upcoming: List<PersonalTask>,
+    val Done: List<PersonalTask>
 ) :
     Adapter<ParentPersonalAdapter.BaseViewHolder>() {
 

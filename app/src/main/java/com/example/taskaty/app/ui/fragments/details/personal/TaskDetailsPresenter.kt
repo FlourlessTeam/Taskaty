@@ -2,7 +2,7 @@ package com.example.taskaty.app.ui.fragments.details.personal
 
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 
 class TaskDetailsPresenter(
@@ -12,13 +12,13 @@ class TaskDetailsPresenter(
 
 	override fun getTask(taskId: String) {
 		view.showGetTaskLoading()
-		personalTaskInteractor.getTaskById(taskId, object : RepoCallback<Task> {
-			override fun onSuccess(response: RepoResponse.Success<Task>) {
+		personalTaskInteractor.getTaskById(taskId, object : RepoCallback<PersonalTask> {
+			override fun onSuccess(response: RepoResponse.Success<PersonalTask>) {
 				view.hideGetTaskLoading()
 				view.updateUiData(response.data)
 			}
 
-			override fun onError(response: RepoResponse.Error<Task>) {
+			override fun onError(response: RepoResponse.Error<PersonalTask>) {
 				view.showMessage(response.message)
 			}
 		})

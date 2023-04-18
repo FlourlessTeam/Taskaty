@@ -9,7 +9,6 @@ import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamUpcomingBinding
-import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 
 class ParentTeamAdapter(

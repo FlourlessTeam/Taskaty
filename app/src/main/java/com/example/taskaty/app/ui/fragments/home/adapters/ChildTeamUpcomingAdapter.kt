@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ItemUpcomingTeamCardBinding
-import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 
 class ChildTeamUpcomingAdapter(val items: List<TeamTask>) :
@@ -24,7 +23,7 @@ class ChildTeamUpcomingAdapter(val items: List<TeamTask>) :
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
-        val item = items[position].task
+        val item = items[position]
         holder.binding.apply {
             taskHeader.text = item.title
             timeText.text = item.creationTime
