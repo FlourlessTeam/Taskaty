@@ -14,6 +14,7 @@ import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentSearchBinding
+import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.interactors.SearchInteractor
 
@@ -39,13 +40,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                     return true
                 }
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    searchData.searchTasks(newText ?: "", object : RepoCallback<List<Task>> {
-                        override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
+                    searchData.searchTasks(newText ?: "", object : RepoCallback<List<PersonalTask>> {
+                        override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
                             requireActivity().runOnUiThread {
                                 adapter.submitList(response.data)
                             }
                         }
-                        override fun onError(response: RepoResponse.Error<List<Task>>) {
+                        override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
                             Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT)
                                 .show()
                         }
