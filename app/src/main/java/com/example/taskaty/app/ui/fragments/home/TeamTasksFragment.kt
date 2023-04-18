@@ -31,13 +31,17 @@ class TeamTasksFragment :
     private fun getTeamTasksData(interactor: CardDataInteractor) {
         interactor.getTeamTasksData(object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-                val tasks = response.data
-                filterTasks(tasks)
+                requireActivity().runOnUiThread {
+                    val tasks = response.data
+                    filterTasks(tasks)
+                }
+
             }
 
             override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
                 Log.d("tag", "getTeamTasksData onError: ${response.message}")
-                showErrorMessage(response.message)
+                requireActivity().runOnUiThread { showErrorMessage(response.message) }
+
             }
 
         })

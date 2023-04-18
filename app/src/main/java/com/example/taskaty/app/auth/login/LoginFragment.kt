@@ -9,6 +9,7 @@ import com.example.taskaty.R
 import com.example.taskaty.app.auth.signup.SignupFragment
 import com.example.taskaty.databinding.FragmentLoginBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
+import com.example.taskaty.app.ui.fragments.home.HomeFragment
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
 import com.example.taskaty.data.repositories.remote.RemoteAuthRepository
 import com.example.taskaty.domain.interactors.AuthInteractor
@@ -64,7 +65,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun navigateToHomeScreen() {
-        showToast("Login Success")
+       startFragmentNavigation()
     }
 
     override fun showValidationError(message: String) {
@@ -89,6 +90,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             progressBar.isVisible = isVisible
             buttonLogin.isEnabled = !isVisible
         }
+    }
+
+    private fun startFragmentNavigation(){
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, HomeFragment())
+        transaction.commit()
     }
 
 

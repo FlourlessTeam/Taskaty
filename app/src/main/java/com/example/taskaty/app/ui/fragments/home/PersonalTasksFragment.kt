@@ -33,13 +33,21 @@ class PersonalTasksFragment :
     private fun getPersonalTasksData(interactor: CardDataInteractor) {
         interactor.getPersonalTasksData(object : RepoCallback<List<Task>> {
             override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
-                val tasks = response.data
-                filterTasks(tasks)
+                requireActivity().runOnUiThread {
+                    val tasks = response.data
+                    filterTasks(tasks)
+
+                }
+
             }
 
             override fun onError(response: RepoResponse.Error<List<Task>>) {
                 Log.d("tag", "getPersonalTasksData onError: ${response.message}")
-                showErrorMessage(response.message)
+                requireActivity().runOnUiThread {
+                    showErrorMessage(response.message)
+
+                }
+
             }
         })
     }
