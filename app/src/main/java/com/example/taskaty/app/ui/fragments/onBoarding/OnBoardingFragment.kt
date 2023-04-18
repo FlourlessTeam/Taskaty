@@ -1,4 +1,4 @@
-package com.example.taskaty.app.ui.fragments
+package com.example.taskaty.app.ui.fragments.onBoarding
 
 import android.os.Bundle
 import android.view.View

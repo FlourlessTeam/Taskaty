@@ -20,9 +20,9 @@ import java.util.*
 
 class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 	FragmentTeamTaskDetailsBinding::inflate
-), IContract.IView {
+), TeamTaskDetailsContract.IView {
 
-	private lateinit var presenter: IContract.IPresenter
+	private lateinit var presenter: TeamTaskDetailsContract.IPresenter
 	private lateinit var listPopupWindow: ListPopupWindow
 	private lateinit var teamTaskId: String
 

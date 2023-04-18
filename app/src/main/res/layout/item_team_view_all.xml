@@ -102,6 +102,25 @@
             app:layout_constraintTop_toBottomOf="@id/text_calender"
             tools:ignore="SmallSp" />
 
+        <TextView
+            android:id="@+id/text_assignee"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="16dp"
+            tools:text="M"
+            android:textSize="8sp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/white"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/text_state"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/text_state"
+            app:layout_constraintTop_toTopOf="@+id/text_state"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="SmallSp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

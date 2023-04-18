@@ -6,6 +6,9 @@ import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.SearchFragment
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.HomePagerAdapter
+import com.example.taskaty.app.ui.fragments.home.bottomSheet.NewTaskBottomSheetFragment
+import com.example.taskaty.app.ui.fragments.home.personal.PersonalTasksFragment
+import com.example.taskaty.app.ui.fragments.home.team.TeamTasksFragment
 import com.example.taskaty.databinding.FragmentHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
 

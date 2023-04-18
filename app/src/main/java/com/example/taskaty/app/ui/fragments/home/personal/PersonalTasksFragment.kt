@@ -1,54 +1,58 @@
-package com.example.taskaty.app.ui.fragments.home
+package com.example.taskaty.app.ui.fragments.home.personal
 
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
-import com.example.taskaty.app.ui.fragments.home.adapters.ParentTeamAdapter
+import com.example.taskaty.app.ui.fragments.home.adapters.ParentPersonalAdapter
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
-import com.example.taskaty.databinding.FragmentTeamTasksBinding
-import com.example.taskaty.domain.entities.TeamTask
+import com.example.taskaty.databinding.FragmentPersonalTasksBinding
+import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.interactors.CardDataInteractor
 
-class TeamTasksFragment :
-    BaseFragment<FragmentTeamTasksBinding>(FragmentTeamTasksBinding::inflate) {
+
+class PersonalTasksFragment :
+    BaseFragment<FragmentPersonalTasksBinding>(FragmentPersonalTasksBinding::inflate) {
 
     private val token =
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6ImMyMzY0MzdmLTZiMDktNGMyNC1iZDhmLTFmZmFhYmY5ZWVmZSIsInRlYW1JZCI6ImMyYzAyNTA3LTk5NjgtNDg2Yi05YmYwLTRjMzg2MGZlMWYyZCIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjoxNjgxODUzMjcyfQ.p02yBvXNP7npFkiegLO6aJTSrXjPtk91Urfwsuza-sQ"
-    private val interactor = CardDataInteractor(RemoteTasksRepository.getInstance())
-    private var inProgressTasks = listOf<TeamTask>()
-    private var upcomingTasks = listOf<TeamTask>()
-    private var doneTasks = listOf<TeamTask>()
+    private val interactor =
+        CardDataInteractor(RemoteTasksRepository.getInstance())
+    private var inProgressTasks = listOf<PersonalTask>()
+    private var upcomingTasks = listOf<PersonalTask>()
+    private var doneTasks = listOf<PersonalTask>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getTeamTasksData(interactor)
+        getPersonalTasksData(interactor)
     }
 
-    private fun getTeamTasksData(interactor: CardDataInteractor) {
-        interactor.getTeamTasksData(object : RepoCallback<List<TeamTask>> {
-            override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
+    private fun getPersonalTasksData(interactor: CardDataInteractor) {
+        interactor.getPersonalTasksData(object : RepoCallback<List<PersonalTask>> {
+            override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
                 requireActivity().runOnUiThread {
                     val tasks = response.data
                     filterTasks(tasks)
+
                 }
 
             }
 
-            override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
-                Log.d("tag", "getTeamTasksData onError: ${response.message}")
-                requireActivity().runOnUiThread { showErrorMessage(response.message) }
+            override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
+                Log.d("tag", "getPersonalTasksData onError: ${response.message}")
+                requireActivity().runOnUiThread {
+                    showErrorMessage(response.message)
+
+                }
 
             }
-
         })
-
     }
 
-    private fun filterTasks(tasks: List<TeamTask>) {
+    private fun filterTasks(tasks: List<PersonalTask>) {
         inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
         upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }.take(LIMIT)
         doneTasks = tasks.filter { it.status == DONE_STATUS }.take(LIMIT)
@@ -56,15 +60,15 @@ class TeamTasksFragment :
     }
 
     private fun initViews() {
-        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks)
+        val adapter = ParentPersonalAdapter(inProgressTasks, upcomingTasks, doneTasks)
         binding.PersonalTasksRecycler.adapter = adapter
         showTasks()
     }
 
     private fun showTasks() {
         binding.apply {
-            PersonalTasksRecycler.isVisible = true
             progressBar.isVisible = false
+            PersonalTasksRecycler.isVisible = true
         }
     }
 
@@ -82,5 +86,4 @@ class TeamTasksFragment :
         const val DONE_STATUS = 2
         const val LIMIT = 2
     }
-
 }

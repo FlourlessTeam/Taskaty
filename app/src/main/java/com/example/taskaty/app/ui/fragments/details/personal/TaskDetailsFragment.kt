@@ -20,9 +20,9 @@ import java.util.*
 
 class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
 	FragmentTaskDetailsBinding::inflate
-), IContract.IView {
+), TaskDetailsContract.IView {
 
-	private lateinit var presenter: IContract.IPresenter
+	private lateinit var presenter: TaskDetailsContract.IPresenter
 	private lateinit var listPopupWindow: ListPopupWindow
 	private lateinit var taskId: String
 
@@ -35,8 +35,6 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
 		taskId = arguments?.getString(ARGUMENT_KEY, "")!!
-
-		val token = LocalAuthRepository.getInstance(requireActivity().application).getToken()
 
 		val remoteTasksRepository = RemoteTasksRepository.getInstance()
 		presenter = TaskDetailsPresenter(

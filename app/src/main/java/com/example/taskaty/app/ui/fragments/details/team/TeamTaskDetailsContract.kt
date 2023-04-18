@@ -3,7 +3,7 @@ package com.example.taskaty.app.ui.fragments.details.team
 import com.example.taskaty.domain.entities.TeamTask
 
 
-interface IContract {
+interface TeamTaskDetailsContract {
 	interface IView {
 		fun showMessage(message: String)
 		fun updateUiData(task: TeamTask)

@@ -1,9 +1,9 @@
-package com.example.taskaty.app
+package com.example.taskaty.app.ui
 
 import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.taskaty.app.ui.fragments.OnBoardingFragment
+import com.example.taskaty.app.ui.fragments.onBoarding.OnBoardingFragment
 import com.example.taskaty.databinding.ActivityMainBinding
 import com.example.taskaty.global.GlobalState
 
