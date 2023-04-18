@@ -38,7 +38,7 @@ class PersonalTasksFragment :
             }
 
             override fun onError(response: RepoResponse.Error<List<Task>>) {
-                Log.d("tag", "getPersonalTasksData onError: ${response.message}")
+                Log.d("tag", "getPersonalTasks onError: ${response.message}")
                 showErrorMessage(response.message)
             }
         })
