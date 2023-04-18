@@ -3,8 +3,8 @@ package com.example.taskaty.app.ui.fragments.home
 import android.os.Bundle
 import android.view.View
 import com.example.taskaty.R
-import com.example.taskaty.app.auth.login.LoginFragment
-import com.example.taskaty.app.auth.signup.SignupFragment
+import com.example.taskaty.app.ui.fragments.auth.login.LoginFragment
+import com.example.taskaty.app.ui.fragments.auth.signup.SignupFragment
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.HomePagerAdapter
 import com.example.taskaty.app.ui.fragments.home.bottomSheet.NewTaskBottomSheetFragment
