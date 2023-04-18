@@ -8,10 +8,10 @@ import com.example.taskaty.domain.entities.TeamTask
 
 class SearchInteractor(private val repo: RemoteTasksRepository) {
 
-    fun searchTasks(status: Int, title: String, callback: RepoCallback<List<PersonalTask>>) {
+    fun searchTasks( title: String, callback: RepoCallback<List<PersonalTask>>) {
         repo.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
-                val taskSearch = response.data.filter { it.title.contains(title) && it.status == status }
+                val taskSearch = response.data.filter { it.title.contains(title) }
                 callback.onSuccess(RepoResponse.Success(taskSearch))
             }
 
@@ -21,10 +21,10 @@ class SearchInteractor(private val repo: RemoteTasksRepository) {
         })
     }
 
-    fun searchTeamTasks(status: Int, title: String, callback: RepoCallback<List<TeamTask>>) {
+    fun searchTeamTasks( title: String, callback: RepoCallback<List<TeamTask>>) {
         repo.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-                val teamSearchTasks = response.data.filter { it.title.contains(title) && it.status == status }
+                val teamSearchTasks = response.data.filter { it.title.contains(title) }
                 callback.onSuccess(RepoResponse.Success(teamSearchTasks))
             }
 

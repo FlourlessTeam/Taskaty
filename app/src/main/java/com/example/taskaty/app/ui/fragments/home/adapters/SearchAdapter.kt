@@ -1,6 +1,5 @@
 package com.example.taskaty.app.ui.fragments.home.adapters
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -8,14 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskaty.R
-import com.example.taskaty.app.ui.fragments.TasksOfSpecifiedStateFragment
 import com.example.taskaty.databinding.ItemInprogressPersonalCardBinding
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 import java.text.SimpleDateFormat
 import java.util.*
 
 class SearchAdapter(private val searchListener: SearchListener) :
-    ListAdapter<Task, SearchAdapter.SearchViewHolder>(TaskDiffCallback()) {
+    ListAdapter<PersonalTask, SearchAdapter.SearchViewHolder>(TaskDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val binding = ItemInprogressPersonalCardBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -34,14 +32,14 @@ class SearchAdapter(private val searchListener: SearchListener) :
 
     class SearchViewHolder(private val binding: ItemInprogressPersonalCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Task, searchListener: SearchListener) {
+        fun bind(item: PersonalTask, searchListener: SearchListener) {
             binding.apply {
                 binding.root.setOnClickListener {
                     searchListener.onClick(item)
                 }
 
                 taskCardHeaderInProgress.text = item.title
-                taskCardHeaderInProgress.text = item.description
+                taskCardDescriptionInProgress.text = item.description
                 timeTextInProgress.text = item.creationTime.toTimeFormat()
                 taskCardDateInProgress.text = item.creationTime.toDateFormat()
                 inProgressText.text = when (item.status) {
@@ -81,12 +79,12 @@ private fun getStatusColors(status: Int?): Int {
     }
 }
 
-class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
-    override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+class TaskDiffCallback : DiffUtil.ItemCallback<PersonalTask>() {
+    override fun areItemsTheSame(oldItem: PersonalTask, newItem: PersonalTask): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+    override fun areContentsTheSame(oldItem: PersonalTask, newItem: PersonalTask): Boolean {
         return oldItem == newItem
     }
 
