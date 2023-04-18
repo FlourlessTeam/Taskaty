@@ -15,7 +15,6 @@ class LocalAuthRepository private constructor(private val application: Context) 
         }
         return token!!
     }
-
     override fun getExpireAt(): String {
         if (expireAt == null) {
             val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
@@ -23,8 +22,6 @@ class LocalAuthRepository private constructor(private val application: Context) 
         }
         return expireAt!!
     }
-
-
     override fun updateToken(token: String, expireAt: String) {
         val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("token", token).apply()
@@ -32,7 +29,6 @@ class LocalAuthRepository private constructor(private val application: Context) 
         this.token = sharedPreferences.getString("token", "")
         this.expireAt = sharedPreferences.getString("expireAt", "")
     }
-
     companion object {
         private var instance: LocalAuthRepository? = null
 

@@ -6,7 +6,7 @@ import com.example.taskaty.domain.entities.SignupResponse
 import com.example.taskaty.domain.entities.User
 
 interface RemoteAuthDataSource {
-    fun fetchTokenByLogin(
+    fun login(
         userName: String,
         password: String,
         callback: RepoCallback<LoginResponse>

@@ -18,7 +18,7 @@ class AuthInteractor(
 ) {
 
     fun login(userName: String, password: String, callback: RepoCallback<String>) {
-        remoteAuthDataSource.fetchTokenByLogin(userName,
+        remoteAuthDataSource.login(userName,
             password,
             object : RepoCallback<LoginResponse> {
 

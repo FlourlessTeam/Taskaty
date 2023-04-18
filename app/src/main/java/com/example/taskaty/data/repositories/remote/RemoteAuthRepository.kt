@@ -1,14 +1,13 @@
 package com.example.taskaty.data.repositories.remote
 
 import com.example.taskaty.data.api.UserApiClient
-import com.example.taskaty.data.mappers.AuthMapper
+import com.example.taskaty.data.mappers.AuthMappers
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.LoginResponse
 import com.example.taskaty.domain.entities.SignupResponse
 import com.example.taskaty.domain.entities.User
 import com.example.taskaty.domain.repositories.remote.RemoteAuthDataSource
-import com.google.gson.Gson
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -18,7 +17,7 @@ import okio.IOException
 class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
 
 
-    override fun fetchTokenByLogin(
+    override fun login(
         userName: String,
         password: String,
         callback: RepoCallback<LoginResponse>
@@ -28,9 +27,10 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error("No internet connection"))
             }
-
             override fun onResponse(call: Call, response: Response) {
-                callback.onSuccess(RepoResponse.Success(AuthMapper.extractLoginResponse(response.body.string())))
+                val loginResponse =
+                    AuthMappers.mapJsonStringToLoginResponse(response.body.string())
+                callback.onSuccess(RepoResponse.Success(loginResponse))
             }
         }
         userClient.login(userName, password, apiCallBack)
@@ -44,7 +44,9 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                callback.onSuccess(RepoResponse.Success(AuthMapper.extractSignupResponse(response.body.string())))
+                val signupResponse =
+                    AuthMappers.mapJsonStringToSignupResponse(response.body.string())
+                callback.onSuccess(RepoResponse.Success(signupResponse))
             }
         }
         userClient.signup(user, apiCallBack)
