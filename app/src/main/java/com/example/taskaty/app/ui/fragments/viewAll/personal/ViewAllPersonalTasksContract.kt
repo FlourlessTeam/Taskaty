@@ -4,10 +4,13 @@ import com.example.taskaty.domain.entities.Task
 
 interface ViewAllPersonalTasksContract {
     interface View {
+        fun showLoading()
+        fun hideLoading()
+        fun showErrorMessage(message: String)
         fun viewAllPersonalTasksStatus(tasks: List<Task>)
     }
 
     interface Presenter {
-        fun getPersonalTasks()
+        fun getPersonalTasks(state:Int)
     }
 }
