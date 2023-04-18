@@ -21,4 +21,5 @@
     <color name="search_hint_text_color">#80FFFFFF</color>
     <color name="search_bar_stroke_color">#F5F5F5</color>
     <color name="submit_text_color">#DEFFFFFF</color>
+    <color name="back_icon">#ffffff</color>
 </resources>
