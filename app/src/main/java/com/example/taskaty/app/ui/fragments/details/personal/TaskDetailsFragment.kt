@@ -38,7 +38,7 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
 
 		val token = LocalAuthRepository.getInstance(requireActivity().application).getToken()
 
-		val remoteTasksRepository = RemoteTasksRepository.getInstance(token)
+		val remoteTasksRepository = RemoteTasksRepository.getInstance()
 		presenter = TaskDetailsPresenter(
 			this,
 			PersonalTaskInteractor(remoteTasksRepository)
