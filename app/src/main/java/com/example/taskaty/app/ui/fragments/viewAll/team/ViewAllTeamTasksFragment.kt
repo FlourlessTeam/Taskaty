@@ -2,18 +2,15 @@ package com.example.taskaty.app.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import com.example.taskaty.app.adapters.ViewAllTeamTasksAdapter
+import com.example.taskaty.app.ui.fragments.details.team.ViewAllTeamTasksAdapter
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksContract
 import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksPresenter
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
-import com.example.taskaty.data.response.RepoCallback
-import com.example.taskaty.data.response.RepoResponse
 
 import com.example.taskaty.databinding.FragmentViewAllTeamTasksBinding
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
-import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
 
 class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
     (FragmentViewAllTeamTasksBinding::inflate), ViewAllTeamTasksContract.View {

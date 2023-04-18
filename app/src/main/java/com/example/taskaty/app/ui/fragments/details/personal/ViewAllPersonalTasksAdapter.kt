@@ -1,4 +1,4 @@
-package com.example.taskaty.app.adapters
+package com.example.taskaty.app.ui.fragments.details.personal
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import java.util.*
 
 
 class ViewAllPersonalTasksAdapter:
-    ListAdapter<Task,ViewAllPersonalTasksAdapter.ViewAllHolder>(TaskDiffCallback1()){
+    ListAdapter<Task, ViewAllPersonalTasksAdapter.ViewAllHolder>(TaskDiffCallback1()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllHolder {
         val view=LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all,parent,false)
@@ -82,7 +82,7 @@ class ViewAllPersonalTasksAdapter:
         }
 
         override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-            return oldItem==newItem
+            return oldItem.id==newItem.id
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.taskaty.app.adapters
+package com.example.taskaty.app.ui.fragments.details.team
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
