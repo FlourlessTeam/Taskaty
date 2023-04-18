@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ItemDoneTeamCardBinding
-import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 
-class ChildTeamDoneAdapter(val items: List<TeamTask>) :
+class ChildTeamDoneAdapter(private val items: List<TeamTask>) :
     Adapter<ChildTeamDoneAdapter.DoneViewHolder>() {
 
 
@@ -24,7 +23,7 @@ class ChildTeamDoneAdapter(val items: List<TeamTask>) :
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: DoneViewHolder, position: Int) {
-        val item = items[position].task
+        val item = items[position]
         holder.binding.apply {
             timeText.text = item.creationTime
             taskHeader.text = item.title

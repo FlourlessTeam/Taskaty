@@ -2,20 +2,20 @@ package com.example.taskaty.domain.interactors
 
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.repositories.remote.TasksDataSource
 
 class PersonalTaskInteractor(
 	private val tasksDataSource: TasksDataSource,
 ) {
-	fun getTaskById(taskId: String, callback: RepoCallback<Task>) {
-		tasksDataSource.getAllPersonalTasks(object : RepoCallback<List<Task>> {
-			override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
+	fun getTaskById(taskId: String, callback: RepoCallback<PersonalTask>) {
+		tasksDataSource.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {
+			override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
 				val task = response.data.find { it.id == taskId }!!
 				callback.onSuccess(RepoResponse.Success(task))
 			}
 
-			override fun onError(response: RepoResponse.Error<List<Task>>) {
+			override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
 				val message = response.message
 				callback.onError(RepoResponse.Error(message))
 			}

@@ -16,10 +16,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewPager.adapter = HomePagerAdapter(this)
+        binding.viewPager.isUserInputEnabled = false
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> getString(R.string.personal)
@@ -28,8 +28,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }.attach()
 
         binding.newTaskFAB.setOnClickListener {
-            val bottomSheet  = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
-            bottomSheet.show(childFragmentManager , "tag")
+            val bottomSheet = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
+            bottomSheet.show(childFragmentManager, "tag")
         }
 
     }

@@ -49,9 +49,9 @@ class TeamTasksFragment :
     }
 
     private fun filterTasks(tasks: List<TeamTask>) {
-        inProgressTasks = tasks.filter { it.task.status == IN_PROGRESS_STATUS }
-        upcomingTasks = tasks.filter { it.task.status == UPCOMING_STATUS }.take(LIMIT)
-        doneTasks = tasks.filter { it.task.status == DONE_STATUS }.take(LIMIT)
+        inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
+        upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }.take(LIMIT)
+        doneTasks = tasks.filter { it.status == DONE_STATUS }.take(LIMIT)
         initViews()
     }
 

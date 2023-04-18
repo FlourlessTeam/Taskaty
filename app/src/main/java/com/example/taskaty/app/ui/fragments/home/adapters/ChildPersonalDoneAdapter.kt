@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ItemDonePersonalCardBinding
-import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.entities.PersonalTask
 
-class ChildPersonalDoneAdapter(private val items: List<Task>) :
+class ChildPersonalDoneAdapter(private val items: List<PersonalTask>) :
     Adapter<ChildPersonalDoneAdapter.DoneViewHolder>() {
 
 
