@@ -5,12 +5,14 @@ import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
 
-class ViewAllTeamTasksPresenter( private val teamTaskInteractor: TeamTaskInteractor,
-                                 private val view:ViewAllTeamTasksContract.View):ViewAllTeamTasksContract.Presenter {
+class ViewAllTeamTasksPresenter(
+    private val teamTaskInteractor: TeamTaskInteractor,
+    private val view: ViewAllTeamTasksContract.View
+) : ViewAllTeamTasksContract.Presenter {
     override fun getTeamTaskData() {
-        teamTaskInteractor.getTeamTaskData( object :RepoCallback<List<TeamTask>> {
+        teamTaskInteractor.getTeamTaskData(object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-               view.viewAllTeamTasksStatus(response.data)
+                view.viewAllTeamTasksStatus(response.data)
             }
 
             override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
@@ -18,7 +20,7 @@ class ViewAllTeamTasksPresenter( private val teamTaskInteractor: TeamTaskInterac
             }
 
 
-             })
+        })
 
     }
 }

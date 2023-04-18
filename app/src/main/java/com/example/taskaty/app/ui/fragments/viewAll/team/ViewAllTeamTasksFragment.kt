@@ -15,21 +15,21 @@ import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
 import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
 
-class ViewAllTeamTasksFragment: BaseFragment<FragmentViewAllTeamTasksBinding>
-    (FragmentViewAllTeamTasksBinding::inflate) ,ViewAllTeamTasksContract.View{
-private lateinit var presenter:ViewAllTeamTasksContract.Presenter
+class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
+    (FragmentViewAllTeamTasksBinding::inflate), ViewAllTeamTasksContract.View {
+    private lateinit var presenter: ViewAllTeamTasksContract.Presenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter=ViewAllTeamTasksPresenter(
-            TeamTaskInteractor(RemoteTasksRepository.getInstance())
-            ,this)
+        presenter = ViewAllTeamTasksPresenter(
+            TeamTaskInteractor(RemoteTasksRepository.getInstance()), this
+        )
 
         setup()
 
     }
 
-    private fun setup(){
-       presenter.getTeamTaskData()
+    private fun setup() {
+        presenter.getTeamTaskData()
     }
 
     private fun getStatusNames(status: Int?): String {
@@ -41,12 +41,12 @@ private lateinit var presenter:ViewAllTeamTasksContract.Presenter
     }
 
     override fun viewAllTeamTasksStatus(teamTasks: List<TeamTask>) {
-        val status =arguments?.getInt("key")
+        val status = arguments?.getInt("key")
         requireActivity().runOnUiThread {
-            val adapter=ViewAllTeamTasksAdapter()
-            adapter.submitList(teamTasks.filter { it.task.status==status })
-            binding.toolbar.title=getStatusNames(status)
-            binding.recyclerViewInViewAll.adapter=adapter
+            val adapter = ViewAllTeamTasksAdapter()
+            adapter.submitList(teamTasks.filter { it.task.status == status })
+            binding.toolbar.title = getStatusNames(status)
+            binding.recyclerViewInViewAll.adapter = adapter
         }
     }
 
