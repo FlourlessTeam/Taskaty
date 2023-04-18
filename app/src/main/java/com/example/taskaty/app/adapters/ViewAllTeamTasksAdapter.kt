@@ -15,43 +15,45 @@ import com.example.taskaty.databinding.ItemInViewAllBinding
 import com.example.taskaty.domain.entities.TeamTask
 import java.text.SimpleDateFormat
 
-class ViewAllTeamTasksAdapter():
-    ListAdapter<TeamTask,ViewAllTeamTasksAdapter.ViewAllHolder>(TeamTaskDiffCallback()) {
+class ViewAllTeamTasksAdapter() :
+    ListAdapter<TeamTask, ViewAllTeamTasksAdapter.ViewAllHolder>(TeamTaskDiffCallback()) {
 
 
-    class ViewAllHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        val binding= ItemInViewAllBinding.bind(itemView)
+    class ViewAllHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ItemInViewAllBinding.bind(itemView)
     }
 
-    class  TeamTaskDiffCallback: DiffUtil.ItemCallback<TeamTask>() {
+    class TeamTaskDiffCallback : DiffUtil.ItemCallback<TeamTask>() {
         override fun areItemsTheSame(oldItem: TeamTask, newItem: TeamTask): Boolean {
-            return oldItem.task==newItem.task
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: TeamTask, newItem: TeamTask): Boolean {
-            return oldItem==newItem
+            return oldItem == newItem
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllHolder {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all,parent,false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all, parent, false)
         return ViewAllHolder(view)
     }
 
 
-
     override fun onBindViewHolder(holder: ViewAllHolder, position: Int) {
-        val item=getItem(position)
-        holder.binding.apply{
-            textTitle.text=item.task.title
-            textContent.text=item.task.description
-            textState.text=getStatusNames(item.task.status)
-            textState.backgroundTintList= ContextCompat.
-            getColorStateList(holder.itemView.context ,getStatusColors(item.task.status))
+        val item = getItem(position)
+        holder.binding.apply {
+            textTitle.text = item.title
+            textContent.text = item.description
+            textState.text = getStatusNames(item.status)
+            textState.backgroundTintList = ContextCompat.getColorStateList(
+                holder.itemView.context,
+                getStatusColors(item.status)
+            )
 
-            val inputDateString = item.task.creationTime
-            textCalender.text=inputDateString.outputDateFormat()
-            textClock.text=inputDateString.outputTimeFormat()
+            val inputDateString = item.creationTime
+            textCalender.text = inputDateString.outputDateFormat()
+            textClock.text = inputDateString.outputTimeFormat()
         }
 
     }
@@ -63,6 +65,7 @@ class ViewAllTeamTasksAdapter():
             else -> "Done"
         }
     }
+
     private fun getStatusColors(status: Int?): Int {
         return when (status) {
             0 -> R.color.todo_color
@@ -78,6 +81,7 @@ class ViewAllTeamTasksAdapter():
         val date = inputFormat.parse(this)
         return outputTimeFormat.format(date!!)
     }
+
     @SuppressLint("SimpleDateFormat")
     fun String.outputDateFormat(): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")

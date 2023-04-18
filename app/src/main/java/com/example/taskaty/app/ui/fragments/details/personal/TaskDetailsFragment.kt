@@ -36,8 +36,6 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
 		super.onViewCreated(view, savedInstanceState)
 		taskId = arguments?.getString(ARGUMENT_KEY, "")!!
 
-		val token = LocalAuthRepository.getInstance(requireActivity().application).getToken()
-
 		val remoteTasksRepository = RemoteTasksRepository.getInstance()
 		presenter = TaskDetailsPresenter(
 			this,

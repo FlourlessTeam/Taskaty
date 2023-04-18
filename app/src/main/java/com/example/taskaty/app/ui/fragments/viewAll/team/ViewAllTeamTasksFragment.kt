@@ -44,7 +44,7 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
         val status = arguments?.getInt("key")
         requireActivity().runOnUiThread {
             val adapter = ViewAllTeamTasksAdapter()
-            adapter.submitList(teamTasks.filter { it.task.status == status })
+            adapter.submitList(teamTasks.filter { it.status == status })
             binding.toolbar.title = getStatusNames(status)
             binding.recyclerViewInViewAll.adapter = adapter
         }
