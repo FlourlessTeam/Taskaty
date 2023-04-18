@@ -1,6 +1,7 @@
 package com.example.taskaty.app.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksAdapter
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
@@ -26,7 +27,7 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
     }
 
     private fun setup() {
-        presenter.getTeamTaskData()
+        presenter.getTeamTaskData(0)
     }
 
     private fun getStatusNames(status: Int?): String {
@@ -37,11 +38,29 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
         }
     }
 
+    override fun showLoading() {
+        requireActivity().runOnUiThread {
+            binding.shimmerFrameLayout.startShimmer()
+            binding.shimmerFrameLayout.visibility = View.VISIBLE
+        }
+    }
+
+    override fun hideLoading() {
+        requireActivity().runOnUiThread {
+            binding.shimmerFrameLayout.stopShimmer()
+            binding.shimmerFrameLayout.visibility = View.GONE
+        }
+    }
+
+    override fun showErrorMessage(message: String) {
+        Log.d("TAG", "showErrorMessage: $message")
+    }
+
     override fun viewAllTeamTasksStatus(teamTasks: List<TeamTask>) {
         val status = arguments?.getInt("key")
         requireActivity().runOnUiThread {
             val adapter = ViewAllTeamTasksAdapter()
-            adapter.submitList(teamTasks.filter { it.status == status })
+            adapter.submitList(teamTasks)
             binding.toolbar.title = getStatusNames(status)
             binding.recyclerViewInViewAll.adapter = adapter
         }

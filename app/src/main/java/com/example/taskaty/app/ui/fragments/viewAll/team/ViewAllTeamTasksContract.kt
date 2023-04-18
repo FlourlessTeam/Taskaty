@@ -5,10 +5,13 @@ import com.example.taskaty.domain.entities.TeamTask
 
 interface ViewAllTeamTasksContract {
     interface View {
+        fun showLoading()
+        fun hideLoading()
+        fun showErrorMessage(message: String)
         fun viewAllTeamTasksStatus(teamTasks: List<TeamTask>)
     }
 
     interface Presenter {
-        fun getTeamTaskData()
+        fun getTeamTaskData(state: Int)
     }
 }

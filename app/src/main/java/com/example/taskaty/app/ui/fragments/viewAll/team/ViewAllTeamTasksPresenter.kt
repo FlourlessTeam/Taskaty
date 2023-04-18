@@ -9,14 +9,17 @@ class ViewAllTeamTasksPresenter(
     private val teamTaskInteractor: TeamTaskInteractor,
     private val view: ViewAllTeamTasksContract.View
 ) : ViewAllTeamTasksContract.Presenter {
-    override fun getTeamTaskData() {
-        teamTaskInteractor.getTeamTaskData(object : RepoCallback<List<TeamTask>> {
+    override fun getTeamTaskData(state:Int) {
+        view.showLoading()
+        teamTaskInteractor.filterTeamTaskData(state,object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
                 view.viewAllTeamTasksStatus(response.data)
+                view.hideLoading()
             }
 
             override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
-                TODO("Not yet implemented")
+                view.showErrorMessage(response.message)
+                view.hideLoading()
             }
 
 

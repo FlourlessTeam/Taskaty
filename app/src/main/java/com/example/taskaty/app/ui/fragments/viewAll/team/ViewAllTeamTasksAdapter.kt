@@ -9,18 +9,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskaty.R
-import com.example.taskaty.databinding.ItemInViewAllBinding
+import com.example.taskaty.databinding.ItemTeamViewAllBinding
 
 
 import com.example.taskaty.domain.entities.TeamTask
 import java.text.SimpleDateFormat
+import java.util.*
 
 class ViewAllTeamTasksAdapter() :
     ListAdapter<TeamTask, ViewAllTeamTasksAdapter.ViewAllHolder>(TeamTaskDiffCallback()) {
 
 
     class ViewAllHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding = ItemInViewAllBinding.bind(itemView)
+        val binding = ItemTeamViewAllBinding.bind(itemView)
     }
 
     class TeamTaskDiffCallback : DiffUtil.ItemCallback<TeamTask>() {
@@ -35,7 +36,7 @@ class ViewAllTeamTasksAdapter() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_team_view_all, parent, false)
         return ViewAllHolder(view)
     }
 
@@ -50,7 +51,11 @@ class ViewAllTeamTasksAdapter() :
                 holder.itemView.context,
                 getStatusColors(item.status)
             )
-
+            textAssignee.text = item.assignee.subSequence(0, 1).toString().uppercase()
+            textAssignee.backgroundTintList = ContextCompat.getColorStateList(
+                holder.itemView.context,
+                getStatusColors(item.status)
+            )
             val inputDateString = item.creationTime
             textCalender.text = inputDateString.outputDateFormat()
             textClock.text = inputDateString.outputTimeFormat()
