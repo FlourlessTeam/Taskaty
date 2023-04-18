@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="@dimen/margin_16">
 
     <LinearLayout
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginHorizontal="@dimen/margin_16"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -67,6 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginHorizontal="@dimen/margin_4"
         android:clipToPadding="true"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

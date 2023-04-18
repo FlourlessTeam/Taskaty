@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskaty.R
-import com.example.taskaty.databinding.ItemInViewAllBinding
+import com.example.taskaty.databinding.ItemInViewAllAndSearchBinding
 import com.example.taskaty.domain.entities.Task
 
 import java.text.SimpleDateFormat
@@ -21,7 +21,7 @@ class ViewAllPersonalTasksAdapter:
     ListAdapter<Task, ViewAllPersonalTasksAdapter.ViewAllHolder>(TaskDiffCallback1()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllHolder {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all,parent,false)
+        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all_and_search,parent,false)
         return ViewAllHolder(view)
     }
 
@@ -73,7 +73,7 @@ class ViewAllPersonalTasksAdapter:
 
 
     class ViewAllHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        val binding=ItemInViewAllBinding.bind(itemView)
+        val binding=ItemInViewAllAndSearchBinding.bind(itemView)
     }
 
     class TaskDiffCallback1: DiffUtil.ItemCallback<Task>() {
