@@ -9,6 +9,7 @@ import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentViewAllPersonalTasksBinding
 import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.domain.interactors.CardDataInteractor
 
 
 class ViewAllPersonalTasksFragment : BaseFragment<FragmentViewAllPersonalTasksBinding>
@@ -51,36 +52,5 @@ class ViewAllPersonalTasksFragment : BaseFragment<FragmentViewAllPersonalTasksBi
             else -> "Done"
         }
     }
-
-    //token just for testing
-    companion object {
-
-        private const val token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9" +
-                ".eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6" +
-                "ImIwNjI3ZDVhLTZlYjUtNDhlNC1hNTA4LTY1ZTY3MzIzMWE3ZCIsIn" +
-                "RlYW1JZCI6ImMyYzAyNTA3LTk5NjgtNDg2Yi05YmYwLTRjMzg2MGZlMW" +
-                "YyZCIsImlzcyI6Imh0dHBzOi8vdGhlLWNoYW5jZS5vcmcvIiwiZXhwIjox" +
-                "NjgxOTE2ODY4fQ.GolW2N3a5ubGpK7BPPC9rscD8qW7Be_AqJqCcALipto"
-    }
-
-}
-
-
-//Temporary Interactor should move in another file
-class CardDataInteractor(private val repo: RemoteTasksRepository) {
-
-    fun getPersonalTasksData(callback: RepoCallback<List<Task>>) {
-        repo.getAllPersonalTasks(object : RepoCallback<List<Task>> {
-            override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
-                val task = response.data
-                callback.onSuccess(RepoResponse.Success(task))
-            }
-
-            override fun onError(response: RepoResponse.Error<List<Task>>) {
-                callback.onError(RepoResponse.Error(response.message))
-            }
-        })
-    }
-
 
 }
