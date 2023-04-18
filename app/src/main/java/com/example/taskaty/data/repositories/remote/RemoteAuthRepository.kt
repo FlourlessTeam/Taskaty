@@ -1,6 +1,7 @@
 package com.example.taskaty.data.repositories.remote
 
 import com.example.taskaty.data.api.UserApiClient
+import com.example.taskaty.data.mappers.AuthMapper
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.LoginResponse
@@ -27,8 +28,9 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error("No internet connection"))
             }
+
             override fun onResponse(call: Call, response: Response) {
-                callback.onSuccess(RepoResponse.Success(extractTokenFromResponse(response.body.string())))
+                callback.onSuccess(RepoResponse.Success(AuthMapper.extractLoginResponse(response.body.string())))
             }
         }
         userClient.login(userName, password, apiCallBack)
@@ -42,20 +44,12 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                callback.onSuccess(RepoResponse.Success(extractSignupResponse(response.body.string())))
+                callback.onSuccess(RepoResponse.Success(AuthMapper.extractSignupResponse(response.body.string())))
             }
         }
         userClient.signup(user, apiCallBack)
     }
 
-    private fun extractTokenFromResponse(jsonString: String): LoginResponse {
-        val gson = Gson()
-        return gson.fromJson(jsonString, LoginResponse::class.java)
-    }
-    private fun extractSignupResponse(jsonString: String): SignupResponse {
-        val gson = Gson()
-        return gson.fromJson(jsonString, SignupResponse::class.java)
-    }
 
     companion object {
         private var instance: RemoteAuthRepository? = null
