@@ -59,7 +59,6 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
             }
         }, task)
     }
-
     override fun updatePersonalTaskState(
         taskId: String,
         status: Int,
@@ -72,6 +71,7 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
 
             override fun onResponse(call: Call, response: Response) {
                 callback.onSuccess(RepoResponse.Success(Unit))
+
             }
         }, taskId, status)
     }
