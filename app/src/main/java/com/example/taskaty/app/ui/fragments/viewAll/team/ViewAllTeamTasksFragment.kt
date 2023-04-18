@@ -2,7 +2,6 @@ package com.example.taskaty.app.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import com.example.taskaty.app.adapters.ViewAllPersonalTasksAdapter
 import com.example.taskaty.app.adapters.ViewAllTeamTasksAdapter
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
@@ -10,7 +9,6 @@ import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 
 import com.example.taskaty.databinding.FragmentViewAllTeamTasksBinding
-import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
 
@@ -20,14 +18,14 @@ class ViewAllTeamTasksFragment: BaseFragment<FragmentViewAllTeamTasksBinding>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUp()
+        setup()
 
     }
 
-    private fun setUp(){
+    private fun setup(){
         //get the status number from the home screen to display the required list
         val status =arguments?.getInt("key")
-        TeamTaskInteractors(RemoteTasksRepository.getInstance(token))
+        TeamTaskInteractors(RemoteTasksRepository.getInstance())
             .getTeamTaskData(object :RepoCallback<List<TeamTask>>{
                 override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
 

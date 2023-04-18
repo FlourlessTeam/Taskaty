@@ -1,48 +1,38 @@
 package com.example.taskaty.app.ui.fragments
 
-import android.annotation.SuppressLint
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.example.taskaty.R
 import com.example.taskaty.app.adapters.ViewAllPersonalTasksAdapter
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
-import com.example.taskaty.data.repositories.local.LocalAuthRepository
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentViewAllPersonalTasksBinding
 import com.example.taskaty.domain.entities.Task
-import com.example.taskaty.domain.entities.TeamTask
-import com.example.taskaty.domain.repositories.remote.TasksDataSource
 
 
-class ViewAllPersonalTasksFragment:  BaseFragment<FragmentViewAllPersonalTasksBinding>
-    (FragmentViewAllPersonalTasksBinding::inflate){
+class ViewAllPersonalTasksFragment : BaseFragment<FragmentViewAllPersonalTasksBinding>
+    (FragmentViewAllPersonalTasksBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUp()
+        setup()
 
     }
 
-    private fun setUp(){
+    private fun setup() {
         //get the status number from the home screen to display the required list
         val status = arguments?.getInt("key")
 
-        CardDataInteractor(RemoteTasksRepository.getInstance(token))
-            .getPersonalTasksData(object :RepoCallback<List<Task>>{
+        CardDataInteractor(RemoteTasksRepository.getInstance())
+            .getPersonalTasksData(object : RepoCallback<List<Task>> {
                 override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
 
                     requireActivity().runOnUiThread {
-                        val adapter=ViewAllPersonalTasksAdapter()
-                        adapter.submitList(response.data.filter { it.status==status })
-                        binding.toolbar.title=getStatusNames(status)
-                        binding.recyclerViewInViewAll.adapter=adapter
+                        val adapter = ViewAllPersonalTasksAdapter()
+                        adapter.submitList(response.data.filter { it.status == status })
+                        binding.toolbar.title = getStatusNames(status)
+                        binding.recyclerViewInViewAll.adapter = adapter
                     }
 
                 }
@@ -54,18 +44,18 @@ class ViewAllPersonalTasksFragment:  BaseFragment<FragmentViewAllPersonalTasksBi
 
     }
 
-     private fun getStatusNames(status: Int?): String {
+    private fun getStatusNames(status: Int?): String {
         return when (status) {
             0 -> "ToDo"
             1 -> "In Progress"
-           else -> "Done"
+            else -> "Done"
         }
     }
 
     //token just for testing
-    companion object{
+    companion object {
 
-        private const val token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9" +
+        private const val token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9" +
                 ".eyJhdWQiOiJodHRwczovL3RoZS1jaGFuY2Uub3JnLyIsInN1YiI6" +
                 "ImIwNjI3ZDVhLTZlYjUtNDhlNC1hNTA4LTY1ZTY3MzIzMWE3ZCIsIn" +
                 "RlYW1JZCI6ImMyYzAyNTA3LTk5NjgtNDg2Yi05YmYwLTRjMzg2MGZlMW" +
@@ -74,8 +64,6 @@ class ViewAllPersonalTasksFragment:  BaseFragment<FragmentViewAllPersonalTasksBi
     }
 
 }
-
-
 
 
 //Temporary Interactor should move in another file

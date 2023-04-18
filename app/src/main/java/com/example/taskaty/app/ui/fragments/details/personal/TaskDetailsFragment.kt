@@ -20,9 +20,9 @@ import java.util.*
 
 class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
 	FragmentTaskDetailsBinding::inflate
-), IContract.IView {
+), TaskDetailsContract.IView {
 
-	private lateinit var presenter: IContract.IPresenter
+	private lateinit var presenter: TaskDetailsContract.IPresenter
 	private lateinit var listPopupWindow: ListPopupWindow
 	private lateinit var taskId: String
 
