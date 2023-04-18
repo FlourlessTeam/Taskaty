@@ -2,7 +2,7 @@ package com.example.taskaty.app.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import com.example.taskaty.app.ui.fragments.details.personal.ViewAllPersonalTasksAdapter
+import com.example.taskaty.app.ui.fragments.viewAll.personal.ViewAllPersonalTasksAdapter
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.viewAll.personal.ViewAllPersonalTasksContract
 import com.example.taskaty.app.ui.fragments.viewAll.personal.ViewAllPersonalTasksPresenter
