@@ -22,7 +22,7 @@ class NewTaskPresenter {
     ) {
         //selectedTabPosition when equal 0 means we in personal task fragment
         //selectedTabPosition when equal 1 means we in team task fragment
-        val teamTask = TeamTask(
+        val task = TeamTask(
             id = "",
             title = title,
             description = description,
@@ -41,7 +41,7 @@ class NewTaskPresenter {
             personalTaskDataSource.createPersonalTask(personalTask, repo)
         } else {
 
-            teamTaskDataSource.createTeamTask(teamTask, repo)
+            teamTaskDataSource.createTeamTask(task, repo)
         }
     }
 }

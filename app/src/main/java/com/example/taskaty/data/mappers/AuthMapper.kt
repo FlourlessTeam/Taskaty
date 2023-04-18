@@ -4,7 +4,7 @@ import com.example.taskaty.domain.entities.LoginResponse
 import com.example.taskaty.domain.entities.SignupResponse
 import com.google.gson.Gson
 
-object AuthMappers {
+object AuthMapper {
      fun mapJsonStringToLoginResponse(jsonString: String): LoginResponse {
         val gson = Gson()
         return gson.fromJson(jsonString, LoginResponse::class.java)

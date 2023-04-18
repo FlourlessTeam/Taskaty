@@ -54,7 +54,7 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
             }
 
             override fun onResponse(call: Call, response: Response) {
-                cachedPersonalTasks= cachedPersonalTasks + listOf(task)
+                cachedPersonalTasks = cachedPersonalTasks + listOf(task)
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, task)
@@ -85,7 +85,7 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    cachedTeamTasks =TaskMappers.jsonToTeamTasks(response.body.string())
+                    cachedTeamTasks = TaskMappers.jsonToTeamTasks(response.body.string())
                     callback.onSuccess(RepoResponse.Success(cachedTeamTasks))
                 }
             })
@@ -93,20 +93,24 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
             callback.onSuccess(RepoResponse.Success(cachedTeamTasks))
     }
 
-    override fun createTeamTask(teamTask: TeamTask, callback: RepoCallback<Unit>) {
+    override fun createTeamTask(task: TeamTask, callback: RepoCallback<Unit>) {
         tasksApiClient.addTeamTask(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))
             }
 
             override fun onResponse(call: Call, response: Response) {
-                cachedTeamTasks= cachedTeamTasks + listOf(teamTask)
+                cachedTeamTasks = cachedTeamTasks + listOf(task)
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
-        }, teamTask)
+        }, task)
     }
 
-    override fun updateTeamTaskState(taskId: String, status: Int, callback: RepoCallback<Unit>) {
+    override fun updateTeamTaskState(
+        taskId: String,
+        status: Int,
+        callback: RepoCallback<Unit>
+    ) {
         tasksApiClient.updateTeamTask(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))

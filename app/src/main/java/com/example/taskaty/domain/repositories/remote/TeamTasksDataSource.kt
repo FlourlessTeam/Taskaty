@@ -5,6 +5,6 @@ import com.example.taskaty.domain.entities.TeamTask
 
 interface TeamTasksDataSource{
     fun getAllTeamTasks(callback: RepoCallback<List<TeamTask>>)
-    fun createTeamTask(teamTask: TeamTask, callback: RepoCallback<Unit>)
+    fun createTeamTask(task: TeamTask, callback: RepoCallback<Unit>)
     fun updateTeamTaskState(taskId: String, status: Int, callback: RepoCallback<Unit>)
 }

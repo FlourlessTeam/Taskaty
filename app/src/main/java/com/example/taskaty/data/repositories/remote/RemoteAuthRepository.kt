@@ -1,7 +1,7 @@
 package com.example.taskaty.data.repositories.remote
 
 import com.example.taskaty.data.api.UserApiClient
-import com.example.taskaty.data.mappers.AuthMappers
+import com.example.taskaty.data.mappers.AuthMapper
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.LoginResponse
@@ -29,7 +29,7 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
             }
             override fun onResponse(call: Call, response: Response) {
                 val loginResponse =
-                    AuthMappers.mapJsonStringToLoginResponse(response.body.string())
+                    AuthMapper.mapJsonStringToLoginResponse(response.body.string())
                 callback.onSuccess(RepoResponse.Success(loginResponse))
             }
         }
@@ -45,7 +45,7 @@ class RemoteAuthRepository private constructor() : RemoteAuthDataSource {
 
             override fun onResponse(call: Call, response: Response) {
                 val signupResponse =
-                    AuthMappers.mapJsonStringToSignupResponse(response.body.string())
+                    AuthMapper.mapJsonStringToSignupResponse(response.body.string())
                 callback.onSuccess(RepoResponse.Success(signupResponse))
             }
         }
