@@ -37,7 +37,7 @@
             android:gravity="center"
             android:paddingHorizontal="8dp"
             android:text="@string/submit"
-            android:textColor="@color/submit_text_color"
+            android:textColor="@color/black"
             android:textSize="12sp" />
     </androidx.appcompat.widget.Toolbar>
 
@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="8dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:textColor="@color/task_card_text_color"
+                        android:textColor="@color/black"
                         android:textSize="12sp"
                         app:drawableStartCompat="@drawable/calendar_icon"
                         tools:ignore="TextContrastCheck"
@@ -115,7 +115,7 @@
                         android:layout_marginStart="32dp"
                         android:drawablePadding="8dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:textColor="@color/task_card_text_color"
+                        android:textColor="@color/black"
                         android:textSize="12sp"
                         app:drawableStartCompat="@drawable/clock_icon"
                         tools:ignore="TextContrastCheck"
@@ -135,7 +135,7 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/poppins_medium"
                     android:maxLines="2"
-                    android:textColor="@color/task_card_text_color"
+                    android:textColor="@color/black"
                     android:textSize="12sp"
                     app:drawableStartCompat="@drawable/team_icon"
                     app:layout_constraintEnd_toEndOf="parent"

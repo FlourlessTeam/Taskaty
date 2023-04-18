@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".app.ui.fragments.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -65,7 +66,6 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/search_view_background"
             android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent"
             android:queryHint="Search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
