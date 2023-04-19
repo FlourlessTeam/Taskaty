@@ -7,9 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.example.taskaty.R
+import com.example.taskaty.app.ui.fragments.home.SearchFragment
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
-import com.example.taskaty.data.repositories.local.LocalAuthRepository
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.databinding.FragmentTaskDetailsBinding
 import com.example.taskaty.domain.entities.PersonalTask
@@ -61,8 +62,8 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
 	}
 
 	private fun addCallbacks() {
+		binding.toolbarDetails.setOnClickListener { replaceFragment(SearchFragment()) }
 		var taskStatus = UPCOMING_STATE
-
 		listPopupWindow.setOnItemClickListener { _, _, status: Int, _ ->
 			binding.taskStatusButton.text = statusMap[status]
 			taskStatus = status
@@ -153,6 +154,12 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
 			}
 		}
 	}
-
+	private fun replaceFragment(fragment: Fragment) {
+		val fragmentManager = requireActivity().supportFragmentManager
+		val transaction = fragmentManager.beginTransaction()
+		transaction.replace(R.id.container_fragment, fragment)
+		transaction.addToBackStack(null)
+		transaction.commit()
+	}
 
 }

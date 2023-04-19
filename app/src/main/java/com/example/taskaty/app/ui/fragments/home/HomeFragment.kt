@@ -2,8 +2,8 @@ package com.example.taskaty.app.ui.fragments.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.example.taskaty.R
-import com.example.taskaty.app.ui.fragments.SearchFragment
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.HomePagerAdapter
 import com.example.taskaty.app.ui.fragments.home.bottomSheet.NewTaskBottomSheetFragment
