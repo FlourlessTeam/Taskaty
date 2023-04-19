@@ -12,8 +12,8 @@ import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 
 class ViewAllPersonalTasksFragment :
     BaseFragment<FragmentViewAllPersonalTasksBinding>(FragmentViewAllPersonalTasksBinding::inflate),
-    ViewAllPersonalTasksContract.View {
-    private lateinit var presenter: ViewAllPersonalTasksContract.Presenter
+    ViewAllPersonalTasksView {
+    private lateinit var presenter: ViewAllPersonalTasksPresenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

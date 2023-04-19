@@ -11,8 +11,8 @@ import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
 
 class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
-    (FragmentViewAllTeamTasksBinding::inflate), ViewAllTeamTasksContract.View {
-    private lateinit var presenter: ViewAllTeamTasksContract.Presenter
+    (FragmentViewAllTeamTasksBinding::inflate), ViewAllTeamTasksView {
+    private lateinit var presenter: ViewAllTeamTasksPresenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = ViewAllTeamTasksPresenter(
@@ -24,7 +24,7 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
     }
 
     private fun setup() {
-        presenter.getTeamTaskData(0)
+        presenter.getTeamTaskData(1)
     }
 
     private fun getStatusNames(status: Int?): String {
