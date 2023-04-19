@@ -6,19 +6,18 @@ import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.LoginResponse
 import com.example.taskaty.domain.entities.SignupResponse
 import com.example.taskaty.domain.entities.User
-import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
-import com.example.taskaty.domain.repositories.remote.RemoteAuthDataSource
+import com.example.taskaty.domain.repositories.auth.AuthRepository
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 
 class AuthInteractor(
-    private val localAuthDataSource: LocalAuthDataSource,
-    private val remoteAuthDataSource: RemoteAuthDataSource
+    private val authRepository: AuthRepository,
+
 ) {
 
     fun login(userName: String, password: String, callback: RepoCallback<String>) {
-        remoteAuthDataSource.login(userName,
+        authRepository.login(userName,
             password,
             object : RepoCallback<LoginResponse> {
 
@@ -27,7 +26,7 @@ class AuthInteractor(
                         val token = response.data.value.token
                         val expireAt = response.data.value.expireAt
                         callback.onSuccess(RepoResponse.Success(token))
-                        localAuthDataSource.updateToken(token, expireAt)
+                        authRepository.updateToken(token, expireAt)
                     } else {
                         callback.onError(RepoResponse.Error(response.data.message.toString()))
                     }
@@ -40,7 +39,7 @@ class AuthInteractor(
     }
 
     fun signup(user: User, callback: RepoCallback<String>) {
-        remoteAuthDataSource.signup(user, object : RepoCallback<SignupResponse> {
+        authRepository.signup(user, object : RepoCallback<SignupResponse> {
             override fun onSuccess(response: RepoResponse.Success<SignupResponse>) {
                 if (response.data.isSuccess) {
                     callback.onSuccess(RepoResponse.Success(response.data.value.username))
@@ -65,7 +64,7 @@ class AuthInteractor(
     }
 
     fun checkExpireToken(): Boolean {
-        return if (convertExpireTokenTime(localAuthDataSource.getExpireAt()) > System.currentTimeMillis()) {
+        return if (convertExpireTokenTime(authRepository.getExpirationDate()) > System.currentTimeMillis()) {
             true
         } else {
             removeTokenFromLocal()
@@ -74,7 +73,7 @@ class AuthInteractor(
     }
 
     private fun removeTokenFromLocal() {
-        localAuthDataSource.updateToken("", "")
+        authRepository.updateToken("", "")
     }
 
     fun checkValidField(

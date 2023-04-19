@@ -6,7 +6,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.ParentTeamAdapter
-import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
+import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentTeamTasksBinding
@@ -16,7 +16,7 @@ import com.example.taskaty.domain.interactors.CardDataInteractor
 class TeamTasksFragment :
     BaseFragment<FragmentTeamTasksBinding>(FragmentTeamTasksBinding::inflate) {
 
-    private val interactor = CardDataInteractor(RemoteTasksRepository.getInstance())
+    private val interactor = CardDataInteractor(AllTasksRepositoryImpl.getInstance())
     private var inProgressTasks = listOf<TeamTask>()
     private var upcomingTasks = listOf<TeamTask>()
     private var doneTasks = listOf<TeamTask>()

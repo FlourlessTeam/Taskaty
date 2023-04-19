@@ -1,27 +1,24 @@
-package com.example.taskaty.data.repositories.remote
+package com.example.taskaty.data.repositories
 
 import com.example.taskaty.data.api.TasksApiClient
 import com.example.taskaty.data.api.interceptors.AuthInterceptor
 import com.example.taskaty.data.mappers.TaskMappers
-import com.example.taskaty.data.repositories.local.LocalAuthRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.PersonalTask
+import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
-import com.example.taskaty.domain.repositories.local.LocalAuthDataSource
-import com.example.taskaty.domain.repositories.remote.TasksDataSource
-import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
+import com.example.taskaty.domain.repositories.tasks.AllTasksRepository
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okio.IOException
 
-class RemoteTasksRepository private constructor() : TasksDataSource,
-    TeamTasksDataSource {
+class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
 
-    private val localAuthRepo: LocalAuthDataSource by lazy { LocalAuthRepository.getInstance() }
-    private val userToken by lazy { localAuthRepo.getToken() }
+    private val authRepo: AuthRepositoryImpl by lazy { AuthRepositoryImpl.getInstance() }
+    private val userToken by lazy { authRepo.getToken() }
     private val okHttpClient by lazy {
         OkHttpClient.Builder().addInterceptor(AuthInterceptor(userToken)).build()
     }
@@ -54,11 +51,12 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
             }
 
             override fun onResponse(call: Call, response: Response) {
-                cachedPersonalTasks = cachedPersonalTasks + listOf(task)
+                cachedPersonalTasks = cachedPersonalTasks + task
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, task)
     }
+
     override fun updatePersonalTaskState(
         taskId: String,
         status: Int,
@@ -71,6 +69,7 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
 
             override fun onResponse(call: Call, response: Response) {
                 callback.onSuccess(RepoResponse.Success(Unit))
+                updateCachedData(taskId, status, cachedTeamTasks)
 
             }
         }, taskId, status)
@@ -100,7 +99,7 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
             }
 
             override fun onResponse(call: Call, response: Response) {
-                cachedTeamTasks = cachedTeamTasks + listOf(task)
+                cachedTeamTasks = cachedTeamTasks + task
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, task)
@@ -118,16 +117,24 @@ class RemoteTasksRepository private constructor() : TasksDataSource,
 
             override fun onResponse(call: Call, response: Response) {
                 callback.onSuccess(RepoResponse.Success(Unit))
+                updateCachedData(taskId, status, cachedTeamTasks)
             }
         }, taskId, status)
     }
 
-    companion object {
-        private var instance: RemoteTasksRepository? = null
+    private fun <T : Task> updateCachedData(id: String, status: Int, data: List<T>) {
+        val taskIndex = data.indexOfFirst { it.id == id }
+        data[taskIndex].status = status
 
-        fun getInstance(): RemoteTasksRepository {
+    }
+
+
+    companion object {
+        private var instance: AllTasksRepositoryImpl? = null
+
+        fun getInstance(): AllTasksRepositoryImpl {
             if (instance == null) {
-                instance = RemoteTasksRepository()
+                instance = AllTasksRepositoryImpl()
             }
             return instance!!
         }

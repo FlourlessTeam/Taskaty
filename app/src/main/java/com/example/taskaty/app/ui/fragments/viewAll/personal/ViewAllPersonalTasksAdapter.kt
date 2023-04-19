@@ -1,6 +1,5 @@
 package com.example.taskaty.app.ui.fragments.viewAll.personal
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskaty.R
 import com.example.taskaty.databinding.ItemInViewAllBinding
 import com.example.taskaty.domain.entities.Task
-import com.example.taskaty.global.DateTimeUtils
-
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.taskaty.app.utils.DateTimeUtils
 
 
 class ViewAllPersonalTasksAdapter :

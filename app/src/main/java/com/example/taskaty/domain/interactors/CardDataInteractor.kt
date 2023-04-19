@@ -1,12 +1,12 @@
 package com.example.taskaty.domain.interactors
 
-import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
+import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.TeamTask
 
-class CardDataInteractor(private val repo: RemoteTasksRepository) {
+class CardDataInteractor(private val repo: AllTasksRepositoryImpl) {
 
     fun getPersonalTasksData(callback: RepoCallback<List<PersonalTask>>) {
         repo.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {

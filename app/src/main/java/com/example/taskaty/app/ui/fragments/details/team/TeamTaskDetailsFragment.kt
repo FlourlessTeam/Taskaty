@@ -9,15 +9,12 @@ import androidx.core.view.isVisible
 import androidx.transition.TransitionManager
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
-import com.example.taskaty.data.repositories.local.LocalAuthRepository
-import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
+import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
+import com.example.taskaty.data.repositories.AuthRepositoryImpl
 import com.example.taskaty.databinding.FragmentTeamTaskDetailsBinding
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
-import com.example.taskaty.global.DateTimeUtils
-import com.facebook.shimmer.Shimmer
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.taskaty.app.utils.DateTimeUtils
 
 
 class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
@@ -38,12 +35,12 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 		super.onViewCreated(view, savedInstanceState)
 		teamTaskId = arguments?.getString(ARGUMENT_KEY, "")!!
 
-		LocalAuthRepository.getInstance(requireActivity().application).getToken()
+		AuthRepositoryImpl.getInstance(requireActivity().application).getToken()
 
-		val remoteTasksRepository = RemoteTasksRepository.getInstance()
+		val allTasksRepositoryImpl = AllTasksRepositoryImpl.getInstance()
 		presenter = TeamTaskDetailsPresenter(
 			this,
-			TeamTaskInteractor(remoteTasksRepository)
+			TeamTaskInteractor(allTasksRepositoryImpl)
 		)
 
 		setup()
