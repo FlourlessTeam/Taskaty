@@ -15,4 +15,9 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="FabShapeStyle" parent="Widget.Design.FloatingActionButton">
+        <item name="cornerSize">100dp</item>
+
+    </style>
 </resources>
