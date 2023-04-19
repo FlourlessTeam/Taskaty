@@ -13,6 +13,7 @@ import com.example.taskaty.databinding.ItemTeamViewAllBinding
 
 
 import com.example.taskaty.domain.entities.TeamTask
+import com.example.taskaty.global.DateTimeUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,8 +56,8 @@ class ViewAllTeamTasksAdapter() :
                 holder.itemView.context, getStatusColors(item.status)
             )
             val inputDateString = item.creationTime
-            textCalender.text = inputDateString.outputDateFormat()
-            textClock.text = inputDateString.outputTimeFormat()
+            textCalender.text = DateTimeUtils.toDateFormat(inputDateString)
+            textClock.text = DateTimeUtils.toTimeFormat(inputDateString)
         }
 
     }
@@ -77,21 +78,6 @@ class ViewAllTeamTasksAdapter() :
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun String.outputTimeFormat(): String {
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        val outputTimeFormat = SimpleDateFormat("HH:mm:ss")
-        val date = inputFormat.parse(this)
-        return outputTimeFormat.format(date!!)
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    fun String.outputDateFormat(): String {
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        val outputDateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val date = inputFormat.parse(this)
-        return outputDateFormat.format(date!!)
-    }
 
 
 }

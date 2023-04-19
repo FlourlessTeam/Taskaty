@@ -14,15 +14,16 @@ import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.databinding.FragmentTeamTaskDetailsBinding
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
+import com.example.taskaty.global.DateTimeUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 	FragmentTeamTaskDetailsBinding::inflate
-), TeamTaskDetailsContract.IView {
+), TeamTaskDetailsView {
 
-	private lateinit var presenter: TeamTaskDetailsContract.IPresenter
+	private lateinit var presenter: TeamTaskDetailsPresenter
 	private lateinit var listPopupWindow: ListPopupWindow
 	private lateinit var teamTaskId: String
 
@@ -34,7 +35,7 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		teamTaskId = arguments?.getString(ARGUMENT_KEY, "")!!
+		teamTaskId = "361d7234-ba58-4d26-bcfa-e06d35d00370"
 
 		LocalAuthRepository.getInstance(requireActivity().application).getToken()
 
@@ -85,8 +86,8 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 			with(binding) {
 				taskTitle.text = task.title
 				taskStatusButton.text = statusMap[task.status]
-				taskDate.text = task.creationTime.toDateFormat()
-				taskTime.text = task.creationTime.toTimeFormat()
+				taskDate.text = DateTimeUtils.toDateFormat(task.creationTime)
+				taskTime.text = DateTimeUtils.toTimeFormat(task.creationTime)
 				taskDescriptionContent.text = task.description
 				taskTeam.text = task.assignee
 			}
@@ -127,22 +128,6 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 		}
 	}
 
-
-	//Need to be moved to another file
-	private fun String.toDateFormat(): String {
-		val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
-		val date = inputFormat.parse(this)
-		val outputDateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-		return outputDateFormat.format(date!!)
-	}
-
-	//Need to be moved to another file
-	private fun String.toTimeFormat(): String {
-		val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS", Locale.getDefault())
-		val time = inputFormat.parse(this)
-		val outputTimeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
-		return outputTimeFormat.format(time!!)
-	}
 
 	companion object {
 		private const val ARGUMENT_KEY = "team_task_id"

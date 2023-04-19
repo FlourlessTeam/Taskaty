@@ -6,11 +6,11 @@ import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 
 class TaskDetailsPresenter(
-    private val view: TaskDetailsContract.IView,
+    private val view: TaskDetailsView,
     private val personalTaskInteractor: PersonalTaskInteractor
-) : TaskDetailsContract.IPresenter {
+)  {
 
-	override fun getTask(taskId: String) {
+	 fun getTask(taskId: String) {
 		view.showGetTaskLoading()
 		personalTaskInteractor.getTaskById(taskId, object : RepoCallback<PersonalTask> {
 			override fun onSuccess(response: RepoResponse.Success<PersonalTask>) {
@@ -25,7 +25,7 @@ class TaskDetailsPresenter(
 
 	}
 
-	override fun updateTaskStatus(taskId: String, status: Int) {
+	 fun updateTaskStatus(taskId: String, status: Int) {
 		view.showUpdateTaskLoading()
 		personalTaskInteractor.updateTaskStatus(taskId, status, object : RepoCallback<Unit> {
 			override fun onSuccess(response: RepoResponse.Success<Unit>) {

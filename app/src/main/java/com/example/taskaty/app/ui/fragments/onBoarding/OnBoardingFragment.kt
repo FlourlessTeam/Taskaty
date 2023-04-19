@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.taskaty.R
-import com.example.taskaty.app.auth.login.LoginFragment
+import com.example.taskaty.app.ui.fragments.auth.login.LoginFragment
 import com.example.taskaty.databinding.FragmentOnboardingBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 

@@ -1,4 +1,4 @@
-package com.example.taskaty.app.auth.login
+package com.example.taskaty.app.ui.fragments.auth.login
 
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
@@ -6,10 +6,10 @@ import com.example.taskaty.domain.interactors.AuthInteractor
 
 class LoginPresenter(
     private val authInteractor: AuthInteractor,
-    private val view: LoginContract.View
-) : LoginContract.Presenter {
+    private val view: LoginView
+) {
 
-    override fun onLogin(userName: String, password: String) {
+     fun onLogin(userName: String, password: String) {
         if (!authInteractor.checkValidField(userName, password)) {
             view.showValidationError("Please fill all fields")
             return
@@ -29,7 +29,7 @@ class LoginPresenter(
         })
     }
 
-    override fun onLoginWithSaveToken() {
+     fun onLoginWithSaveToken() {
         if (authInteractor.checkExpireToken()) {
             view.navigateToHomeScreen()
         }
