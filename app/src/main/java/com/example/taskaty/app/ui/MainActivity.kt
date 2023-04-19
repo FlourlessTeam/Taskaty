@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupAppContext()
         supportFragmentManager.beginTransaction()
-         .add(binding.containerFragment.id, ViewAllPersonalTasksFragment()).commit()
+         .add(binding.containerFragment.id, OnBoardingFragment()).commit()
     }
 
     private fun setupAppContext() {
