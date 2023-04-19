@@ -1,4 +1,4 @@
-package com.example.taskaty.app.auth.login
+package com.example.taskaty.app.ui.fragments.auth.login
 
 import android.os.Bundle
 import android.view.View
@@ -6,18 +6,22 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.taskaty.R
-import com.example.taskaty.app.auth.signup.SignupFragment
+import com.example.taskaty.app.ui.fragments.auth.signup.SignupFragment
 import com.example.taskaty.databinding.FragmentLoginBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
+import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
+import com.example.taskaty.app.ui.fragments.details.team.TeamTaskDetailsFragment
 import com.example.taskaty.app.ui.fragments.home.HomeFragment
+import com.example.taskaty.app.ui.fragments.viewAll.personal.ViewAllPersonalTasksFragment
+import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksFragment
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
 import com.example.taskaty.data.repositories.remote.RemoteAuthRepository
 import com.example.taskaty.domain.interactors.AuthInteractor
 
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate),
-    LoginContract.View {
-    private lateinit var presenter: LoginContract.Presenter
+    LoginView {
+    private lateinit var presenter: LoginPresenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window?.statusBarColor =

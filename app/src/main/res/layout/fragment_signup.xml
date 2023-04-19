@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_color"
     android:paddingHorizontal="16dp"
-    tools:context=".app.auth.signup.SignupFragment">
+    tools:context=".app.ui.fragments.auth.signup.SignupFragment">
 
     <TextView
         android:id="@+id/text_title"

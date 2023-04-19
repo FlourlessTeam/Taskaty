@@ -10,21 +10,22 @@ import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 
 
-class ViewAllPersonalTasksFragment private constructor() :
+class ViewAllPersonalTasksFragment :
     BaseFragment<FragmentViewAllPersonalTasksBinding>(FragmentViewAllPersonalTasksBinding::inflate),
-    ViewAllPersonalTasksContract.View {
-    private lateinit var presenter: ViewAllPersonalTasksContract.Presenter
+    ViewAllPersonalTasksView {
+    private lateinit var presenter: ViewAllPersonalTasksPresenter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = ViewAllPersonalTasksPresenter(
             PersonalTaskInteractor(RemoteTasksRepository.getInstance()), this
         )
-        setup(requireArguments().getInt(TASK_TYPE_ARG))
+        setup()
     }
 
-    private fun setup(status: Int) {
-        presenter.getPersonalTasks(status)
+    private fun setup() {
+        val status = arguments?.getInt("key")
+        presenter.getPersonalTasks(0)
     }
 
     private fun getStatusNames(status: Int?): String {
@@ -53,25 +54,13 @@ class ViewAllPersonalTasksFragment private constructor() :
         Log.d("TAG", "showErrorMessage: $message")
     }
 
-    override fun viewAllPersonalTasksStatus(tasks: List<Task>) {
-        val status = arguments?.getInt(TASK_TYPE_ARG)
+    override fun viewAllPersonalTasksStatus(state:Int,tasks: List<Task>) {
         requireActivity().runOnUiThread {
             val adapter = ViewAllPersonalTasksAdapter()
             adapter.submitList(tasks)
-            binding.toolbar.title = getStatusNames(status)
+            binding.toolbar.title = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
         }
     }
 
-    companion object {
-        private const val TASK_TYPE_ARG = "task_type"
-        fun newInstance(taskType: Int) =
-            ViewAllPersonalTasksFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(TASK_TYPE_ARG, taskType)
-                }
-            }
-    }
 }
-
-
