@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.taskaty.R
 import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamInprogressBinding
@@ -156,6 +157,7 @@ class ParentTeamAdapter(
         val doneStatesValue =  (Done.size*100 ) /totalTasks
         val inProgressStatesValue =  (InProgress.size*100 ) /totalTasks
         holder.binding.apply {
+            chartTitle.text = "Team Todo States"
             todoStates.text = "$upComingStatesValue %"
             doneStates.text = "$doneStatesValue %"
             inProgressStates.text = "$inProgressStatesValue %"
