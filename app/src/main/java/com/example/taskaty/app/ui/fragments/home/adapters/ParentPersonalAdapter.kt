@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,7 @@ class ParentPersonalAdapter(
                 )
                 return ChartViewHolder(view.root)
             }
+
             SECOND_ITEM -> {
                 val view = ChildRecyclerHomePersonalInprogressBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -48,6 +50,7 @@ class ParentPersonalAdapter(
                 )
                 return InProgressViewHolder(view.root)
             }
+
             THIRD_ITEM -> {
                 val view = ChildRecyclerHomePersonalUpcomingBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -56,6 +59,7 @@ class ParentPersonalAdapter(
                 )
                 return UpcomingViewHolder(view.root)
             }
+
             else -> {
                 val view = ChildRecyclerHomePersonalDoneBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -81,7 +85,7 @@ class ParentPersonalAdapter(
             is InProgressViewHolder -> bindInProgress(holder)
             is UpcomingViewHolder -> bindUpcoming(holder)
             is DoneViewHolder -> bindDone(holder)
-            is ChartViewHolder ->bindChart(holder)
+            is ChartViewHolder -> bindChart(holder)
         }
     }
 
@@ -154,11 +158,17 @@ class ParentPersonalAdapter(
             }
         }
     }
+
     private fun bindChart(holder: ChartViewHolder) {
         val totalTasks = Done.size + InProgress.size + Upcoming.size
-        val upComingStatesValue =  (Upcoming.size*100 ) /totalTasks
-        val doneStatesValue =  (Done.size*100 ) /totalTasks
-        val inProgressStatesValue =  (InProgress.size*100 ) /totalTasks
+        var upComingStatesValue = 0
+        var doneStatesValue = 0
+        var inProgressStatesValue = 0
+        if(totalTasks != 0) {
+            upComingStatesValue = (Upcoming.size * 100) / totalTasks
+            doneStatesValue = (Done.size * 100) / totalTasks
+            inProgressStatesValue = (InProgress.size * 100) / totalTasks
+        }
         holder.binding.apply {
             todoStates.text = "$upComingStatesValue %"
             doneStates.text = "$doneStatesValue %"
@@ -171,23 +181,23 @@ class ParentPersonalAdapter(
             chart.setCenterTextSize(11F)
             chart.getDescription().setEnabled(false)
             chart.legend.isEnabled = false
-            val entries = ArrayList<PieEntry>();
-            entries.add(PieEntry(Upcoming.size*1f, "Todo"))
-            entries.add(PieEntry(Done.size*1f, "Done"))
-            entries.add(PieEntry(InProgress.size*1f, "In Progress"))
-            val colors = ArrayList<Int>();
+            val entries = ArrayList<PieEntry>()
+            entries.add(PieEntry(Upcoming.size * 1f, "Todo"))
+            entries.add(PieEntry(Done.size * 1f, "Done"))
+            entries.add(PieEntry(InProgress.size * 1f, "In Progress"))
+            val colors = ArrayList<Int>()
             colors.add(Color.parseColor("#7FBAA9"))
             colors.add(Color.parseColor("#93CB80"))
             colors.add(Color.parseColor("#418E77"))
-            val dataSet = PieDataSet(entries, "");
-            dataSet.setColors(colors);
-            val data = PieData(dataSet);
-            data.setDrawValues(false);
-            data.setValueFormatter(PercentFormatter(chart));
-            data.setValueTextSize(12f);
-            data.setValueTextColor(Color.BLACK);
-            chart.setData(data);
-            chart.invalidate();
+            val dataSet = PieDataSet(entries, "")
+            dataSet.setColors(colors)
+            val data = PieData(dataSet)
+            data.setDrawValues(false)
+            data.setValueFormatter(PercentFormatter(chart))
+            data.setValueTextSize(12f)
+            data.setValueTextColor(Color.BLACK)
+            chart.setData(data)
+            chart.invalidate()
         }
     }
 

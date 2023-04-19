@@ -153,11 +153,15 @@ class ParentTeamAdapter(
 
     private fun bindChart(holder: ChartViewHolder) {
         val totalTasks = Done.size + InProgress.size + Upcoming.size
-        val upComingStatesValue =  (Upcoming.size*100 ) /totalTasks
-        val doneStatesValue =  (Done.size*100 ) /totalTasks
-        val inProgressStatesValue =  (InProgress.size*100 ) /totalTasks
+        var upComingStatesValue = 0
+        var doneStatesValue = 0
+        var inProgressStatesValue = 0
+        if(totalTasks != 0) {
+            upComingStatesValue = (Upcoming.size * 100) / totalTasks
+            doneStatesValue = (Done.size * 100) / totalTasks
+            inProgressStatesValue = (InProgress.size * 100) / totalTasks
+        }
         holder.binding.apply {
-            chartTitle.text = "Team Todo States"
             todoStates.text = "$upComingStatesValue %"
             doneStates.text = "$doneStatesValue %"
             inProgressStates.text = "$inProgressStatesValue %"
@@ -169,23 +173,23 @@ class ParentTeamAdapter(
             chart.setCenterTextSize(11F)
             chart.getDescription().setEnabled(false)
             chart.legend.isEnabled = false
-            val entries = ArrayList<PieEntry>();
-            entries.add(PieEntry(Upcoming.size*1f, "Todo"))
-            entries.add(PieEntry(Done.size*1f, "Done"))
-            entries.add(PieEntry(InProgress.size*1f, "In Progress"))
-            val colors = ArrayList<Int>();
+            val entries = ArrayList<PieEntry>()
+            entries.add(PieEntry(Upcoming.size * 1f, "Todo"))
+            entries.add(PieEntry(Done.size * 1f, "Done"))
+            entries.add(PieEntry(InProgress.size * 1f, "In Progress"))
+            val colors = ArrayList<Int>()
             colors.add(Color.parseColor("#7FBAA9"))
             colors.add(Color.parseColor("#93CB80"))
             colors.add(Color.parseColor("#418E77"))
-            val dataSet = PieDataSet(entries, "");
-            dataSet.setColors(colors);
-            val data = PieData(dataSet);
-            data.setDrawValues(false);
-            data.setValueFormatter(PercentFormatter(chart));
-            data.setValueTextSize(12f);
-            data.setValueTextColor(Color.BLACK);
-            chart.setData(data);
-            chart.invalidate();
+            val dataSet = PieDataSet(entries, "")
+            dataSet.setColors(colors)
+            val data = PieData(dataSet)
+            data.setDrawValues(false)
+            data.setValueFormatter(PercentFormatter(chart))
+            data.setValueTextSize(12f)
+            data.setValueTextColor(Color.BLACK)
+            chart.setData(data)
+            chart.invalidate()
         }
     }
 
