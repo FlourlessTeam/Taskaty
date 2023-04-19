@@ -55,6 +55,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/done_view_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
@@ -64,6 +65,7 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/first_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_8"
@@ -136,7 +138,7 @@
                 android:background="@drawable/shape_task_done_status"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="3dp"
-                android:text="@string/todoText"
+                android:text="@string/done"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_8"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -164,6 +166,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/second_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/margin_8"
@@ -234,7 +237,7 @@
                 android:background="@drawable/shape_task_done_status"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="3dp"
-                android:text="@string/todoText"
+                android:text="@string/done"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_8"
                 app:layout_constraintBottom_toBottomOf="parent"

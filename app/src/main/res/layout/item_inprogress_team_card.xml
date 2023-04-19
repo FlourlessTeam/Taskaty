@@ -104,6 +104,7 @@
             android:id="@+id/member_team_circle"
             android:layout_width="18dp"
             android:layout_height="18dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/circle"
             android:paddingStart="5dp"
@@ -113,9 +114,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_8"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.953"
-            app:layout_constraintStart_toEndOf="@+id/inProgressText_team" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

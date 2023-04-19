@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
+import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
+import com.example.taskaty.app.ui.fragments.details.team.TeamTaskDetailsFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.ParentTeamAdapter
+import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksFragment
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
@@ -54,7 +57,20 @@ class TeamTasksFragment :
     }
 
     private fun initViews() {
-        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks)
+        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks, object : ParentTeamAdapter.OnViewAllClickListener {
+            override fun onViewAllClick(taskType: Int) {
+                val frag = ViewAllTeamTasksFragment.newInstance(taskType)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+            }
+        }, object : ParentTeamAdapter.OnTeamTaskClickListener {
+            override fun onTaskClick(task: TeamTask) {
+                val frag = TeamTaskDetailsFragment.getInstance(task.id)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+            }
+
+        })
         binding.PersonalTasksRecycler.adapter = adapter
         showTasks()
     }
@@ -75,8 +91,8 @@ class TeamTasksFragment :
     }
 
     companion object {
-        const val IN_PROGRESS_STATUS = 0
-        const val UPCOMING_STATUS = 1
+        const val UPCOMING_STATUS = 0
+        const val IN_PROGRESS_STATUS = 1
         const val DONE_STATUS = 2
     }
 

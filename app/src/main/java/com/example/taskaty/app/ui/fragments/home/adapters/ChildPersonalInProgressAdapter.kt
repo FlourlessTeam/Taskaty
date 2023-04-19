@@ -9,7 +9,8 @@ import com.example.taskaty.databinding.ItemInprogressPersonalCardBinding
 import com.example.taskaty.domain.entities.PersonalTask
 import java.util.*
 
-class ChildPersonalInProgressAdapter(private val items: List<PersonalTask>) :
+class ChildPersonalInProgressAdapter(private val items: List<PersonalTask>,
+                                     private val onTaskClickListener: ParentPersonalAdapter.OnPersonalTaskClickListener) :
     Adapter<ChildPersonalInProgressAdapter.InProgressViewHolder>() {
 
 
@@ -31,6 +32,7 @@ class ChildPersonalInProgressAdapter(private val items: List<PersonalTask>) :
         val outputTimeFormat = SimpleDateFormat(outputTimePattern, Locale.getDefault())
 
         holder.binding.apply {
+            root.setOnClickListener { onTaskClickListener.onTaskClick(item) }
             taskCardHeaderInProgress.text = item.title
             taskCardDescriptionInProgress.text = item.description
             taskCardDateInProgress.text = outputDateFormat.format(inputDateFormat.parse(item.creationTime))
