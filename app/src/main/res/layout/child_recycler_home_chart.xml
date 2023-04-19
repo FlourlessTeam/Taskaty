@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="16dp"
+    android:background="@color/task_card_color"
     app:cardCornerRadius="@dimen/size_12"
-    app:cardElevation="0dp"
-
-    android:layout_marginHorizontal="@dimen/margin_8">
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/chart_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:paddingBottom="12dp"
             android:text="Personal Todo States"
             android:textSize="@dimen/text_size_16" />
 
@@ -27,13 +26,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:weightSum="10">
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="10"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -41,21 +40,19 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="8dp">
+                    android:layout_marginBottom="8dp">
 
                     <View
                         android:layout_width="9dp"
                         android:layout_height="9dp"
                         android:background="@drawable/rounded_shape"
-                        android:backgroundTint="@color/todo_color"
-
-                        />
+                        android:backgroundTint="@color/todo_color" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingLeft="8dp">
+                        android:layout_marginStart="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -75,7 +72,6 @@
                             android:textSize="11sp" />
 
                     </LinearLayout>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -83,26 +79,21 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingBottom="8dp">
+                    android:layout_marginBottom="8dp">
 
                     <View
                         android:layout_width="9dp"
                         android:layout_height="9dp"
                         android:background="@drawable/rounded_shape"
-                        android:backgroundTint="@color/done_color"
-
-                        />
+                        android:backgroundTint="@color/done_color" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingLeft="8dp"
-
-                        >
+                        android:layout_marginStart="8dp">
 
                         <TextView
-
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins"
@@ -120,7 +111,6 @@
                             android:textSize="11sp" />
 
                     </LinearLayout>
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,15 +123,13 @@
                         android:layout_width="9dp"
                         android:layout_height="9dp"
                         android:background="@drawable/rounded_shape"
-                        android:backgroundTint="@color/in_progress_color"
-
-                        />
+                        android:backgroundTint="@color/in_progress_color"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingLeft="8dp">
+                        android:layout_marginStart="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -161,13 +149,12 @@
                             android:textSize="11sp" />
 
                     </LinearLayout>
-
                 </LinearLayout>
-
             </LinearLayout>
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/chart"
+                android:layout_weight="0.2"
                 android:layout_width="120dp"
                 android:layout_height="120dp" />
         </LinearLayout>
