@@ -16,7 +16,7 @@ class ViewAllPersonalTasksPresenter(
             override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
                 view.hideLoading()
                 val tasks = response.data
-                view.viewAllPersonalTasksStatus(tasks)
+                view.viewAllPersonalTasksStatus(state,tasks)
             }
 
             override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {

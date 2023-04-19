@@ -24,6 +24,7 @@ class ViewAllPersonalTasksFragment :
     }
 
     private fun setup() {
+        val status = arguments?.getInt("key")
         presenter.getPersonalTasks(0)
     }
 
@@ -53,12 +54,11 @@ class ViewAllPersonalTasksFragment :
         Log.d("TAG", "showErrorMessage: $message")
     }
 
-    override fun viewAllPersonalTasksStatus(tasks: List<Task>) {
-        val status = arguments?.getInt("key")
+    override fun viewAllPersonalTasksStatus(state:Int,tasks: List<Task>) {
         requireActivity().runOnUiThread {
             val adapter = ViewAllPersonalTasksAdapter()
             adapter.submitList(tasks)
-            binding.toolbar.title = getStatusNames(status)
+            binding.toolbar.title = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
         }
     }

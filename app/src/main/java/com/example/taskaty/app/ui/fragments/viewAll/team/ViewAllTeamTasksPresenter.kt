@@ -13,7 +13,7 @@ class ViewAllTeamTasksPresenter(
         view.showLoading()
         teamTaskInteractor.filterTeamTaskData(state,object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-                view.viewAllTeamTasksStatus(response.data)
+                view.viewAllTeamTasksStatus(state,response.data)
                 view.hideLoading()
             }
 

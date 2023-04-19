@@ -7,6 +7,6 @@ interface ViewAllPersonalTasksView {
     fun showLoading()
     fun hideLoading()
     fun showErrorMessage(message: String)
-    fun viewAllPersonalTasksStatus(tasks: List<Task>)
+    fun viewAllPersonalTasksStatus(state:Int,tasks: List<Task>)
 
 }
