@@ -9,7 +9,7 @@ import com.example.taskaty.domain.entities.TeamTask
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ChildTeamInProgressAdapter(private val items: List<TeamTask>) :
+class ChildTeamInProgressAdapter(private val items: List<TeamTask>,private val onTeamTaskClickListener: ParentTeamAdapter.OnTeamTaskClickListener) :
     Adapter<ChildTeamInProgressAdapter.InProgressViewHolder>() {
 
 
@@ -34,6 +34,7 @@ class ChildTeamInProgressAdapter(private val items: List<TeamTask>) :
         val outputTimeFormat = SimpleDateFormat(outputTimePattern, Locale.getDefault())
 
         holder.binding.apply {
+            root.setOnClickListener { onTeamTaskClickListener.onClick(item) }
             timeTextTeam.text = item.creationTime
             taskCardHeaderInProgressTeam.text = item.title
             taskDetailsTeam.text = item.description

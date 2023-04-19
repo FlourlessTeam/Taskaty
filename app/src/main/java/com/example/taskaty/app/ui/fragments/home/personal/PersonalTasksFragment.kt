@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
+import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.ParentPersonalAdapter
 import com.example.taskaty.app.ui.fragments.viewAll.personal.ViewAllPersonalTasksFragment
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
@@ -60,10 +61,14 @@ class PersonalTasksFragment :
     }
 
     private fun initViews() {
-        val adapter = ParentPersonalAdapter(inProgressTasks, upcomingTasks, doneTasks,ParentPersonalAdapter.OnViewAllClickListener{
+        val adapter = ParentPersonalAdapter(inProgressTasks, upcomingTasks, doneTasks, ParentPersonalAdapter.OnViewAllClickListener {
             val frag = ViewAllPersonalTasksFragment.newInstance(it)
             requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container_fragment,frag).addToBackStack(null).commit()
+                .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+        }, ParentPersonalAdapter.OnPersonalTaskClickListener {
+            val frag = TaskDetailsFragment.getInstance(it.id)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .add(R.id.container_fragment, frag).addToBackStack(null).commit()
         })
         binding.PersonalTasksRecycler.adapter = adapter
         showTasks()
@@ -85,8 +90,8 @@ class PersonalTasksFragment :
     }
 
     companion object {
-        const val IN_PROGRESS_STATUS = 0
-        const val UPCOMING_STATUS = 1
+        const val UPCOMING_STATUS = 0
+        const val IN_PROGRESS_STATUS = 1
         const val DONE_STATUS = 2
     }
 }

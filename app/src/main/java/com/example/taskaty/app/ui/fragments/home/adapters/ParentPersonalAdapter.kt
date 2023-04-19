@@ -14,10 +14,12 @@ import com.example.taskaty.domain.entities.PersonalTask
 import java.util.Locale
 
 class ParentPersonalAdapter(
-    val InProgress: List<PersonalTask>,
-    val Upcoming: List<PersonalTask>,
-    val Done: List<PersonalTask>,
-    val onViewAllClickListener: OnViewAllClickListener
+    private val InProgress: List<PersonalTask>,
+    private val Upcoming: List<PersonalTask>,
+    private val Done: List<PersonalTask>,
+    private val onViewAllClickListener: OnViewAllClickListener,
+    private val onTaskClickListener: OnPersonalTaskClickListener
+
 ) :
     Adapter<ParentPersonalAdapter.BaseViewHolder>() {
 
@@ -56,7 +58,7 @@ class ParentPersonalAdapter(
                     parent,
                     false
                 )
-                return UpcomingViewHolder(view.root)
+                return DoneViewHolder(view.root)
             }
         }
     }
@@ -79,11 +81,16 @@ class ParentPersonalAdapter(
     }
 
     private fun bindInProgress(holder: InProgressViewHolder) {
-        val adapter = ChildPersonalInProgressAdapter(InProgress)
+        val adapter = ChildPersonalInProgressAdapter(InProgress, onTaskClickListener)
         holder.binding.apply {
-            inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
-            childRecycler.adapter = adapter
-            tasksNumber.text = InProgress.size.toString()
+            if (InProgress.isEmpty()) {
+                //root.visibility = View.GONE
+
+            } else {
+                inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
+                childRecycler.adapter = adapter
+                tasksNumber.text = InProgress.size.toString()
+            }
         }
     }
 
@@ -93,7 +100,7 @@ class ParentPersonalAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
-            linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
+            upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.size == 1) {
                 val firstItem = Upcoming[FIRST_ITEM]
@@ -102,6 +109,7 @@ class ParentPersonalAdapter(
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
             } else if (Upcoming.size >= 2) {
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
@@ -115,6 +123,10 @@ class ParentPersonalAdapter(
                     outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
+                firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
+                secondCard.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
+            } else {
+                root.visibility = View.GONE
             }
         }
     }
@@ -125,17 +137,17 @@ class ParentPersonalAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
-            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(9999) }
+            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
-
-            if (Upcoming.size == 1) {
+            if (Done.size == 1) {
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
-            } else if (Upcoming.size >= 2) {
+                cardDoneSecond.visibility = View.GONE
+            } else if (Done.size >= 2) {
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -148,6 +160,10 @@ class ParentPersonalAdapter(
                     outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
+                cardDoneFirst.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
+                cardDoneSecond.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
+            } else {
+                root.visibility = View.GONE
             }
 
         }
@@ -165,9 +181,7 @@ class ParentPersonalAdapter(
         val binding = ChildRecyclerHomePersonalUpcomingBinding.bind(view)
     }
 
-    class ChartViewHolder(view: View) : BaseViewHolder(view) {
-
-    }
+    class ChartViewHolder(view: View) : BaseViewHolder(view)
 
     class DoneViewHolder(view: View) : BaseViewHolder(view) {
         val binding = ChildRecyclerHomePersonalDoneBinding.bind(view)
@@ -187,4 +201,7 @@ class ParentPersonalAdapter(
         fun onViewAllClick(taskType: Int) = onClick(taskType)
     }
 
+    class OnPersonalTaskClickListener(private val onClick: (PersonalTask) -> Unit) {
+        fun onTaskClick(task: PersonalTask) = onClick(task)
+    }
 }

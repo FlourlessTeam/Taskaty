@@ -55,6 +55,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/upcoming_view_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
@@ -64,6 +65,7 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/first_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_8"
@@ -72,6 +74,7 @@
         app:cardCornerRadius="@dimen/margin_8">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/first_constraint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -148,6 +151,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/second_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/task_card_color"

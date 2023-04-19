@@ -64,6 +64,7 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/upcoming_first_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_8"
@@ -163,6 +164,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/upcoming_second_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/task_card_color"

@@ -11,13 +11,14 @@ import com.example.taskaty.databinding.ChildRecyclerHomeTeamDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomeTeamUpcomingBinding
 import com.example.taskaty.domain.entities.TeamTask
-import java.util.*
+import java.util.Locale
 
 class ParentTeamAdapter(
-    val InProgress: List<TeamTask>,
-    val Upcoming: List<TeamTask>,
-    val Done: List<TeamTask>,
-    private val onViewAllClickListener: OnViewAllClickListener
+    private val InProgress: List<TeamTask>,
+    private val Upcoming: List<TeamTask>,
+    private val Done: List<TeamTask>,
+    private val onViewAllClickListener: OnViewAllClickListener,
+    private val onTeamTaskClickListener: OnTeamTaskClickListener
 ) : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -39,6 +40,7 @@ class ParentTeamAdapter(
                 )
                 return InProgressViewHolder(view.root)
             }
+
             THIRD_ITEM -> {
                 val view = ChildRecyclerHomeTeamUpcomingBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -47,13 +49,14 @@ class ParentTeamAdapter(
                 )
                 return UpcomingViewHolder(view.root)
             }
+
             else -> {
                 val view = ChildRecyclerHomeTeamDoneBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
-                return UpcomingViewHolder(view.root)
+                return DoneViewHolder(view.root)
             }
         }
     }
@@ -76,11 +79,15 @@ class ParentTeamAdapter(
     }
 
     private fun bindInProgress(holder: InProgressViewHolder) {
-        val adapter = ChildTeamInProgressAdapter(InProgress)
         holder.binding.apply {
-            inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
-            childRecycler.adapter = adapter
-            tasksNumber.text = InProgress.size.toString()
+            if (InProgress.isEmpty()) {
+                root.visibility = View.GONE
+            } else {
+                val adapter = ChildTeamInProgressAdapter(InProgress, onTeamTaskClickListener)
+                inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
+                childRecycler.adapter = adapter
+                tasksNumber.text = InProgress.size.toString()
+            }
         }
     }
 
@@ -92,14 +99,18 @@ class ParentTeamAdapter(
         holder.binding.apply {
             linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
-            if (Upcoming.size == 1) {
+            if (Upcoming.isEmpty()) {
+                root.visibility = View.GONE
+            } else if (Upcoming.size == 1) {
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
-            } else if (Upcoming.size >= 2) {
+                upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onClick(firstItem) }
+                upcomingSecondCard.visibility = View.GONE
+            } else {
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -112,6 +123,9 @@ class ParentTeamAdapter(
                     outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
+                upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onClick(firstItem) }
+                upcomingSecondCard.setOnClickListener { onTeamTaskClickListener.onClick(secondItem) }
+
             }
         }
     }
@@ -124,14 +138,18 @@ class ParentTeamAdapter(
         holder.binding.apply {
             doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
-            if (Upcoming.size == 1) {
+            if (Done.isEmpty()) {
+                root.visibility = View.GONE
+            } else if (Done.size == 1) {
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
-            } else if (Upcoming.size >= 2) {
+                firstCard.setOnClickListener { onTeamTaskClickListener.onClick(firstItem) }
+                secondCard.visibility = View.GONE
+            } else {
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -144,6 +162,8 @@ class ParentTeamAdapter(
                     outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
+                firstCard.setOnClickListener { onTeamTaskClickListener.onClick(firstItem) }
+                secondCard.setOnClickListener { onTeamTaskClickListener.onClick(secondItem) }
             }
         }
     }
@@ -160,9 +180,7 @@ class ParentTeamAdapter(
         val binding = ChildRecyclerHomeTeamUpcomingBinding.bind(view)
     }
 
-    class ChartViewHolder(view: View) : BaseViewHolder(view) {
-
-    }
+    class ChartViewHolder(view: View) : BaseViewHolder(view)
 
     class DoneViewHolder(view: View) : BaseViewHolder(view) {
         val binding = ChildRecyclerHomeTeamDoneBinding.bind(view)
@@ -177,7 +195,12 @@ class ParentTeamAdapter(
         const val OUTPUT_DATE_PATTERN = "yyyy-MM-dd"
         const val OUTPUT_TIME_PATTERN = "HH:mm"
     }
+
     class OnViewAllClickListener(private val onClick: (Int) -> Unit) {
         fun onViewAllClick(taskType: Int) = onClick(taskType)
+    }
+
+    interface OnTeamTaskClickListener {
+        fun onClick(task: TeamTask)
     }
 }
