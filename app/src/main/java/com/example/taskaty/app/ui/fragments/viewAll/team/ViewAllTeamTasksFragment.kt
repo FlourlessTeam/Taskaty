@@ -24,7 +24,8 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
     }
 
     private fun setup() {
-        presenter.getTeamTaskData(1)
+        val status = arguments?.getInt("key")
+        presenter.getTeamTaskData(0)
     }
 
     private fun getStatusNames(status: Int?): String {
@@ -53,12 +54,11 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
         Log.d("TAG", "showErrorMessage: $message")
     }
 
-    override fun viewAllTeamTasksStatus(teamTasks: List<TeamTask>) {
-        val status = arguments?.getInt("key")
+    override fun viewAllTeamTasksStatus(state:Int,teamTasks: List<TeamTask>) {
         requireActivity().runOnUiThread {
             val adapter = ViewAllTeamTasksAdapter()
             adapter.submitList(teamTasks)
-            binding.toolbar.title = getStatusNames(status)
+            binding.toolbar.title = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
         }
     }

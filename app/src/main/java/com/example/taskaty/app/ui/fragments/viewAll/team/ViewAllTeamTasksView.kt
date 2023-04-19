@@ -7,5 +7,5 @@ interface ViewAllTeamTasksView {
     fun showLoading()
     fun hideLoading()
     fun showErrorMessage(message: String)
-    fun viewAllTeamTasksStatus(teamTasks: List<TeamTask>)
+    fun viewAllTeamTasksStatus(state:Int,teamTasks: List<TeamTask>)
 }
