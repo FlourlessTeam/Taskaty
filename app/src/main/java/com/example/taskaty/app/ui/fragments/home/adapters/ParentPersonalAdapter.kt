@@ -197,11 +197,12 @@ class ParentPersonalAdapter(
         const val OUTPUT_TIME_PATTERN = "HH:mm"
     }
 
-    class OnViewAllClickListener(private val onClick: (Int) -> Unit) {
-        fun onViewAllClick(taskType: Int) = onClick(taskType)
+    interface OnViewAllClickListener {
+        fun onViewAllClick(taskType: Int)
     }
 
-    class OnPersonalTaskClickListener(private val onClick: (PersonalTask) -> Unit) {
-        fun onTaskClick(task: PersonalTask) = onClick(task)
+
+    interface OnPersonalTaskClickListener {
+        fun onTaskClick(task: PersonalTask)
     }
 }

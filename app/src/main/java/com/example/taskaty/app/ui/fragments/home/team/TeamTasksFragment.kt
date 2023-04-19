@@ -57,12 +57,14 @@ class TeamTasksFragment :
     }
 
     private fun initViews() {
-        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks, ParentTeamAdapter.OnViewAllClickListener {
-            val frag = ViewAllTeamTasksFragment.newInstance(it)
-            requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks, object : ParentTeamAdapter.OnViewAllClickListener {
+            override fun onViewAllClick(taskType: Int) {
+                val frag = ViewAllTeamTasksFragment.newInstance(taskType)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+            }
         }, object : ParentTeamAdapter.OnTeamTaskClickListener {
-            override fun onClick(task: TeamTask) {
+            override fun onTaskClick(task: TeamTask) {
                 val frag = TeamTaskDetailsFragment.getInstance(task.id)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .add(R.id.container_fragment, frag).addToBackStack(null).commit()

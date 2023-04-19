@@ -108,7 +108,7 @@ class ParentTeamAdapter(
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
-                upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onClick(firstItem) }
+                upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
                 upcomingSecondCard.visibility = View.GONE
             } else {
                 val firstItem = Upcoming[FIRST_ITEM]
@@ -123,8 +123,8 @@ class ParentTeamAdapter(
                     outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
-                upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onClick(firstItem) }
-                upcomingSecondCard.setOnClickListener { onTeamTaskClickListener.onClick(secondItem) }
+                upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
+                upcomingSecondCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(secondItem) }
 
             }
         }
@@ -147,7 +147,7 @@ class ParentTeamAdapter(
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
-                firstCard.setOnClickListener { onTeamTaskClickListener.onClick(firstItem) }
+                firstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
                 secondCard.visibility = View.GONE
             } else {
                 val firstItem = Done[FIRST_ITEM]
@@ -162,8 +162,8 @@ class ParentTeamAdapter(
                     outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
-                firstCard.setOnClickListener { onTeamTaskClickListener.onClick(firstItem) }
-                secondCard.setOnClickListener { onTeamTaskClickListener.onClick(secondItem) }
+                firstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
+                secondCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(secondItem) }
             }
         }
     }
@@ -196,11 +196,11 @@ class ParentTeamAdapter(
         const val OUTPUT_TIME_PATTERN = "HH:mm"
     }
 
-    class OnViewAllClickListener(private val onClick: (Int) -> Unit) {
-        fun onViewAllClick(taskType: Int) = onClick(taskType)
+    interface OnViewAllClickListener {
+        fun onViewAllClick(taskType: Int)
     }
 
     interface OnTeamTaskClickListener {
-        fun onClick(task: TeamTask)
+        fun onTaskClick(task: TeamTask)
     }
 }

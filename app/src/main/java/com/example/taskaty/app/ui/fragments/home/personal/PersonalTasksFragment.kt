@@ -61,14 +61,19 @@ class PersonalTasksFragment :
     }
 
     private fun initViews() {
-        val adapter = ParentPersonalAdapter(inProgressTasks, upcomingTasks, doneTasks, ParentPersonalAdapter.OnViewAllClickListener {
-            val frag = ViewAllPersonalTasksFragment.newInstance(it)
-            requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container_fragment, frag).addToBackStack(null).commit()
-        }, ParentPersonalAdapter.OnPersonalTaskClickListener {
-            val frag = TaskDetailsFragment.getInstance(it.id)
-            requireActivity().supportFragmentManager.beginTransaction()
-                .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+        val adapter = ParentPersonalAdapter(inProgressTasks, upcomingTasks, doneTasks, object : ParentPersonalAdapter.OnViewAllClickListener {
+            override fun onViewAllClick(taskType: Int) {
+                val frag = ViewAllPersonalTasksFragment.newInstance(taskType)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+            }
+        }, object : ParentPersonalAdapter.OnPersonalTaskClickListener {
+            override fun onTaskClick(task: PersonalTask) {
+                val frag = TaskDetailsFragment.getInstance(task.id)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+            }
+
         })
         binding.PersonalTasksRecycler.adapter = adapter
         showTasks()

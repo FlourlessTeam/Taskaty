@@ -34,7 +34,7 @@ class ChildTeamInProgressAdapter(private val items: List<TeamTask>,private val o
         val outputTimeFormat = SimpleDateFormat(outputTimePattern, Locale.getDefault())
 
         holder.binding.apply {
-            root.setOnClickListener { onTeamTaskClickListener.onClick(item) }
+            root.setOnClickListener { onTeamTaskClickListener.onTaskClick(item) }
             timeTextTeam.text = item.creationTime
             taskCardHeaderInProgressTeam.text = item.title
             taskDetailsTeam.text = item.description
