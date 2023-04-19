@@ -11,36 +11,39 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskaty.R
 import com.example.taskaty.databinding.ItemInViewAllBinding
 import com.example.taskaty.domain.entities.Task
+import com.example.taskaty.global.DateTimeUtils
 
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-
-class ViewAllPersonalTasksAdapter:
-    ListAdapter<Task, ViewAllPersonalTasksAdapter.ViewAllHolder>(TaskDiffCallback1()){
+class ViewAllPersonalTasksAdapter :
+    ListAdapter<Task, ViewAllPersonalTasksAdapter.ViewAllHolder>(TaskDiffCallback1()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllHolder {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all,parent,false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_in_view_all, parent, false)
         return ViewAllHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewAllHolder, position: Int) {
-        val item=getItem(position)
-        holder.binding.apply{
-            textTitle.text=item.title
-             textContent.text=item.description
-             textState.text=getStatusNames(item.status)
-            textState.backgroundTintList= ContextCompat.
-            getColorStateList(holder.itemView.context ,getStatusColors(item.status))
+        val item = getItem(position)
+        holder.binding.apply {
+            textTitle.text = item.title
+            textContent.text = item.description
+            textState.text = getStatusNames(item.status)
+            textState.backgroundTintList = ContextCompat.getColorStateList(
+                holder.itemView.context, getStatusColors(item.status)
+            )
 
             val inputDateString = item.creationTime
-             textCalender.text=  inputDateString.outputDateFormat()
-             textClock.text=  inputDateString.outputTimeFormat()
+            textCalender.text = DateTimeUtils.toDateFormat(inputDateString)
+            textClock.text = DateTimeUtils.toTimeFormat(inputDateString)
         }
 
 
     }
+
     private fun getStatusNames(status: Int?): String {
         return when (status) {
             0 -> "ToDo"
@@ -48,6 +51,7 @@ class ViewAllPersonalTasksAdapter:
             else -> "Done"
         }
     }
+
     private fun getStatusColors(status: Int?): Int {
         return when (status) {
             0 -> R.color.todo_color
@@ -56,33 +60,18 @@ class ViewAllPersonalTasksAdapter:
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun String.outputTimeFormat(): String {
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        val outputTimeFormat = SimpleDateFormat("HH:mm:ss")
-        val date = inputFormat.parse(this)
-        return outputTimeFormat.format(date!!)
-    }
-    @SuppressLint("SimpleDateFormat")
-    fun String.outputDateFormat(): String {
-        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        val outputDateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val date = inputFormat.parse(this)
-        return outputDateFormat.format(date!!)
+
+    class ViewAllHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding = ItemInViewAllBinding.bind(itemView)
     }
 
-
-    class ViewAllHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        val binding=ItemInViewAllBinding.bind(itemView)
-    }
-
-    class TaskDiffCallback1: DiffUtil.ItemCallback<Task>() {
+    class TaskDiffCallback1 : DiffUtil.ItemCallback<Task>() {
         override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
-            return oldItem.id==newItem.id
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
-            return oldItem.id==newItem.id
+            return oldItem.id == newItem.id
         }
     }
 }

@@ -3,6 +3,8 @@ package com.example.taskaty.app.ui.fragments.home
 import android.os.Bundle
 import android.view.View
 import com.example.taskaty.R
+import com.example.taskaty.app.ui.fragments.auth.login.LoginFragment
+import com.example.taskaty.app.ui.fragments.auth.signup.SignupFragment
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.HomePagerAdapter
 import com.example.taskaty.app.ui.fragments.home.bottomSheet.NewTaskBottomSheetFragment
@@ -18,9 +20,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         )
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setup()
+    }
+
+    private fun setup() {
         binding.viewPager.adapter = HomePagerAdapter(this)
         binding.viewPager.isUserInputEnabled = false
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -31,9 +36,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }.attach()
 
         binding.newTaskFAB.setOnClickListener {
-            val bottomSheet = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
-            bottomSheet.show(childFragmentManager, "tag")
+            showBottomSheet()
         }
+    }
 
+    private fun showBottomSheet() {
+        val bottomSheet = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
+        bottomSheet.show(childFragmentManager, "tag")
     }
 }

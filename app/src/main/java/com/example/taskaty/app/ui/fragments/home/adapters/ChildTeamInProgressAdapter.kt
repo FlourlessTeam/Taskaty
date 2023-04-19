@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ItemInprogressTeamCardBinding
 import com.example.taskaty.domain.entities.TeamTask
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ChildTeamInProgressAdapter(private val items: List<TeamTask>) :
     Adapter<ChildTeamInProgressAdapter.InProgressViewHolder>() {
@@ -24,10 +26,19 @@ class ChildTeamInProgressAdapter(private val items: List<TeamTask>) :
 
     override fun onBindViewHolder(holder: InProgressViewHolder, position: Int) {
         val item = items[position]
+        val inputDatePattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        val outputDatePattern = "yyyy-MM-dd"
+        val outputTimePattern = "HH:mm"
+        val inputDateFormat = SimpleDateFormat(inputDatePattern, Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat(outputDatePattern, Locale.getDefault())
+        val outputTimeFormat = SimpleDateFormat(outputTimePattern, Locale.getDefault())
+
         holder.binding.apply {
             timeTextTeam.text = item.creationTime
             taskCardHeaderInProgressTeam.text = item.title
             taskDetailsTeam.text = item.description
+            dateTextTeam.text = outputDateFormat.format(inputDateFormat.parse(item.creationTime)!!)
+            timeTextTeam.text = outputTimeFormat.format(inputDateFormat.parse(item.creationTime)!!)
         }
     }
 
