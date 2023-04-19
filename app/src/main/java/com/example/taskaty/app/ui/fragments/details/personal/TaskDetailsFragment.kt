@@ -34,7 +34,6 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         taskId = arguments?.getString(ARGUMENT_KEY, "")!!
-
         val remoteTasksRepository = RemoteTasksRepository.getInstance()
         presenter = TaskDetailsPresenter(
             this, PersonalTaskInteractor(remoteTasksRepository)
@@ -89,19 +88,19 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
     }
 
     override fun showGetTaskLoading() {
-        showLoading(progressBarVisible = true, taskDataVisible = false)
+        showLoading(progressBarVisible = false, taskDataVisible = false,shimmerVisible = true)
     }
 
     override fun hideGetTaskLoading() {
-        showLoading(progressBarVisible = false, taskDataVisible = true)
+        showLoading(progressBarVisible = false, taskDataVisible = true,shimmerVisible = false)
     }
 
     override fun showUpdateTaskLoading() {
-        showLoading(progressBarVisible = true, taskDataVisible = true)
+        showLoading(progressBarVisible = true, taskDataVisible = true,shimmerVisible = false)
     }
 
     override fun hideUpdateTaskLoading() {
-        showLoading(progressBarVisible = false, taskDataVisible = true)
+        showLoading(progressBarVisible = false, taskDataVisible = true,shimmerVisible = false)
     }
 
     override fun showMessage(message: String) {
@@ -114,11 +113,12 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
         }
     }
 
-    private fun showLoading(progressBarVisible: Boolean, taskDataVisible: Boolean) {
+    private fun showLoading(progressBarVisible: Boolean, taskDataVisible: Boolean,shimmerVisible:Boolean) {
         requireActivity().runOnUiThread {
             TransitionManager.beginDelayedTransition(binding.root)
             binding.progressBar.isVisible = progressBarVisible
             binding.taskDataLayout.isVisible = taskDataVisible
+            binding.shimmerFrameLayout.isVisible = shimmerVisible
         }
     }
 
