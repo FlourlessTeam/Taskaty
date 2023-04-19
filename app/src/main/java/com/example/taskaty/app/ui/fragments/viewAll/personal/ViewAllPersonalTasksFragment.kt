@@ -10,7 +10,7 @@ import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 
 
-class ViewAllPersonalTasksFragment :
+class ViewAllPersonalTasksFragment private constructor() :
     BaseFragment<FragmentViewAllPersonalTasksBinding>(FragmentViewAllPersonalTasksBinding::inflate),
     ViewAllPersonalTasksContract.View {
     private lateinit var presenter: ViewAllPersonalTasksContract.Presenter
@@ -20,11 +20,11 @@ class ViewAllPersonalTasksFragment :
         presenter = ViewAllPersonalTasksPresenter(
             PersonalTaskInteractor(RemoteTasksRepository.getInstance()), this
         )
-        setup()
+        setup(requireArguments().getInt(TASK_TYPE_ARG))
     }
 
-    private fun setup() {
-        presenter.getPersonalTasks(0)
+    private fun setup(status: Int) {
+        presenter.getPersonalTasks(status)
     }
 
     private fun getStatusNames(status: Int?): String {
@@ -54,7 +54,7 @@ class ViewAllPersonalTasksFragment :
     }
 
     override fun viewAllPersonalTasksStatus(tasks: List<Task>) {
-        val status = arguments?.getInt("key")
+        val status = arguments?.getInt(TASK_TYPE_ARG)
         requireActivity().runOnUiThread {
             val adapter = ViewAllPersonalTasksAdapter()
             adapter.submitList(tasks)
@@ -63,4 +63,15 @@ class ViewAllPersonalTasksFragment :
         }
     }
 
+    companion object {
+        private const val TASK_TYPE_ARG = "task_type"
+        fun newInstance(taskType: Int) =
+            ViewAllPersonalTasksFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(TASK_TYPE_ARG, taskType)
+                }
+            }
+    }
 }
+
+

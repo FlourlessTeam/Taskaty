@@ -11,18 +11,18 @@ import com.example.taskaty.databinding.ChildRecyclerHomePersonalDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalUpcomingBinding
 import com.example.taskaty.domain.entities.PersonalTask
-import java.util.*
+import java.util.Locale
 
 class ParentPersonalAdapter(
     val InProgress: List<PersonalTask>,
     val Upcoming: List<PersonalTask>,
-    val Done: List<PersonalTask>
+    val Done: List<PersonalTask>,
+    val onViewAllClickListener: OnViewAllClickListener
 ) :
     Adapter<ParentPersonalAdapter.BaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
-
             FIRST_ITEM -> {
                 val view = ChildRecyclerHomeChartBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -31,6 +31,7 @@ class ParentPersonalAdapter(
                 )
                 return ChartViewHolder(view.root)
             }
+
             SECOND_ITEM -> {
                 val view = ChildRecyclerHomePersonalInprogressBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -39,6 +40,7 @@ class ParentPersonalAdapter(
                 )
                 return InProgressViewHolder(view.root)
             }
+
             THIRD_ITEM -> {
                 val view = ChildRecyclerHomePersonalUpcomingBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -47,6 +49,7 @@ class ParentPersonalAdapter(
                 )
                 return UpcomingViewHolder(view.root)
             }
+
             else -> {
                 val view = ChildRecyclerHomePersonalDoneBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -78,6 +81,7 @@ class ParentPersonalAdapter(
     private fun bindInProgress(holder: InProgressViewHolder) {
         val adapter = ChildPersonalInProgressAdapter(InProgress)
         holder.binding.apply {
+            inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
             childRecycler.adapter = adapter
             tasksNumber.text = InProgress.size.toString()
         }
@@ -89,6 +93,7 @@ class ParentPersonalAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
+            linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.size == 1) {
                 val firstItem = Upcoming[FIRST_ITEM]
@@ -120,6 +125,7 @@ class ParentPersonalAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
+            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(9999) }
             tasksNumber.text = Done.size.toString()
 
             if (Upcoming.size == 1) {
@@ -176,4 +182,9 @@ class ParentPersonalAdapter(
         const val OUTPUT_DATE_PATTERN = "yyyy-MM-dd"
         const val OUTPUT_TIME_PATTERN = "HH:mm"
     }
+
+    class OnViewAllClickListener(private val onClick: (Int) -> Unit) {
+        fun onViewAllClick(taskType: Int) = onClick(taskType)
+    }
+
 }

@@ -5,12 +5,11 @@ import android.util.Log
 import android.view.View
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
-
 import com.example.taskaty.databinding.FragmentViewAllTeamTasksBinding
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
 
-class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
+class ViewAllTeamTasksFragment private constructor(): BaseFragment<FragmentViewAllTeamTasksBinding>
     (FragmentViewAllTeamTasksBinding::inflate), ViewAllTeamTasksContract.View {
     private lateinit var presenter: ViewAllTeamTasksContract.Presenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -19,12 +18,12 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
             TeamTaskInteractor(RemoteTasksRepository.getInstance()), this
         )
 
-        setup()
+        setup(requireArguments().getInt(TASK_TYPE_ARG))
 
     }
 
-    private fun setup() {
-        presenter.getTeamTaskData(0)
+    private fun setup(status: Int) {
+        presenter.getTeamTaskData(status)
     }
 
     private fun getStatusNames(status: Int?): String {
@@ -54,7 +53,7 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
     }
 
     override fun viewAllTeamTasksStatus(teamTasks: List<TeamTask>) {
-        val status = arguments?.getInt("key")
+        val status = arguments?.getInt(TASK_TYPE_ARG)
         requireActivity().runOnUiThread {
             val adapter = ViewAllTeamTasksAdapter()
             adapter.submitList(teamTasks)
@@ -63,7 +62,15 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
         }
     }
 
-
+    companion object {
+        private const val TASK_TYPE_ARG = "task_type"
+        fun newInstance(taskType: Int) =
+            ViewAllTeamTasksFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(TASK_TYPE_ARG, taskType)
+                }
+            }
+    }
 }
 
 

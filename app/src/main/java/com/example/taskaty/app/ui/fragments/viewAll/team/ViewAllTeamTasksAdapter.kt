@@ -50,7 +50,9 @@ class ViewAllTeamTasksAdapter() :
             textState.backgroundTintList = ContextCompat.getColorStateList(
                 holder.itemView.context, getStatusColors(item.status)
             )
-            textAssignee.text = item.assignee.subSequence(0, 1).toString().uppercase()
+            if(item.assignee.isNotEmpty()) {
+                textAssignee.text = item.assignee.subSequence(0, 1).toString().uppercase()
+            }
             textAssignee.backgroundTintList = ContextCompat.getColorStateList(
                 holder.itemView.context, getStatusColors(item.status)
             )

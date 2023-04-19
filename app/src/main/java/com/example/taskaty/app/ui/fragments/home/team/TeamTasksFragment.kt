@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
+import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.ParentTeamAdapter
+import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksFragment
 import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
@@ -54,7 +56,11 @@ class TeamTasksFragment :
     }
 
     private fun initViews() {
-        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks)
+        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks,ParentTeamAdapter.OnViewAllClickListener {
+            val frag = ViewAllTeamTasksFragment.newInstance(it)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .add(R.id.container_fragment,frag).addToBackStack(null).commit()
+        })
         binding.PersonalTasksRecycler.adapter = adapter
         showTasks()
     }
