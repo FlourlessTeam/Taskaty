@@ -91,13 +91,13 @@ class ParentPersonalAdapter(
             todoStates.text = "$upComingStatesValue %"
             doneStates.text = "$doneStatesValue %"
             inProgressStates.text = "$inProgressStatesValue %"
-            chart.setDrawHoleEnabled(true)
+            chart.isDrawHoleEnabled = true
             chart.setUsePercentValues(false)
             chart.setDrawEntryLabels(false)
             chart.holeRadius = 70f
-            chart.setCenterText("Total \n$totalTasks")
+            chart.centerText = "Total \n$totalTasks"
             chart.setCenterTextSize(11F)
-            chart.getDescription().setEnabled(false)
+            chart.description.isEnabled = false
             chart.legend.isEnabled = false
             val entries = ArrayList<PieEntry>()
             entries.add(PieEntry(Upcoming.size * 1f, "Todo"))
@@ -108,13 +108,13 @@ class ParentPersonalAdapter(
             colors.add(Color.parseColor("#93CB80"))
             colors.add(Color.parseColor("#418E77"))
             val dataSet = PieDataSet(entries, "")
-            dataSet.setColors(colors)
+            dataSet.colors = colors
             val data = PieData(dataSet)
             data.setDrawValues(false)
             data.setValueFormatter(PercentFormatter(chart))
             data.setValueTextSize(12f)
             data.setValueTextColor(Color.BLACK)
-            chart.setData(data)
+            chart.data = data
             chart.invalidate()
         }
     }
@@ -124,16 +124,15 @@ class ParentPersonalAdapter(
             is InProgressViewHolder -> bindInProgress(holder)
             is UpcomingViewHolder -> bindUpcoming(holder)
             is DoneViewHolder -> bindDone(holder)
+            is ChartViewHolder -> bindChart(holder)
+
         }
     }
 
     private fun bindInProgress(holder: InProgressViewHolder) {
         val adapter = ChildPersonalInProgressAdapter(InProgress, onTaskClickListener)
         holder.binding.apply {
-            if (InProgress.isEmpty()) {
-                //root.visibility = View.GONE
-
-            } else {
+            if (InProgress.isNotEmpty()) {
                 inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
                 childRecycler.adapter = adapter
                 tasksNumber.text = InProgress.size.toString()
@@ -182,7 +181,6 @@ class ParentPersonalAdapter(
         val inputDateFormat = SimpleDateFormat(INPUT_DATE_PATTERN, Locale.getDefault())
         val outputDateFormat = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
-
         holder.binding.apply {
             doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
