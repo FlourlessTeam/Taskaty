@@ -15,6 +15,7 @@ import com.example.taskaty.databinding.FragmentTeamTaskDetailsBinding
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
 import com.example.taskaty.global.DateTimeUtils
+import com.facebook.shimmer.Shimmer
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,7 +36,7 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		teamTaskId = "361d7234-ba58-4d26-bcfa-e06d35d00370"
+		teamTaskId = arguments?.getString(ARGUMENT_KEY, "")!!
 
 		LocalAuthRepository.getInstance(requireActivity().application).getToken()
 
@@ -95,19 +96,19 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 	}
 
 	override fun showGetTeamTaskLoading() {
-		showLoading(progressBarVisible = true, taskDataVisible = false)
+		showLoading(progressBarVisible = false, taskDataVisible = false, shimmerVisible = true)
 	}
 
 	override fun hideGetTeamTaskLoading() {
-		showLoading(progressBarVisible = false, taskDataVisible = true)
+		showLoading(progressBarVisible = false, taskDataVisible = true, shimmerVisible = false)
 	}
 
 	override fun showUpdateTeamTaskLoading() {
-		showLoading(progressBarVisible = true, taskDataVisible = true)
+		showLoading(progressBarVisible = true, taskDataVisible = true, shimmerVisible = false)
 	}
 
 	override fun hideUpdateTeamTaskLoading() {
-		showLoading(progressBarVisible = false, taskDataVisible = true)
+		showLoading(progressBarVisible = false, taskDataVisible = true, shimmerVisible = false)
 	}
 
 	override fun showMessage(message: String) {
@@ -120,11 +121,12 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
 		}
 	}
 
-	private fun showLoading(progressBarVisible: Boolean, taskDataVisible: Boolean) {
+	private fun showLoading(progressBarVisible: Boolean, taskDataVisible: Boolean,shimmerVisible: Boolean ) {
 		requireActivity().runOnUiThread {
 			TransitionManager.beginDelayedTransition(binding.root)
 			binding.progressBar.isVisible = progressBarVisible
 			binding.taskDataLayout.isVisible = taskDataVisible
+			binding.shimmerFrameLayout.isVisible = shimmerVisible
 		}
 	}
 
