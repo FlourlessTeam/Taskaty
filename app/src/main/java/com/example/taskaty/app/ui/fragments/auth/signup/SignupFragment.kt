@@ -1,4 +1,4 @@
-package com.example.taskaty.app.auth.signup
+package com.example.taskaty.app.ui.fragments.auth.signup
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.taskaty.R
-import com.example.taskaty.app.auth.login.LoginFragment
+import com.example.taskaty.app.ui.fragments.auth.login.LoginFragment
 import com.example.taskaty.databinding.FragmentSignupBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.local.LocalAuthRepository
@@ -15,8 +15,8 @@ import com.example.taskaty.domain.interactors.AuthInteractor
 
 
 class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding::inflate),
-    SignupContract.View {
-    private lateinit var presenter: SignupContract.Presenter
+    SignupView {
+    private lateinit var presenter: SignupPresenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = SignupPresenter(
