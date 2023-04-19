@@ -9,9 +9,9 @@ import com.example.taskaty.databinding.FragmentViewAllTeamTasksBinding
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
 
-class ViewAllTeamTasksFragment private constructor(): BaseFragment<FragmentViewAllTeamTasksBinding>
-    (FragmentViewAllTeamTasksBinding::inflate), ViewAllTeamTasksContract.View {
-    private lateinit var presenter: ViewAllTeamTasksContract.Presenter
+class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
+    (FragmentViewAllTeamTasksBinding::inflate), ViewAllTeamTasksView {
+    private lateinit var presenter: ViewAllTeamTasksPresenter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = ViewAllTeamTasksPresenter(
@@ -52,12 +52,11 @@ class ViewAllTeamTasksFragment private constructor(): BaseFragment<FragmentViewA
         Log.d("TAG", "showErrorMessage: $message")
     }
 
-    override fun viewAllTeamTasksStatus(teamTasks: List<TeamTask>) {
-        val status = arguments?.getInt(TASK_TYPE_ARG)
+    override fun viewAllTeamTasksStatus(state: Int, teamTasks: List<TeamTask>) {
         requireActivity().runOnUiThread {
             val adapter = ViewAllTeamTasksAdapter()
             adapter.submitList(teamTasks)
-            binding.toolbar.title = getStatusNames(status)
+            binding.toolbar.title = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
         }
     }
@@ -72,6 +71,3 @@ class ViewAllTeamTasksFragment private constructor(): BaseFragment<FragmentViewA
             }
     }
 }
-
-
-

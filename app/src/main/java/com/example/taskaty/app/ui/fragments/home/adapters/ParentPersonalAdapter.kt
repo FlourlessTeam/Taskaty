@@ -1,5 +1,6 @@
 package com.example.taskaty.app.ui.fragments.home.adapters
 
+import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,10 @@ import com.example.taskaty.databinding.ChildRecyclerHomePersonalDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalInprogressBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalUpcomingBinding
 import com.example.taskaty.domain.entities.PersonalTask
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import java.util.Locale
 
 class ParentPersonalAdapter(
@@ -69,6 +74,48 @@ class ParentPersonalAdapter(
             SECOND_ITEM -> SECOND_ITEM
             THIRD_ITEM -> THIRD_ITEM
             else -> FOURTH_ITEM
+        }
+    }
+
+    private fun bindChart(holder: ChartViewHolder) {
+        val totalTasks = Done.size + InProgress.size + Upcoming.size
+        var upComingStatesValue = 0
+        var doneStatesValue = 0
+        var inProgressStatesValue = 0
+        if(totalTasks != 0) {
+            upComingStatesValue = (Upcoming.size * 100) / totalTasks
+            doneStatesValue = (Done.size * 100) / totalTasks
+            inProgressStatesValue = (InProgress.size * 100) / totalTasks
+        }
+        holder.binding.apply {
+            todoStates.text = "$upComingStatesValue %"
+            doneStates.text = "$doneStatesValue %"
+            inProgressStates.text = "$inProgressStatesValue %"
+            chart.setDrawHoleEnabled(true)
+            chart.setUsePercentValues(false)
+            chart.setDrawEntryLabels(false)
+            chart.holeRadius = 70f
+            chart.setCenterText("Total \n$totalTasks")
+            chart.setCenterTextSize(11F)
+            chart.getDescription().setEnabled(false)
+            chart.legend.isEnabled = false
+            val entries = ArrayList<PieEntry>()
+            entries.add(PieEntry(Upcoming.size * 1f, "Todo"))
+            entries.add(PieEntry(Done.size * 1f, "Done"))
+            entries.add(PieEntry(InProgress.size * 1f, "In Progress"))
+            val colors = ArrayList<Int>()
+            colors.add(Color.parseColor("#7FBAA9"))
+            colors.add(Color.parseColor("#93CB80"))
+            colors.add(Color.parseColor("#418E77"))
+            val dataSet = PieDataSet(entries, "")
+            dataSet.setColors(colors)
+            val data = PieData(dataSet)
+            data.setDrawValues(false)
+            data.setValueFormatter(PercentFormatter(chart))
+            data.setValueTextSize(12f)
+            data.setValueTextColor(Color.BLACK)
+            chart.setData(data)
+            chart.invalidate()
         }
     }
 
@@ -181,7 +228,9 @@ class ParentPersonalAdapter(
         val binding = ChildRecyclerHomePersonalUpcomingBinding.bind(view)
     }
 
-    class ChartViewHolder(view: View) : BaseViewHolder(view)
+    class ChartViewHolder(view: View) : BaseViewHolder(view){
+        val binding = ChildRecyclerHomeChartBinding.bind(view)
+    }
 
     class DoneViewHolder(view: View) : BaseViewHolder(view) {
         val binding = ChildRecyclerHomePersonalDoneBinding.bind(view)

@@ -2,6 +2,7 @@ package com.example.taskaty.app.ui.fragments.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.HomePagerAdapter
@@ -16,6 +17,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setup() {
+        binding.searchViewHome.setOnClickListener {
+            replaceFragment(SearchFragment())
+        }
         binding.viewPager.adapter = HomePagerAdapter(this)
         binding.viewPager.isUserInputEnabled = false
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -33,5 +37,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun showBottomSheet() {
         val bottomSheet = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
         bottomSheet.show(childFragmentManager, "tag")
+    }
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }
