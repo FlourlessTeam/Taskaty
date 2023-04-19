@@ -1,9 +1,10 @@
-package com.example.taskaty.app.ui.fragments
+package com.example.taskaty.app.ui.fragments.home
 
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
@@ -20,7 +21,7 @@ import com.example.taskaty.domain.interactors.SearchInteractor
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),SearchListener {
     private val adapter = SearchAdapter(this)
-     private val searchData = SearchInteractor(RemoteTasksRepository.getInstance())
+     private val searchData = SearchInteractor(RemoteTasksRepository.getInstance(), RemoteTasksRepository.getInstance())
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewSearch.adapter = adapter
@@ -30,10 +31,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     private fun setup() {
         with(binding) {
         binding.backButton.setOnClickListener{
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.container_fragment, HomeFragment())
-                .addToBackStack(null)
-                .commit()
+            replaceFragment(HomeFragment())
         }
             searchViewResult.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -58,12 +56,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
    override fun onClick(task: Task) {
-         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.container_fragment, TaskDetailsFragment.getInstance(task.id))
-            .addToBackStack(null)
-            .commit()
+        replaceFragment(TaskDetailsFragment.getInstance(task.id))
           }
-
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 
 
 }

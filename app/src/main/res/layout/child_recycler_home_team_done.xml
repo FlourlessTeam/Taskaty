@@ -68,7 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_8"
         android:background="@color/task_card_color"
-        android:elevation="0dp"
+        app:cardElevation="0dp"
+        android:layout_marginBottom="8dp"
         app:cardCornerRadius="@dimen/margin_8">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -120,7 +121,7 @@
                 android:text="@string/dateTextExample"
                 android:textColor="@color/text_color_50"
                 android:textSize="@dimen/text_size_8"
-                app:drawableStartCompat="@drawable/outline_calendar_month_24"
+                app:drawableStartCompat="@drawable/calendar_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/task_header_first"
                 tools:ignore="TextContrastCheck" />
@@ -166,7 +167,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/task_card_color"
-        android:elevation="0dp"
+        app:cardElevation="0dp"
+        android:layout_marginBottom="8dp"
         app:cardCornerRadius="@dimen/margin_8">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -218,7 +220,7 @@
                 android:text="@string/dateTextExample"
                 android:textColor="@color/text_color_50"
                 android:textSize="@dimen/text_size_8"
-                app:drawableStartCompat="@drawable/outline_calendar_month_24"
+                app:drawableStartCompat="@drawable/calendar_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/task_header_second"
                 tools:ignore="TextContrastCheck" />

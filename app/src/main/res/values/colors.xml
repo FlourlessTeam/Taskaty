@@ -22,4 +22,6 @@
     <color name="search_bar_stroke_color">#FAFAFA</color>
     <color name="submit_text_color">#01704F</color>
     <color name="back_icon">#000000</color>
+    <color name="search_background_color">#FFFFFF</color>
+
 </resources>

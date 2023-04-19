@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskaty.R
-import com.example.taskaty.databinding.ItemInprogressPersonalCardBinding
+import com.example.taskaty.databinding.ItemInViewAllBinding
 import com.example.taskaty.domain.entities.PersonalTask
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,7 +15,7 @@ import java.util.*
 class SearchAdapter(private val searchListener: SearchListener) :
     ListAdapter<PersonalTask, SearchAdapter.SearchViewHolder>(TaskDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        val binding = ItemInprogressPersonalCardBinding.inflate(
+        val binding = ItemInViewAllBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -30,7 +30,7 @@ class SearchAdapter(private val searchListener: SearchListener) :
 
     }
 
-    class SearchViewHolder(private val binding: ItemInprogressPersonalCardBinding) :
+    class SearchViewHolder(private val binding: ItemInViewAllBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PersonalTask, searchListener: SearchListener) {
             binding.apply {
@@ -38,16 +38,16 @@ class SearchAdapter(private val searchListener: SearchListener) :
                     searchListener.onClick(item)
                 }
 
-                taskCardHeaderInProgress.text = item.title
-                taskCardDescriptionInProgress.text = item.description
-                timeTextInProgress.text = item.creationTime.toTimeFormat()
-                taskCardDateInProgress.text = item.creationTime.toDateFormat()
-                inProgressText.text = when (item.status) {
+                textTitle.text = item.title
+                textContent.text = item.description
+                textClock.text = item.creationTime.toTimeFormat()
+                textCalender.text = item.creationTime.toDateFormat()
+                textState.text = when (item.status) {
                     0 -> "Upcoming"
                     1 -> "In Progress"
                     else -> "Done"
                 }
-                inProgressText.backgroundTintList = ContextCompat.getColorStateList(
+                textState.backgroundTintList = ContextCompat.getColorStateList(
                     binding.root.context,
                     getStatusColors(item.status)
                 )

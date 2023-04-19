@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAppContext() {
-        GlobalState.appContext = Application()
+        GlobalState.appContext = applicationContext
     }
 
 }
