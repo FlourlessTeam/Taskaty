@@ -1,16 +1,16 @@
 package com.example.taskaty.app.ui.fragments.home.bottomSheet
 
-import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
+import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.TeamTask
-import com.example.taskaty.domain.repositories.remote.TasksDataSource
-import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
+import com.example.taskaty.domain.repositories.tasks.PersonalTasksRepository
+import com.example.taskaty.domain.repositories.tasks.TeamTasksRepository
 
 class NewTaskPresenter {
 
-    private val personalTaskDataSource: TasksDataSource = RemoteTasksRepository.getInstance()
-    private val teamTaskDataSource: TeamTasksDataSource = RemoteTasksRepository.getInstance()
+    private val personalTaskDataSource: PersonalTasksRepository = AllTasksRepositoryImpl.getInstance()
+    private val teamTaskDataSource: TeamTasksRepository = AllTasksRepositoryImpl.getInstance()
 
 
     fun onCreateBtnClicked(
@@ -22,7 +22,7 @@ class NewTaskPresenter {
     ) {
         //selectedTabPosition when equal 0 means we in personal task fragment
         //selectedTabPosition when equal 1 means we in team task fragment
-        val teamTask = TeamTask(
+        val task = TeamTask(
             id = "",
             title = title,
             description = description,
@@ -41,7 +41,7 @@ class NewTaskPresenter {
             personalTaskDataSource.createPersonalTask(personalTask, repo)
         } else {
 
-            teamTaskDataSource.createTeamTask(teamTask, repo)
+            teamTaskDataSource.createTeamTask(task, repo)
         }
     }
 }

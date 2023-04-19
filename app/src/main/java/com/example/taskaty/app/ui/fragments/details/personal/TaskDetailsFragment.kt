@@ -9,14 +9,11 @@ import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.view.isVisible
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
-import com.example.taskaty.data.repositories.local.LocalAuthRepository
-import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
+import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.databinding.FragmentTaskDetailsBinding
 import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
-import com.example.taskaty.global.DateTimeUtils
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.taskaty.app.utils.DateTimeUtils
 
 
 class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
@@ -34,9 +31,9 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         taskId = arguments?.getString(ARGUMENT_KEY, "")!!
-        val remoteTasksRepository = RemoteTasksRepository.getInstance()
+        val allTasksRepositoryImpl = AllTasksRepositoryImpl.getInstance()
         presenter = TaskDetailsPresenter(
-            this, PersonalTaskInteractor(remoteTasksRepository)
+            this, PersonalTaskInteractor(allTasksRepositoryImpl)
         )
 
         setup()

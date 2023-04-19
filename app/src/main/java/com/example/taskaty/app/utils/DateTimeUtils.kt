@@ -1,4 +1,4 @@
-package com.example.taskaty.global
+package com.example.taskaty.app.utils
 
 import java.text.SimpleDateFormat
 import java.util.*

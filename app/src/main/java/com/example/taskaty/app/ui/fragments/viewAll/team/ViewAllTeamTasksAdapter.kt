@@ -1,6 +1,5 @@
 package com.example.taskaty.app.ui.fragments.viewAll.team
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,7 @@ import com.example.taskaty.databinding.ItemTeamViewAllBinding
 
 
 import com.example.taskaty.domain.entities.TeamTask
-import com.example.taskaty.global.DateTimeUtils
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.taskaty.app.utils.DateTimeUtils
 
 class ViewAllTeamTasksAdapter() :
     ListAdapter<TeamTask, ViewAllTeamTasksAdapter.ViewAllHolder>(TeamTaskDiffCallback()) {

@@ -9,13 +9,8 @@ import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.auth.signup.SignupFragment
 import com.example.taskaty.databinding.FragmentLoginBinding
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
-import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
-import com.example.taskaty.app.ui.fragments.details.team.TeamTaskDetailsFragment
 import com.example.taskaty.app.ui.fragments.home.HomeFragment
-import com.example.taskaty.app.ui.fragments.viewAll.personal.ViewAllPersonalTasksFragment
-import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksFragment
-import com.example.taskaty.data.repositories.local.LocalAuthRepository
-import com.example.taskaty.data.repositories.remote.RemoteAuthRepository
+import com.example.taskaty.data.repositories.AuthRepositoryImpl
 import com.example.taskaty.domain.interactors.AuthInteractor
 
 
@@ -28,8 +23,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             ContextCompat.getColor(requireContext(), R.color.background_color)
         presenter = LoginPresenter(
             AuthInteractor(
-                LocalAuthRepository.getInstance(),
-                RemoteAuthRepository.getInstance()
+               AuthRepositoryImpl.getInstance()
             ), this
         )
         setup()

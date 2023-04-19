@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
-import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
+import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.databinding.FragmentViewAllPersonalTasksBinding
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
@@ -18,7 +18,7 @@ class ViewAllPersonalTasksFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = ViewAllPersonalTasksPresenter(
-            PersonalTaskInteractor(RemoteTasksRepository.getInstance()), this
+            PersonalTaskInteractor(AllTasksRepositoryImpl.getInstance()), this
         )
         setup()
     }
