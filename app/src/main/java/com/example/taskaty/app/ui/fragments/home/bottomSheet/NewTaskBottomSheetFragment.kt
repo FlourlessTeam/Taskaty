@@ -53,8 +53,10 @@ class NewTaskBottomSheetFragment(private val selectedTabPosition: Int) : BottomS
         }
     }
     override fun onSuccess(response: RepoResponse.Success<Unit>) {
-        Toast.makeText(requireContext(), "Task Created Successfully", Toast.LENGTH_SHORT).show()
-        dismiss()
+      requireActivity().runOnUiThread {
+          Toast.makeText(requireContext(), "Task Created Successfully", Toast.LENGTH_SHORT).show()
+          dismiss()
+      }
     }
 
     override fun onError(response: RepoResponse.Error<Unit>) {
