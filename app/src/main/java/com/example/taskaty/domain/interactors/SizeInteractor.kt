@@ -7,10 +7,9 @@ import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 
-class SearchInteractor(private val repo: AllTasksRepositoryImpl) {
+class SizeInteractor(private val repo: AllTasksRepositoryImpl) {
 
-    fun searchTasks(title: String, callback: RepoCallback<List<Task>>) {
-
+    fun sizeTasks(callback: RepoCallback<List<Task>>) {
         var isPersonalTaskLoaded = false
         var isTeamTasksLoaded = false
         var personalTasks: List<PersonalTask> = listOf()
@@ -20,14 +19,7 @@ class SearchInteractor(private val repo: AllTasksRepositoryImpl) {
                 isPersonalTaskLoaded = true
                 personalTasks = response.data
                 if (isTeamTasksLoaded)
-                    callback.onSuccess(
-                        RepoResponse.Success(
-                            filterTasks(
-                                title,
-                                personalTasks + teamTasks
-                            )
-                        )
-                    )
+                    callback.onSuccess(RepoResponse.Success(personalTasks + teamTasks))
             }
 
             override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
@@ -39,14 +31,8 @@ class SearchInteractor(private val repo: AllTasksRepositoryImpl) {
                 isTeamTasksLoaded = true
                 teamTasks = response.data
                 if (isPersonalTaskLoaded)
-                    callback.onSuccess(
-                        RepoResponse.Success(
-                            filterTasks(
-                                title,
-                                personalTasks + teamTasks
-                            )
-                        )
-                    )
+                    callback.onSuccess(RepoResponse.Success(personalTasks + teamTasks))
+
             }
 
             override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
@@ -56,8 +42,5 @@ class SearchInteractor(private val repo: AllTasksRepositoryImpl) {
         })
     }
 
-    private fun filterTasks(text: String, tasks: List<Task>): List<Task> {
 
-        return tasks.filter { it.title.contains(text) }
-    }
 }
