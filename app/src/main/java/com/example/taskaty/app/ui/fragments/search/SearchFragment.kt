@@ -74,6 +74,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
 			binding.emptySearch.emptySearchImage.isVisible = isVisible
 			binding.emptySearch.emptySearchText.isVisible = isVisible
 			binding.recyclerViewSearch.isVisible = !isVisible
+			binding.shadow.isVisible = !isVisible
 		}
 	}
 
