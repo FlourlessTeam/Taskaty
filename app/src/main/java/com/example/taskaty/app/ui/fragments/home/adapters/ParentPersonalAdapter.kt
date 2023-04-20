@@ -1,7 +1,6 @@
 package com.example.taskaty.app.ui.fragments.home.adapters
 
 import android.graphics.Color
-import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +8,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.taskaty.app.utils.DateTimeUtils
 import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalDoneBinding
 import com.example.taskaty.databinding.ChildRecyclerHomePersonalInprogressBinding
@@ -99,9 +99,9 @@ class ParentPersonalAdapter(
             inProgressStatesValue = (InProgress.size * 100) / totalTasks
         }
         holder.binding.apply {
-            todoStates.text = "$upComingStatesValue %"
-            doneStates.text = "$doneStatesValue %"
-            inProgressStates.text = "$inProgressStatesValue %"
+            todoStates.text = upComingStatesValue.toString().plus("%")
+            doneStates.text = doneStatesValue.toString().plus("%")
+            inProgressStates.text = inProgressStatesValue.toString().plus("%")
             chart.isDrawHoleEnabled = true
             chart.setUsePercentValues(false)
             chart.setDrawEntryLabels(false)
@@ -150,8 +150,8 @@ class ParentPersonalAdapter(
                 upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
-                dateTextFirst.text = formatDate(firstItem.creationTime, true)
-                timeTextFirst.text = formatDate(firstItem.creationTime, false)
+                dateTextFirst.text = DateTimeUtils.toDateFormat(firstItem.creationTime)
+                timeTextFirst.text = DateTimeUtils.toTimeFormat(firstItem.creationTime)
                 firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 disappearCards(firstCard, secondCard, true)
             } else {
@@ -159,11 +159,11 @@ class ParentPersonalAdapter(
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
-                dateTextFirst.text = formatDate(firstItem.creationTime, true)
-                timeTextFirst.text = formatDate(firstItem.creationTime, false)
+                dateTextFirst.text = DateTimeUtils.toDateFormat(firstItem.creationTime)
+                timeTextFirst.text = DateTimeUtils.toTimeFormat(firstItem.creationTime)
                 taskHeaderSecond.text = secondItem.title
-                dateTextSecond.text = formatDate(secondItem.creationTime, true)
-                timeTextSecond.text = formatDate(secondItem.creationTime, false)
+                dateTextSecond.text = DateTimeUtils.toDateFormat(secondItem.creationTime)
+                timeTextSecond.text = DateTimeUtils.toTimeFormat(secondItem.creationTime)
                 firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 secondCard.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
             }
@@ -179,40 +179,24 @@ class ParentPersonalAdapter(
                 doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
-                dateTextFirst.text = formatDate(firstItem.creationTime, true)
-                timeTextFirst.text = formatDate(firstItem.creationTime, false)
+                dateTextFirst.text = DateTimeUtils.toDateFormat(firstItem.creationTime)
+                timeTextFirst.text = DateTimeUtils.toTimeFormat(firstItem.creationTime)
                 disappearCards(cardDoneFirst, cardDoneSecond, true)
             } else {
                 doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
-                dateTextFirst.text = formatDate(firstItem.creationTime, true)
-                timeTextFirst.text = formatDate(firstItem.creationTime, false)
+                dateTextFirst.text = DateTimeUtils.toDateFormat(firstItem.creationTime)
+                timeTextFirst.text = DateTimeUtils.toTimeFormat(firstItem.creationTime)
                 taskHeaderSecond.text = secondItem.title
-                dateTextSecond.text = formatDate(secondItem.creationTime, true)
-                timeTextSecond.text = formatDate(secondItem.creationTime, false)
+                dateTextSecond.text = DateTimeUtils.toDateFormat(secondItem.creationTime)
+                timeTextSecond.text = DateTimeUtils.toTimeFormat(secondItem.creationTime)
                 cardDoneFirst.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 cardDoneSecond.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
             }
 
         }
-    }
-
-    private fun formatDate(
-        creationTime: String,
-        isDate: Boolean
-    ): String {
-        val date: String
-        val inputDateFormat = SimpleDateFormat(INPUT_DATE_PATTERN, Locale.getDefault())
-        val outputDateFormat = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
-        val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
-        date = if (isDate) {
-            outputDateFormat.format(inputDateFormat.parse(creationTime))
-        } else {
-            outputTimeFormat.format(inputDateFormat.parse(creationTime))
-        }
-        return date
     }
 
     private fun disappearCards(firsCard: CardView, secondCard: CardView, isOne: Boolean) {
@@ -258,9 +242,6 @@ class ParentPersonalAdapter(
         const val SECOND_ITEM = 1
         const val THIRD_ITEM = 2
         const val FOURTH_ITEM = 3
-        const val INPUT_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
-        const val OUTPUT_DATE_PATTERN = "yyyy-MM-dd"
-        const val OUTPUT_TIME_PATTERN = "HH:mm"
     }
 
 }
