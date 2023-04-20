@@ -89,7 +89,7 @@
                 android:text="@string/timeTextExample"
                 android:textColor="@color/text_color_50"
                 android:textSize="@dimen/text_size_8"
-                app:drawableStartCompat="@drawable/baseline_access_time_24"
+                app:drawableStartCompat="@drawable/clock_icon"
                 app:layout_constraintStart_toEndOf="@+id/date_text_first"
                 app:layout_constraintTop_toBottomOf="@+id/task_header_first"
                 tools:ignore="TextContrastCheck" />
@@ -123,7 +123,7 @@
                 android:text="@string/dateTextExample"
                 android:textColor="@color/text_color_50"
                 android:textSize="@dimen/text_size_8"
-                app:drawableStartCompat="@drawable/outline_calendar_month_24"
+                app:drawableStartCompat="@drawable/calendar_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/task_header_first"
                 tools:ignore="TextContrastCheck" />
@@ -173,7 +173,7 @@
                 android:text="@string/timeTextExample"
                 android:textColor="@color/text_color_50"
                 android:textSize="@dimen/text_size_8"
-                app:drawableStartCompat="@drawable/baseline_access_time_24"
+                app:drawableStartCompat="@drawable/clock_icon"
                 app:layout_constraintStart_toEndOf="@+id/date_text_second"
                 app:layout_constraintTop_toBottomOf="@+id/task_header_second"
                 tools:ignore="TextContrastCheck" />
@@ -207,7 +207,7 @@
                 android:text="@string/dateTextExample"
                 android:textColor="@color/text_color_50"
                 android:textSize="@dimen/text_size_8"
-                app:drawableStartCompat="@drawable/outline_calendar_month_24"
+                app:drawableStartCompat="@drawable/calendar_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/task_header_second"
                 tools:ignore="TextContrastCheck" />
