@@ -8,6 +8,21 @@ import com.example.taskaty.domain.repositories.tasks.PersonalTasksRepository
 class PersonalTaskInteractor(
 	private val personalTasksRepository: PersonalTasksRepository,
 ) {
+
+	fun getPersonalTasksData(callback: RepoCallback<List<PersonalTask>>) {
+		personalTasksRepository.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {
+			override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {
+				val task = response.data
+				callback.onSuccess(RepoResponse.Success(task))
+			}
+
+			override fun onError(response: RepoResponse.Error<List<PersonalTask>>) {
+				callback.onError(RepoResponse.Error(response.message))
+			}
+		})
+	}
+
+
 	fun getTaskById(taskId: String, callback: RepoCallback<PersonalTask>) {
 		personalTasksRepository.getAllPersonalTasks(object : RepoCallback<List<PersonalTask>> {
 			override fun onSuccess(response: RepoResponse.Success<List<PersonalTask>>) {

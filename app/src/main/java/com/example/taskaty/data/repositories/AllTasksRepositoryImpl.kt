@@ -28,7 +28,7 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
     private var cachedPersonalTasks: List<PersonalTask> = listOf()
     private var cachedTeamTasks: List<TeamTask> = listOf()
 
-    //
+
     override fun getAllPersonalTasks(callback: RepoCallback<List<PersonalTask>>) {
 
         if (cachedPersonalTasks.isEmpty())

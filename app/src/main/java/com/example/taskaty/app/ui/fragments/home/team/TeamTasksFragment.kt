@@ -18,63 +18,66 @@ import com.example.taskaty.databinding.FragmentTeamTasksBinding
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.CardDataInteractor
+import com.example.taskaty.domain.interactors.PersonalTaskInteractor
+import com.example.taskaty.domain.interactors.TeamTaskInteractor
 
 class TeamTasksFragment :
-    BaseFragment<FragmentTeamTasksBinding>(FragmentTeamTasksBinding::inflate) {
+    BaseFragment<FragmentTeamTasksBinding>(FragmentTeamTasksBinding::inflate), TeamTasksView {
 
-    private val interactor = CardDataInteractor(AllTasksRepositoryImpl.getInstance())
+    lateinit var presenter: TeamTasksPresenter
+    private val interactor = TeamTaskInteractor(AllTasksRepositoryImpl.getInstance())
     private var inProgressTasks = listOf<TeamTask>()
     private var upcomingTasks = listOf<TeamTask>()
     private var doneTasks = listOf<TeamTask>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getTeamTasksData(interactor)
+        presenter = TeamTasksPresenter(interactor, this)
+        presenter.getTeamTasksData()
     }
 
-    private fun getTeamTasksData(interactor: CardDataInteractor) {
-        interactor.getTeamTasksData(object : RepoCallback<List<TeamTask>> {
-            override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
-                requireActivity().runOnUiThread {
-                    val tasks = response.data
-                    filterTasks(tasks)
-                }
-
-            }
-
-            override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
-                Log.d("tag", "getTeamTasksData onError: ${response.message}")
-                requireActivity().runOnUiThread { showErrorMessage(response.message) }
-
-            }
-
-        })
-
+    override fun filterTasks(tasks: List<TeamTask>) {
+        requireActivity().runOnUiThread {
+            inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
+            upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }
+            doneTasks = tasks.filter { it.status == DONE_STATUS }
+            initViews()
+        }
     }
 
-    private fun filterTasks(tasks: List<TeamTask>) {
-        inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
-        upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }
-        doneTasks = tasks.filter { it.status == DONE_STATUS }
-        initViews()
+    override fun showErrorMessage(message: String) {
+        requireActivity().runOnUiThread {
+            binding.apply {
+                progressBar.isVisible = false
+                errorText.isVisible = true
+                errorText.text = message
+            }
+        }
     }
 
     private fun initViews() {
-        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks, object : OnViewAllClickListener {
-            override fun onViewAllClick(taskType: Int) {
-                val frag = ViewAllTeamTasksFragment.newInstance(taskType)
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .add(R.id.container_fragment, frag).addToBackStack(null).commit()
-            }
-        }, object : OnTaskClickListener {
-            override fun onTaskClick(task: Task) {
-                val frag = TeamTaskDetailsFragment.getInstance(task.id)
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .add(R.id.container_fragment, frag).addToBackStack(null).commit()
-            }
+        val adapter = ParentTeamAdapter(
+            inProgressTasks,
+            upcomingTasks,
+            doneTasks,
+            object : OnViewAllClickListener {
+                override fun onViewAllClick(taskType: Int) {
+                    val frag = ViewAllTeamTasksFragment.newInstance(taskType)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+                }
+            },
+            object : OnTaskClickListener {
+                override fun onTaskClick(task: Task) {
+                    val frag = TeamTaskDetailsFragment.getInstance(task.id)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+                }
 
-        })
-        binding.PersonalTasksRecycler.adapter = adapter
+            })
+        requireActivity().runOnUiThread {
+            binding.PersonalTasksRecycler.adapter = adapter
+        }
         showTasks()
     }
 
@@ -85,13 +88,6 @@ class TeamTasksFragment :
         }
     }
 
-    private fun showErrorMessage(message: String) {
-        binding.apply {
-            progressBar.isVisible = false
-            errorText.isVisible = true
-            errorText.text = message
-        }
-    }
 
     companion object {
         const val UPCOMING_STATUS = 0
