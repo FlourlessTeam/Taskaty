@@ -9,8 +9,6 @@ import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.repositories.tasks.AllTasksRepository
-import com.google.gson.JsonObject
-
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -105,9 +103,9 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val jsonObject= JsonObject().apply { addProperty("value",response.body.string()) }
-                val createdTask = TaskMappers.jsonToTeamTask(jsonObject)
-                cachedTeamTasks = cachedTeamTasks + createdTask
+
+//                val createdTask = TaskMappers.jsonToTeamTask(response.body.string())
+//                cachedTeamTasks = cachedTeamTasks + createdTask
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, title,description,assignee)
