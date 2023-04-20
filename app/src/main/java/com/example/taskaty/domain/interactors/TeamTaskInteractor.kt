@@ -3,13 +3,13 @@ package com.example.taskaty.domain.interactors
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.TeamTask
-import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
+import com.example.taskaty.domain.repositories.tasks.TeamTasksRepository
 
 class TeamTaskInteractor(
-    private val teamTasksDataSource: TeamTasksDataSource,
+    private val teamTasksRepository: TeamTasksRepository,
 ) {
     fun getTeamTaskById(teamTaskId: String, callback: RepoCallback<TeamTask>) {
-        teamTasksDataSource.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
+        teamTasksRepository.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
                 val teamTask = response.data.find { it.id == teamTaskId }!!
                 callback.onSuccess(RepoResponse.Success(teamTask))
@@ -27,7 +27,7 @@ class TeamTaskInteractor(
         teamTaskStatus: Int,
         callback: RepoCallback<Unit>
     ) {
-        teamTasksDataSource.updateTeamTaskState(
+        teamTasksRepository.updateTeamTaskState(
             teamTaskId,
             teamTaskStatus,
             object : RepoCallback<Unit> {
@@ -42,7 +42,7 @@ class TeamTaskInteractor(
             })
     }
     fun filterTeamTaskData(status: Int,callback: RepoCallback<List<TeamTask>>) {
-        teamTasksDataSource.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
+        teamTasksRepository.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
             override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
                 val teamTask = filterSates(status,response.data)
                 callback.onSuccess(RepoResponse.Success(teamTask))

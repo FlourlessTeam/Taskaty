@@ -9,7 +9,7 @@ import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.ParentPersonalAdapter
 import com.example.taskaty.app.ui.fragments.viewAll.personal.ViewAllPersonalTasksFragment
-import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
+import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentPersonalTasksBinding
@@ -21,7 +21,7 @@ class PersonalTasksFragment :
     BaseFragment<FragmentPersonalTasksBinding>(FragmentPersonalTasksBinding::inflate) {
 
     private val interactor =
-        CardDataInteractor(RemoteTasksRepository.getInstance())
+        CardDataInteractor(AllTasksRepositoryImpl.getInstance())
     private var inProgressTasks = listOf<PersonalTask>()
     private var upcomingTasks = listOf<PersonalTask>()
     private var doneTasks = listOf<PersonalTask>()

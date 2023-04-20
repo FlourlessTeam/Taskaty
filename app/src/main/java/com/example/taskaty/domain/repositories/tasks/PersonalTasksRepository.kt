@@ -1,9 +1,9 @@
-package com.example.taskaty.domain.repositories.remote
+package com.example.taskaty.domain.repositories.tasks
 
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.domain.entities.PersonalTask
 
-interface TasksDataSource {
+interface PersonalTasksRepository {
     fun getAllPersonalTasks(callback: RepoCallback<List<PersonalTask>>)
     fun createPersonalTask(task: PersonalTask, callback: RepoCallback<Unit>)
     fun updatePersonalTaskState(taskId: String, status: Int, callback: RepoCallback<Unit>)

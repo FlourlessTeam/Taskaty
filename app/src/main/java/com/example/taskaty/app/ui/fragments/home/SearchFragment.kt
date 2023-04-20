@@ -8,10 +8,9 @@ import androidx.fragment.app.Fragment
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
-import com.example.taskaty.app.ui.fragments.home.HomeFragment
 import com.example.taskaty.app.ui.fragments.home.adapters.SearchAdapter
 import com.example.taskaty.app.ui.fragments.home.adapters.SearchListener
-import com.example.taskaty.data.repositories.remote.RemoteTasksRepository
+import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentSearchBinding
@@ -21,7 +20,7 @@ import com.example.taskaty.domain.interactors.SearchInteractor
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate),SearchListener {
     private val adapter = SearchAdapter(this)
-     private val searchData = SearchInteractor(RemoteTasksRepository.getInstance(), RemoteTasksRepository.getInstance())
+     private val searchData = SearchInteractor(AllTasksRepositoryImpl.getInstance())
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerViewSearch.adapter = adapter
