@@ -7,8 +7,10 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
+import com.example.taskaty.app.ui.fragments.home.HomeFragment
 import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.databinding.FragmentTaskDetailsBinding
 import com.example.taskaty.domain.entities.PersonalTask
@@ -75,6 +77,9 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
     override fun updateUiData(task: PersonalTask) {
         requireActivity().runOnUiThread {
             with(binding) {
+                binding.toolbarDetails.setNavigationOnClickListener {
+                    replaceFragment(HomeFragment())
+                }
                 taskTitle.text = task.title
                 taskStatusButton.text = statusMap[task.status]
                 taskDate.text = DateTimeUtils.toDateFormat(task.creationTime)
@@ -125,12 +130,18 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
         private const val IN_PROGRESS_STATE = 1
         private const val DONE_STATE = 2
 
-        fun getInstance(taskId: String) = TaskDetailsFragment().apply {
+        fun newInstance(taskId: String) = TaskDetailsFragment().apply {
             arguments = Bundle().apply {
                 putString(ARGUMENT_KEY, taskId)
             }
         }
     }
-
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
 
 }

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskaty.R
 import com.example.taskaty.databinding.ItemInViewAllBinding
-import com.example.taskaty.domain.entities.PersonalTask
+import com.example.taskaty.domain.entities.Task
 import java.text.SimpleDateFormat
 import java.util.*
 
 class SearchAdapter(private val searchListener: SearchListener) :
-    ListAdapter<PersonalTask, SearchAdapter.SearchViewHolder>(TaskDiffCallback()) {
+    ListAdapter<Task, SearchAdapter.SearchViewHolder>(TaskDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val binding = ItemInViewAllBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -32,7 +32,7 @@ class SearchAdapter(private val searchListener: SearchListener) :
 
     class SearchViewHolder(private val binding: ItemInViewAllBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: PersonalTask, searchListener: SearchListener) {
+        fun bind(item: Task, searchListener: SearchListener) {
             binding.apply {
                 binding.root.setOnClickListener {
                     searchListener.onClick(item)
@@ -79,13 +79,13 @@ private fun getStatusColors(status: Int?): Int {
     }
 }
 
-class TaskDiffCallback : DiffUtil.ItemCallback<PersonalTask>() {
-    override fun areItemsTheSame(oldItem: PersonalTask, newItem: PersonalTask): Boolean {
+class TaskDiffCallback : DiffUtil.ItemCallback<Task>() {
+    override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: PersonalTask, newItem: PersonalTask): Boolean {
-        return oldItem == newItem
+    override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+        return areItemsTheSame(oldItem, newItem)&& oldItem.status == newItem.status
     }
 
 }

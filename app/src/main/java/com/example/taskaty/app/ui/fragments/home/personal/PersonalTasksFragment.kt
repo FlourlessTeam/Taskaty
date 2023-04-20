@@ -69,7 +69,7 @@ class PersonalTasksFragment :
             }
         }, object : ParentPersonalAdapter.OnPersonalTaskClickListener {
             override fun onTaskClick(task: PersonalTask) {
-                val frag = TaskDetailsFragment.getInstance(task.id)
+                val frag = TaskDetailsFragment.newInstance(task.id)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .add(R.id.container_fragment, frag).addToBackStack(null).commit()
             }
