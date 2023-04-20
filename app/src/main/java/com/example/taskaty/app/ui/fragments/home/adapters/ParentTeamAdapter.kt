@@ -5,6 +5,7 @@ import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -99,13 +100,13 @@ class ParentTeamAdapter(
             todoStates.text = "$upComingStatesValue %"
             doneStates.text = "$doneStatesValue %"
             inProgressStates.text = "$inProgressStatesValue %"
-            chart.setDrawHoleEnabled(true)
+            chart.isDrawHoleEnabled = true
             chart.setUsePercentValues(false)
             chart.setDrawEntryLabels(false)
             chart.holeRadius = 70f
-            chart.setCenterText("Total \n$totalTasks")
+            chart.centerText = "Total \n$totalTasks"
             chart.setCenterTextSize(11F)
-            chart.getDescription().setEnabled(false)
+            chart.description.isEnabled = false
             chart.legend.isEnabled = false
             val entries = ArrayList<PieEntry>()
             entries.add(PieEntry(Upcoming.size * 1f, "Todo"))
@@ -116,21 +117,21 @@ class ParentTeamAdapter(
             colors.add(Color.parseColor("#93CB80"))
             colors.add(Color.parseColor("#418E77"))
             val dataSet = PieDataSet(entries, "")
-            dataSet.setColors(colors)
+            dataSet.colors = colors
             val data = PieData(dataSet)
             data.setDrawValues(false)
             data.setValueFormatter(PercentFormatter(chart))
             data.setValueTextSize(12f)
             data.setValueTextColor(Color.BLACK)
-            chart.setData(data)
+            chart.data = data
             chart.invalidate()
         }
     }
 
 
     private fun bindInProgress(holder: InProgressViewHolder) {
+        val adapter = ChildTeamInProgressAdapter(InProgress, onTeamTaskClickListener)
         holder.binding.apply {
-            val adapter = ChildTeamInProgressAdapter(InProgress, onTeamTaskClickListener)
             inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
             childRecycler.adapter = adapter
             tasksNumber.text = InProgress.size.toString()
@@ -138,103 +139,99 @@ class ParentTeamAdapter(
     }
 
     private fun bindUpcoming(holder: UpcomingViewHolder) {
-        val inputDateFormat = SimpleDateFormat(INPUT_DATE_PATTERN, Locale.getDefault())
-        val outputDateFormat = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
-        val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
-
         holder.binding.apply {
             linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.isEmpty()) {
-                upcomingFirstCard.isVisible = false
-                upcomingSecondCard.isVisible = false
-                val firstCardParam = upcomingSecondCard.layoutParams as ViewGroup.LayoutParams
-                firstCardParam.height = 0
-                upcomingSecondCard.layoutParams = firstCardParam
-                val secondCardParam = upcomingSecondCard.layoutParams as ViewGroup.LayoutParams
-                secondCardParam.height = 0
-                upcomingSecondCard.layoutParams = secondCardParam
+                disappearCards(upcomingFirstCard, upcomingSecondCard, false)
             } else if (Upcoming.size == 1) {
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
-                dateTextFirst.text =
-                    outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
-                timeTextFirst.text =
-                    outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                dateTextFirst.text = formatDate(firstItem.creationTime, true)
+                timeTextFirst.text = formatDate(firstItem.creationTime, false)
                 upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
-                upcomingSecondCard.isVisible = false
-                val layoutParam = upcomingSecondCard.layoutParams
-                layoutParam.height = 0
-                upcomingSecondCard.layoutParams = layoutParam
+                disappearCards(upcomingFirstCard, upcomingSecondCard, true)
             } else {
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
-                dateTextFirst.text =
-                    outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
-                timeTextFirst.text =
-                    outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                dateTextFirst.text = formatDate(firstItem.creationTime, true)
+                timeTextFirst.text = formatDate(firstItem.creationTime, false)
                 taskHeaderSecond.text = secondItem.title
-                dateTextSecond.text =
-                    outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
-                timeTextSecond.text =
-                    outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
+                dateTextSecond.text = formatDate(secondItem.creationTime, true)
+                timeTextSecond.text = formatDate(secondItem.creationTime, false)
                 upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
                 upcomingSecondCard.setOnClickListener {
                     onTeamTaskClickListener.onTaskClick(
                         secondItem
                     )
                 }
-
             }
         }
     }
 
     private fun bindDone(holder: DoneViewHolder) {
-        val inputDateFormat = SimpleDateFormat(INPUT_DATE_PATTERN, Locale.getDefault())
-        val outputDateFormat = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
-        val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
-
         holder.binding.apply {
             doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
             if (Done.isEmpty()) {
-                firstCard.isVisible = false
-                secondCard.isVisible = false
-                val firstCardParam = firstCard.layoutParams as ViewGroup.LayoutParams
-                firstCardParam.height = 0
-                firstCard.layoutParams = firstCardParam
-                val secondCardParam = secondCard.layoutParams as ViewGroup.LayoutParams
-                secondCardParam.height = 0
-                secondCard.layoutParams = secondCardParam
+                disappearCards(firstCard, secondCard, false)
             } else if (Done.size == 1) {
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
-                dateTextFirst.text =
-                    outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
-                timeTextFirst.text =
-                    outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                dateTextFirst.text = formatDate(firstItem.creationTime, true)
+                timeTextFirst.text = formatDate(firstItem.creationTime, false)
                 firstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
-                secondCard.isVisible = false
-                val layoutParam = secondCard.layoutParams
-                layoutParam.height = 0
-                secondCard.layoutParams = layoutParam
+                disappearCards(firstCard, secondCard, true)
             } else {
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
-                dateTextFirst.text =
-                    outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
-                timeTextFirst.text =
-                    outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
+                dateTextFirst.text = formatDate(firstItem.creationTime, true)
+                timeTextFirst.text = formatDate(firstItem.creationTime, false)
                 taskHeaderSecond.text = secondItem.title
-                dateTextSecond.text =
-                    outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
-                timeTextSecond.text =
-                    outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
+                dateTextSecond.text = formatDate(secondItem.creationTime, true)
+                timeTextSecond.text = formatDate(secondItem.creationTime, false)
                 firstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
                 secondCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(secondItem) }
             }
+        }
+    }
+
+    private fun formatDate(
+        creationTime: String,
+        isDate: Boolean
+    ): String {
+        val date: String
+        val inputDateFormat =
+            SimpleDateFormat(INPUT_DATE_PATTERN, Locale.getDefault())
+        val outputDateFormat =
+            SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
+        val outputTimeFormat =
+            SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
+        date = if (isDate) {
+            outputDateFormat.format(inputDateFormat.parse(creationTime))
+        } else {
+            outputTimeFormat.format(inputDateFormat.parse(creationTime))
+        }
+        return date
+    }
+
+    private fun disappearCards(firsCard: CardView, secondCard: CardView, isOne: Boolean) {
+        if (isOne) {
+            secondCard.isVisible = false
+            val layoutParam = secondCard.layoutParams
+            layoutParam.height = 0
+            secondCard.layoutParams = layoutParam
+        } else {
+            firsCard.isVisible = false
+            secondCard.isVisible = false
+            val firstCardParam = firsCard.layoutParams
+            firstCardParam.height = 0
+            firsCard.layoutParams = firstCardParam
+            val secondCardParam = secondCard.layoutParams
+            secondCardParam.height = 0
+            secondCard.layoutParams = secondCardParam
         }
     }
 
@@ -271,7 +268,6 @@ class ParentTeamAdapter(
     interface OnViewAllClickListener {
         fun onViewAllClick(taskType: Int)
     }
-
     interface OnTeamTaskClickListener {
         fun onTaskClick(task: TeamTask)
     }
