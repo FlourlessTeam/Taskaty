@@ -16,13 +16,8 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_back_24px" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/arrow_back_24px">
 
         <SearchView
             android:id="@+id/search_view_result"
@@ -31,7 +26,10 @@
             android:iconifiedByDefault="false"
             android:queryBackground="@android:color/transparent"
             android:queryHint="Search"
-            android:searchIcon="@null" />
+            android:searchIcon="@null">
+
+        </SearchView>
+
     </androidx.appcompat.widget.Toolbar>
 
     <View

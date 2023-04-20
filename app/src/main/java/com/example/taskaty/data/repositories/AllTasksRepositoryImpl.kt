@@ -73,7 +73,7 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
 
             override fun onResponse(call: Call, response: Response) {
                 callback.onSuccess(RepoResponse.Success(Unit))
-                updateCachedData(taskId, status, cachedTeamTasks)
+                updateCachedData(taskId, status, cachedPersonalTasks)
 
             }
         }, taskId, status)
