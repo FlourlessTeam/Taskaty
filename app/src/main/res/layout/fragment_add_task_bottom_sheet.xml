@@ -37,7 +37,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Title" />
+            android:fontFamily="@font/poppins_medium"
+            android:hint="Title"
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,14 +56,16 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="assignee" />
+            android:fontFamily="@font/poppins_medium"
+            android:hint="Assignee"
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/description_text_input"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         app:boxStrokeWidth="1dp"
@@ -70,9 +74,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Description"
+            android:fontFamily="@font/poppins_medium"
             android:gravity="top"
-            />
+            android:hint="Description"
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

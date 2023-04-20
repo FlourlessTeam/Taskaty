@@ -21,11 +21,14 @@ class TasksApiClient(private val okHttpClient: OkHttpClient) {
 		okHttpClient.newCall(request).enqueue(callback)
 	}
 
-	fun addPersonalTask(callback: Callback, task: PersonalTask) {
-		val requestBody = task.toJson().toRequestBody("application/json".toMediaTypeOrNull())
+	fun addPersonalTask(callback: Callback, title: String, description: String) {
+		val requestBody = MultipartBody.Builder()
+			.setType(MultipartBody.FORM)
+			.addFormDataPart("title", title)
+			.addFormDataPart("description", description)
+			.build()
 		val request = Request.Builder().url("$baseUrl/todo/personal").post(requestBody).build()
 		okHttpClient.newCall(request).enqueue(callback)
-
 	}
 
 	fun updatePersonalTask(callback: Callback, id: String, status: Int) {
@@ -48,11 +51,19 @@ class TasksApiClient(private val okHttpClient: OkHttpClient) {
 
 	}
 
-	fun addTeamTask(callback: Callback, teamTask: TeamTask) {
-		val requestBody = teamTask.toJson().toRequestBody("application/json".toMediaTypeOrNull())
+	fun addTeamTask(
+		callback: Callback, title: String,
+		description: String,
+		assignee: String
+	) {
+		val requestBody = MultipartBody.Builder()
+			.setType(MultipartBody.FORM)
+			.addFormDataPart("title", title)
+			.addFormDataPart("description", description)
+			.addFormDataPart("assignee", assignee)
+			.build()
 		val request = Request.Builder().url("$baseUrl/todo/team").post(requestBody).build()
 		okHttpClient.newCall(request).enqueue(callback)
-
 	}
 
 	fun updateTeamTask(callback: Callback, id: String, status: Int) {

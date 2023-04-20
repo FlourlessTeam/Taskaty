@@ -5,6 +5,8 @@ import com.example.taskaty.domain.entities.TeamTask
 
 interface TeamTasksRepository{
     fun getAllTeamTasks(callback: RepoCallback<List<TeamTask>>)
-    fun createTeamTask(task: TeamTask, callback: RepoCallback<Unit>)
+    fun createTeamTask(title: String,
+                       description: String,
+                       assignee: String, callback: RepoCallback<Unit>)
     fun updateTeamTaskState(taskId: String, status: Int, callback: RepoCallback<Unit>)
 }

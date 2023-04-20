@@ -36,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun showBottomSheet() {
-        val bottomSheet = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
+        val bottomSheet = NewTaskBottomSheetFragment.newInstance(binding.tabLayout.selectedTabPosition)
         bottomSheet.show(childFragmentManager, "tag")
     }
     private fun replaceFragment(fragment: Fragment) {
