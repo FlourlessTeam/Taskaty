@@ -70,7 +70,7 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
 
             })
             adapter.submitList(teamTasks)
-            binding.toolbar.title = getStatusNames(state)
+            binding.textState.text = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
         }
     }

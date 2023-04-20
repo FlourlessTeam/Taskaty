@@ -6,8 +6,9 @@ import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
+import com.example.taskaty.domain.repositories.tasks.AllTasksRepository
 
-class SizeInteractor(private val repo: AllTasksRepositoryImpl) {
+class SizeInteractor(private val repo: AllTasksRepository) {
 
     fun sizeTasks(callback: RepoCallback<List<Task>>) {
         var isPersonalTaskLoaded = false
@@ -40,6 +41,10 @@ class SizeInteractor(private val repo: AllTasksRepositoryImpl) {
             }
 
         })
+    }
+    fun clearDate(){
+        repo.clearCashedData()
+        AllTasksRepositoryImpl.clearInstance()
     }
 
 

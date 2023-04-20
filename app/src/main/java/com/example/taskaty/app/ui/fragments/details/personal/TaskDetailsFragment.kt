@@ -137,12 +137,6 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
             }
         }
     }
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = requireActivity().supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.container_fragment, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
+
 
 }

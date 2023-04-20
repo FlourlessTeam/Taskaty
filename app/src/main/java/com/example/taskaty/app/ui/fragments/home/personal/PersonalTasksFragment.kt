@@ -3,7 +3,9 @@ package com.example.taskaty.app.ui.fragments.home.personal
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
@@ -22,7 +24,7 @@ import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 
 class PersonalTasksFragment :
     BaseFragment<FragmentPersonalTasksBinding>(FragmentPersonalTasksBinding::inflate),
-    PersonalTasksView {
+    OnViewAllClickListener, OnTaskClickListener,PersonalTasksView {
 
     lateinit var presenter: PersonalTasksPresenter
     private val interactor =
@@ -39,10 +41,10 @@ class PersonalTasksFragment :
 
 
     override fun filterTasks(tasks: List<PersonalTask>) {
+        inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
+        upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }
+        doneTasks = tasks.filter { it.status == DONE_STATUS }
         requireActivity().runOnUiThread {
-            inProgressTasks = tasks.filter { it.status == IN_PROGRESS_STATUS }
-            upcomingTasks = tasks.filter { it.status == UPCOMING_STATUS }
-            doneTasks = tasks.filter { it.status == DONE_STATUS }
             initViews()
         }
     }
@@ -51,8 +53,7 @@ class PersonalTasksFragment :
         requireActivity().runOnUiThread {
             binding.apply {
                 progressBar.isVisible = false
-                errorText.isVisible = true
-                errorText.text = message
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -61,22 +62,8 @@ class PersonalTasksFragment :
         val adapter = ParentPersonalAdapter(
             inProgressTasks,
             upcomingTasks,
-            doneTasks,
-            object : OnViewAllClickListener {
-                override fun onViewAllClick(taskType: Int) {
-                    val frag = ViewAllPersonalTasksFragment.newInstance(taskType)
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .add(R.id.container_fragment, frag).addToBackStack(null).commit()
-                }
-            },
-            object : OnTaskClickListener {
-                override fun onTaskClick(task: Task) {
-                    val frag = TaskDetailsFragment.newInstance(task.id)
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .add(R.id.container_fragment, frag).addToBackStack(null).commit()
-                }
-
-            })
+            doneTasks, this, this
+        )
         requireActivity().runOnUiThread {
             binding.PersonalTasksRecycler.adapter = adapter
         }
@@ -95,5 +82,22 @@ class PersonalTasksFragment :
         const val UPCOMING_STATUS = 0
         const val IN_PROGRESS_STATUS = 1
         const val DONE_STATUS = 2
+    }
+
+    override fun onViewAllClick(taskType: Int) {
+        val frag = ViewAllPersonalTasksFragment.newInstance(taskType)
+        replaceFragment(frag)
+    }
+
+    override fun onTaskClick(task: Task) {
+        val frag = TaskDetailsFragment.newInstance(task.id)
+        replaceFragment(frag)
+    }
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }
