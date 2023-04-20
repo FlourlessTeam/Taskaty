@@ -21,7 +21,7 @@ object TaskMappers {
         return tasks
     }
 
-    private fun jsonToTeamTask(json: JsonObject): TeamTask {
+     fun jsonToTeamTask(json: JsonObject): TeamTask {
         val gson = Gson()
         val taskJson = gson.fromJson(json, TeamTask::class.java)
 
@@ -49,7 +49,7 @@ object TaskMappers {
         return tasksList
     }
 
-    private fun jsonToTask(json: String): PersonalTask {
+     fun jsonToTask(json: String): PersonalTask {
         val gson = Gson()
         val taskJson = gson.fromJson(json, PersonalTask::class.java)
 

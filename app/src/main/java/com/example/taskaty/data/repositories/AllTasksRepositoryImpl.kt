@@ -9,6 +9,8 @@ import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.repositories.tasks.AllTasksRepository
+import com.google.gson.JsonObject
+
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -51,7 +53,9 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                cachedPersonalTasks = cachedPersonalTasks + task
+
+                val createdTask = TaskMappers.jsonToTask(response.body.string())
+                cachedPersonalTasks = cachedPersonalTasks + createdTask
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, task)
@@ -99,7 +103,9 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                cachedTeamTasks = cachedTeamTasks + task
+                val jsonObject= JsonObject().apply { addProperty("value",response.body.string()) }
+                val createdTask = TaskMappers.jsonToTeamTask(jsonObject)
+                cachedTeamTasks = cachedTeamTasks + createdTask
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, task)

@@ -12,10 +12,11 @@ interface AuthRepository {
     fun getExpirationDate(): String
 
     fun updateToken(token: String, expireAt: String)
+    fun signup(user: User, callback: RepoCallback<SignupResponse>)
     fun login(
         userName: String,
         password: String,
         callback: RepoCallback<LoginResponse>
     )
-    fun signup(user: User, callback: RepoCallback<SignupResponse>)
+   fun logout()
 }

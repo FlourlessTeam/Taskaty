@@ -1,6 +1,7 @@
 package com.example.taskaty.data.repositories
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.example.taskaty.data.api.UserApiClient
 import com.example.taskaty.data.mappers.AuthMapper
 import com.example.taskaty.data.response.RepoCallback
@@ -18,7 +19,7 @@ import okio.IOException
 
 class AuthRepositoryImpl private constructor(private val application: Context) : AuthRepository {
     private var token: String? = null
-    private var expireAt: String? = null
+    private var expireDate: String? = null
 
 
     override fun signup(user: User, callback: RepoCallback<SignupResponse>) {
@@ -57,31 +58,35 @@ class AuthRepositoryImpl private constructor(private val application: Context) :
         userClient.login(userName, password, apiCallBack)
     }
 
+    override fun logout() {
+        updateToken("","")
+    }
 
     override fun getToken(): String {
         if (token == null) {
-            val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
+            val sharedPreferences = getSharedPref()
             token = sharedPreferences.getString("token", "")
         }
         return token!!
     }
 
     override fun getExpirationDate(): String {
-        if (expireAt == null) {
+        if (expireDate == null) {
             val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
-            expireAt = sharedPreferences.getString("expireAt", "")
+            expireDate = sharedPreferences.getString("expireAt", "")
         }
-        return expireAt!!
+        return expireDate!!
     }
 
     override fun updateToken(token: String, expireAt: String) {
-        val sharedPreferences = application.getSharedPreferences("auth", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPref()
         sharedPreferences.edit().putString("token", token).apply()
         sharedPreferences.edit().putString("expireAt", expireAt).apply()
         this.token = sharedPreferences.getString("token", "")
-        this.expireAt = sharedPreferences.getString("expireAt", "")
+        this.expireDate = sharedPreferences.getString("expireAt", "")
     }
-
+    private fun getSharedPref(): SharedPreferences =
+        application.getSharedPreferences("auth", Context.MODE_PRIVATE)
 
     companion object {
         private var instance: AuthRepositoryImpl? = null
