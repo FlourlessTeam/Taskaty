@@ -59,7 +59,7 @@
             android:textColor="@color/text_color_50"
             android:textSize="8sp"
            tools:text="date"
-            app:drawableStartCompat="@drawable/outline_calendar_month_24"
+            app:drawableStartCompat="@drawable/calendar_icon"
             app:layout_goneMarginStart="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_content"
@@ -78,7 +78,7 @@
             android:textColor="@color/text_color_50"
             android:textSize="8sp"
             tools:text="time"
-            app:drawableStartCompat="@drawable/baseline_access_time_24"
+            app:drawableStartCompat="@drawable/clock_icon"
             app:layout_constraintStart_toEndOf="@id/text_calender"
             app:layout_constraintTop_toBottomOf="@id/text_content"
             tools:ignore="SmallSp" />

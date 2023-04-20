@@ -89,7 +89,7 @@
                 android:text="@string/timeTextExample"
                 android:textColor="@color/text_color_50"
                 android:textSize="@dimen/text_size_8"
-                app:drawableStartCompat="@drawable/baseline_access_time_24"
+                app:drawableStartCompat="@drawable/clock_icon"
                 app:layout_constraintStart_toEndOf="@+id/date_text_first"
                 app:layout_constraintTop_toBottomOf="@+id/task_header_first"
                 tools:ignore="TextContrastCheck" />
@@ -147,15 +147,14 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
+                android:id="@+id/top_assignee_count_circle"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/circle"
-                android:paddingStart="5dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="5dp"
                 android:text="@string/Team_member_circle"
                 android:textColor="@color/white"
+                android:gravity="center"
                 android:textSize="@dimen/text_size_8"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -188,7 +187,7 @@
                 android:text="@string/timeTextExample"
                 android:textColor="@color/text_color_50"
                 android:textSize="@dimen/text_size_8"
-                app:drawableStartCompat="@drawable/baseline_access_time_24"
+                app:drawableStartCompat="@drawable/clock_icon"
                 app:layout_constraintStart_toEndOf="@+id/date_text_second"
                 app:layout_constraintTop_toBottomOf="@+id/task_header_second"
                 tools:ignore="TextContrastCheck" />
@@ -246,14 +245,13 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
+                android:id="@+id/bottom_assignee_count_circle"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/circle"
-                android:paddingStart="5dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="5dp"
                 android:text="@string/Team_member_circle"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_8"
                 app:layout_constraintBottom_toBottomOf="parent"
