@@ -1,16 +1,16 @@
 package com.example.taskaty.data.repositories
 
+import android.util.Log
 import com.example.taskaty.data.api.TasksApiClient
 import com.example.taskaty.data.api.interceptors.AuthInterceptor
 import com.example.taskaty.data.mappers.TaskMappers
+import com.example.taskaty.data.mappers.TaskMappers.jsonToPersonalTask
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.repositories.tasks.AllTasksRepository
-import com.google.gson.JsonObject
-
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.OkHttpClient
@@ -46,20 +46,26 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
             callback.onSuccess(RepoResponse.Success(cachedPersonalTasks))
     }
 
-    override fun createPersonalTask(title: String, description: String, callback: RepoCallback<Unit>) {
+    override fun createPersonalTask(
+        title: String,
+        description: String,
+        callback: RepoCallback<Unit>
+    ) {
         tasksApiClient.addPersonalTask(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))
             }
 
             override fun onResponse(call: Call, response: Response) {
-
-                val createdTask = TaskMappers.jsonToTask(response.body.string())
+                val responseBody = response.body.string()
+                Log.d("xxx", responseBody)
+                val createdTask = jsonToPersonalTask(responseBody)
                 cachedPersonalTasks = cachedPersonalTasks + createdTask
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, title, description)
     }
+
 
     override fun updatePersonalTaskState(
         taskId: String,
@@ -96,21 +102,23 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
             callback.onSuccess(RepoResponse.Success(cachedTeamTasks))
     }
 
-    override fun createTeamTask(title: String,
-                                description: String,
-                                assignee: String, callback: RepoCallback<Unit>) {
-        tasksApiClient.addTeamTask(object : Callback {
+    override fun createTeamTask(
+        title: String,
+        description: String,
+        assignee: String, callback: RepoCallback<Unit>
+    ) {
+        tasksApiClient.addTeamTask(
+            object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val jsonObject= JsonObject().apply { addProperty("value",response.body.string()) }
-                val createdTask = TaskMappers.jsonToTeamTask(jsonObject)
+                val createdTask = TaskMappers.jsonToTeamTask(response.body.string())
                 cachedTeamTasks = cachedTeamTasks + createdTask
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
-        }, title,description,assignee)
+        }, title, description, assignee)
     }
 
     override fun updateTeamTaskState(
