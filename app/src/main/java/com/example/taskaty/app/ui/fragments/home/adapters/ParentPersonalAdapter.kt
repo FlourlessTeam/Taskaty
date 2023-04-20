@@ -5,6 +5,7 @@ import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
@@ -16,7 +17,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
-import java.util.Locale
+import java.util.*
 
 class ParentPersonalAdapter(
     private val InProgress: List<PersonalTask>,
@@ -77,12 +78,21 @@ class ParentPersonalAdapter(
         }
     }
 
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        when (holder) {
+            is ChartViewHolder -> bindChart(holder)
+            is InProgressViewHolder -> bindInProgress(holder)
+            is UpcomingViewHolder -> bindUpcoming(holder)
+            is DoneViewHolder -> bindDone(holder)
+        }
+    }
+
     private fun bindChart(holder: ChartViewHolder) {
         val totalTasks = Done.size + InProgress.size + Upcoming.size
         var upComingStatesValue = 0
         var doneStatesValue = 0
         var inProgressStatesValue = 0
-        if(totalTasks != 0) {
+        if (totalTasks != 0) {
             upComingStatesValue = (Upcoming.size * 100) / totalTasks
             doneStatesValue = (Done.size * 100) / totalTasks
             inProgressStatesValue = (InProgress.size * 100) / totalTasks
@@ -91,13 +101,13 @@ class ParentPersonalAdapter(
             todoStates.text = "$upComingStatesValue %"
             doneStates.text = "$doneStatesValue %"
             inProgressStates.text = "$inProgressStatesValue %"
-            chart.isDrawHoleEnabled = true
+            chart.setDrawHoleEnabled(true)
             chart.setUsePercentValues(false)
             chart.setDrawEntryLabels(false)
             chart.holeRadius = 70f
-            chart.centerText = "Total \n$totalTasks"
+            chart.setCenterText("Total \n$totalTasks")
             chart.setCenterTextSize(11F)
-            chart.description.isEnabled = false
+            chart.getDescription().setEnabled(false)
             chart.legend.isEnabled = false
             val entries = ArrayList<PieEntry>()
             entries.add(PieEntry(Upcoming.size * 1f, "Todo"))
@@ -108,37 +118,23 @@ class ParentPersonalAdapter(
             colors.add(Color.parseColor("#93CB80"))
             colors.add(Color.parseColor("#418E77"))
             val dataSet = PieDataSet(entries, "")
-            dataSet.colors = colors
+            dataSet.setColors(colors)
             val data = PieData(dataSet)
             data.setDrawValues(false)
             data.setValueFormatter(PercentFormatter(chart))
             data.setValueTextSize(12f)
             data.setValueTextColor(Color.BLACK)
-            chart.data = data
+            chart.setData(data)
             chart.invalidate()
-        }
-    }
-
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        when (holder) {
-            is InProgressViewHolder -> bindInProgress(holder)
-            is UpcomingViewHolder -> bindUpcoming(holder)
-            is DoneViewHolder -> bindDone(holder)
-            is ChartViewHolder -> bindChart(holder)
-
         }
     }
 
     private fun bindInProgress(holder: InProgressViewHolder) {
         val adapter = ChildPersonalInProgressAdapter(InProgress, onTaskClickListener)
         holder.binding.apply {
+            inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
+            childRecycler.adapter = adapter
             tasksNumber.text = InProgress.size.toString()
-            if (InProgress.isNotEmpty()) {
-                inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
-                childRecycler.adapter = adapter
-            }else{
-                childRecycler.visibility = View.GONE
-            }
         }
     }
 
@@ -148,9 +144,19 @@ class ParentPersonalAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
+            upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
-            if (Upcoming.size == 1) {
-                upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
+            if (Upcoming.isEmpty()) {
+                firstCard.isVisible = false
+                secondCard.isVisible = false
+                val firstCardParam = firstCard.layoutParams as ViewGroup.LayoutParams
+                firstCardParam.height = 0
+                firstCard.layoutParams = firstCardParam
+                val secondCardParam = secondCard.layoutParams as ViewGroup.LayoutParams
+                secondCardParam.height = 0
+                secondCard.layoutParams = secondCardParam
+
+            } else if (Upcoming.size == 1) {
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
@@ -158,8 +164,11 @@ class ParentPersonalAdapter(
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
-            } else if (Upcoming.size >= 2) {
-                upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
+                secondCard.isVisible = false
+                val layoutParam = secondCard.layoutParams
+                layoutParam.height = 0
+                secondCard.layoutParams = layoutParam
+            } else {
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -172,11 +181,8 @@ class ParentPersonalAdapter(
                     outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
-                firstCard.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
+                firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 secondCard.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
-            } else {
-                firstCard.visibility = View.GONE
-                secondCard.visibility = View.GONE
             }
         }
     }
@@ -185,19 +191,31 @@ class ParentPersonalAdapter(
         val inputDateFormat = SimpleDateFormat(INPUT_DATE_PATTERN, Locale.getDefault())
         val outputDateFormat = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
+
         holder.binding.apply {
+            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
-            if (Done.size == 1) {
-                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
+            if (Done.isEmpty()) {
+                cardDoneFirst.isVisible = false
+                cardDoneSecond.isVisible = false
+                val firstCardParam = cardDoneFirst.layoutParams as ViewGroup.LayoutParams
+                firstCardParam.height = 0
+                cardDoneFirst.layoutParams = firstCardParam
+                val secondCardParam = cardDoneSecond.layoutParams as ViewGroup.LayoutParams
+                secondCardParam.height = 0
+                cardDoneSecond.layoutParams = secondCardParam
+            } else if (Done.size == 1) {
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
                     outputDateFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
-                cardDoneSecond.visibility = View.GONE
-            } else if (Done.size >= 2) {
-                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
+                cardDoneSecond.isVisible = false
+                val layoutParam = cardDoneSecond.layoutParams
+                layoutParam.height = 0
+                cardDoneSecond.layoutParams = layoutParam
+            } else {
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -212,9 +230,6 @@ class ParentPersonalAdapter(
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 cardDoneFirst.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 cardDoneSecond.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
-            } else {
-                cardDoneFirst.visibility = View.GONE
-                cardDoneSecond.visibility = View.GONE
             }
 
         }
@@ -232,7 +247,7 @@ class ParentPersonalAdapter(
         val binding = ChildRecyclerHomePersonalUpcomingBinding.bind(view)
     }
 
-    class ChartViewHolder(view: View) : BaseViewHolder(view){
+    class ChartViewHolder(view: View) : BaseViewHolder(view) {
         val binding = ChildRecyclerHomeChartBinding.bind(view)
     }
 

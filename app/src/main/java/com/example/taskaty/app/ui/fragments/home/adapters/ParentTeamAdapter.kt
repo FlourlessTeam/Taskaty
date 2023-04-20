@@ -5,6 +5,7 @@ import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ChildRecyclerHomeChartBinding
@@ -16,7 +17,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
-import java.util.Locale
+import java.util.*
 
 class ParentTeamAdapter(
     private val InProgress: List<TeamTask>,
@@ -77,10 +78,10 @@ class ParentTeamAdapter(
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
+            is ChartViewHolder -> bindChart(holder)
             is InProgressViewHolder -> bindInProgress(holder)
             is UpcomingViewHolder -> bindUpcoming(holder)
             is DoneViewHolder -> bindDone(holder)
-            is ChartViewHolder -> bindChart(holder)
         }
     }
 
@@ -89,7 +90,7 @@ class ParentTeamAdapter(
         var upComingStatesValue = 0
         var doneStatesValue = 0
         var inProgressStatesValue = 0
-        if(totalTasks != 0) {
+        if (totalTasks != 0) {
             upComingStatesValue = (Upcoming.size * 100) / totalTasks
             doneStatesValue = (Done.size * 100) / totalTasks
             inProgressStatesValue = (InProgress.size * 100) / totalTasks
@@ -98,13 +99,13 @@ class ParentTeamAdapter(
             todoStates.text = "$upComingStatesValue %"
             doneStates.text = "$doneStatesValue %"
             inProgressStates.text = "$inProgressStatesValue %"
-            chart.isDrawHoleEnabled = true
+            chart.setDrawHoleEnabled(true)
             chart.setUsePercentValues(false)
             chart.setDrawEntryLabels(false)
             chart.holeRadius = 70f
-            chart.centerText = "Total \n$totalTasks"
+            chart.setCenterText("Total \n$totalTasks")
             chart.setCenterTextSize(11F)
-            chart.description.isEnabled = false
+            chart.getDescription().setEnabled(false)
             chart.legend.isEnabled = false
             val entries = ArrayList<PieEntry>()
             entries.add(PieEntry(Upcoming.size * 1f, "Todo"))
@@ -115,29 +116,24 @@ class ParentTeamAdapter(
             colors.add(Color.parseColor("#93CB80"))
             colors.add(Color.parseColor("#418E77"))
             val dataSet = PieDataSet(entries, "")
-            dataSet.colors = colors
+            dataSet.setColors(colors)
             val data = PieData(dataSet)
             data.setDrawValues(false)
             data.setValueFormatter(PercentFormatter(chart))
             data.setValueTextSize(12f)
             data.setValueTextColor(Color.BLACK)
-            chart.data = data
+            chart.setData(data)
             chart.invalidate()
         }
     }
 
 
-
     private fun bindInProgress(holder: InProgressViewHolder) {
         holder.binding.apply {
+            val adapter = ChildTeamInProgressAdapter(InProgress, onTeamTaskClickListener)
+            inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
+            childRecycler.adapter = adapter
             tasksNumber.text = InProgress.size.toString()
-            if (InProgress.isEmpty()) {
-                childRecycler.visibility = View.GONE
-            } else {
-                val adapter = ChildTeamInProgressAdapter(InProgress, onTeamTaskClickListener)
-                inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
-                childRecycler.adapter = adapter
-            }
         }
     }
 
@@ -147,12 +143,18 @@ class ParentTeamAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
+            linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.isEmpty()) {
-                upcomingFirstCard.visibility = View.GONE
-                upcomingSecondCard.visibility = View.GONE
+                upcomingFirstCard.isVisible = false
+                upcomingSecondCard.isVisible = false
+                val firstCardParam = upcomingSecondCard.layoutParams as ViewGroup.LayoutParams
+                firstCardParam.height = 0
+                upcomingSecondCard.layoutParams = firstCardParam
+                val secondCardParam = upcomingSecondCard.layoutParams as ViewGroup.LayoutParams
+                secondCardParam.height = 0
+                upcomingSecondCard.layoutParams = secondCardParam
             } else if (Upcoming.size == 1) {
-                linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
@@ -160,9 +162,11 @@ class ParentTeamAdapter(
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
-                upcomingSecondCard.visibility = View.GONE
+                upcomingSecondCard.isVisible = false
+                val layoutParam = upcomingSecondCard.layoutParams
+                layoutParam.height = 0
+                upcomingSecondCard.layoutParams = layoutParam
             } else {
-                linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -176,7 +180,11 @@ class ParentTeamAdapter(
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
-                upcomingSecondCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(secondItem) }
+                upcomingSecondCard.setOnClickListener {
+                    onTeamTaskClickListener.onTaskClick(
+                        secondItem
+                    )
+                }
 
             }
         }
@@ -188,12 +196,18 @@ class ParentTeamAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
+            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
             if (Done.isEmpty()) {
-                firstCard.visibility = View.GONE
-                secondCard.visibility = View.GONE
+                firstCard.isVisible = false
+                secondCard.isVisible = false
+                val firstCardParam = firstCard.layoutParams as ViewGroup.LayoutParams
+                firstCardParam.height = 0
+                firstCard.layoutParams = firstCardParam
+                val secondCardParam = secondCard.layoutParams as ViewGroup.LayoutParams
+                secondCardParam.height = 0
+                secondCard.layoutParams = secondCardParam
             } else if (Done.size == 1) {
-                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
@@ -201,9 +215,11 @@ class ParentTeamAdapter(
                 timeTextFirst.text =
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 firstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
-                secondCard.visibility = View.GONE
+                secondCard.isVisible = false
+                val layoutParam = secondCard.layoutParams
+                layoutParam.height = 0
+                secondCard.layoutParams = layoutParam
             } else {
-                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -234,7 +250,7 @@ class ParentTeamAdapter(
         val binding = ChildRecyclerHomeTeamUpcomingBinding.bind(view)
     }
 
-    class ChartViewHolder(view: View) : BaseViewHolder(view){
+    class ChartViewHolder(view: View) : BaseViewHolder(view) {
         val binding = ChildRecyclerHomeChartBinding.bind(view)
     }
 

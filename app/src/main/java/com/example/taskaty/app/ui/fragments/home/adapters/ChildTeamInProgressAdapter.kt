@@ -9,7 +9,10 @@ import com.example.taskaty.databinding.ItemInprogressTeamCardBinding
 import com.example.taskaty.domain.entities.TeamTask
 import java.util.*
 
-class ChildTeamInProgressAdapter(private val items: List<TeamTask>,private val onTeamTaskClickListener: ParentTeamAdapter.OnTeamTaskClickListener) :
+class ChildTeamInProgressAdapter(
+    private val items: List<TeamTask>,
+    private val onTeamTaskClickListener: ParentTeamAdapter.OnTeamTaskClickListener
+) :
     Adapter<ChildTeamInProgressAdapter.InProgressViewHolder>() {
 
 
