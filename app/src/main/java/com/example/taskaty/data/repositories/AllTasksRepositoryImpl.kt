@@ -1,8 +1,10 @@
 package com.example.taskaty.data.repositories
 
+import android.util.Log
 import com.example.taskaty.data.api.TasksApiClient
 import com.example.taskaty.data.api.interceptors.AuthInterceptor
 import com.example.taskaty.data.mappers.TaskMappers
+import com.example.taskaty.data.mappers.TaskMappers.jsonToPersonalTask
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.domain.entities.PersonalTask
@@ -55,13 +57,15 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
             }
 
             override fun onResponse(call: Call, response: Response) {
-
-                val createdTask = TaskMappers.jsonToTask(response.body.string())
+                val responseBody = response.body.string()
+                Log.d("xxx", responseBody)
+                val createdTask = jsonToPersonalTask(responseBody)
                 cachedPersonalTasks = cachedPersonalTasks + createdTask
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, title, description)
     }
+
 
     override fun updatePersonalTaskState(
         taskId: String,
@@ -103,15 +107,15 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
         description: String,
         assignee: String, callback: RepoCallback<Unit>
     ) {
-        tasksApiClient.addTeamTask(object : Callback {
+        tasksApiClient.addTeamTask(
+            object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))
             }
 
             override fun onResponse(call: Call, response: Response) {
-
-//                val createdTask = TaskMappers.jsonToTeamTask(response.body.string())
-//                cachedTeamTasks = cachedTeamTasks + createdTask
+                val createdTask = TaskMappers.jsonToTeamTask(response.body.string())
+                cachedTeamTasks = cachedTeamTasks + createdTask
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
         }, title, description, assignee)
