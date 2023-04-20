@@ -27,6 +27,9 @@ class ViewAllPersonalTasksFragment :
 
     private fun setup(status: Int) {
         presenter.getPersonalTasks(status)
+        binding.toolbar.setNavigationOnClickListener{
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun getStatusNames(status: Int?): String {

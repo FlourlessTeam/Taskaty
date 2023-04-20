@@ -28,6 +28,9 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
 
     private fun setup(status: Int) {
         presenter.getTeamTaskData(status)
+        binding.toolbar.setNavigationOnClickListener{
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun getStatusNames(status: Int?): String {

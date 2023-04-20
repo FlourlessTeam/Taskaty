@@ -50,6 +50,7 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
         presenter.getTeamTask(teamTaskId)
         initMenu()
         addCallbacks()
+
     }
 
     private fun initMenu() {
@@ -82,6 +83,9 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
     override fun updateUiData(task: TeamTask) {
         requireActivity().runOnUiThread {
             with(binding) {
+                toolbarDetails.setNavigationOnClickListener {
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
                 taskTitle.text = task.title
                 taskStatusButton.text = statusMap[task.status]
                 taskDate.text = DateTimeUtils.toDateFormat(task.creationTime)
@@ -118,7 +122,11 @@ class TeamTaskDetailsFragment : BaseFragment<FragmentTeamTaskDetailsBinding>(
         }
     }
 
-    private fun showLoading(progressBarVisible: Boolean, taskDataVisible: Boolean,shimmerVisible: Boolean ) {
+    private fun showLoading(
+        progressBarVisible: Boolean,
+        taskDataVisible: Boolean,
+        shimmerVisible: Boolean
+    ) {
         requireActivity().runOnUiThread {
             TransitionManager.beginDelayedTransition(binding.root)
             binding.progressBar.isVisible = progressBarVisible

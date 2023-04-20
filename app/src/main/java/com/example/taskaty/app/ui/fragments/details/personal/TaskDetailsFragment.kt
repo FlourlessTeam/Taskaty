@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.home.HomeFragment
@@ -78,7 +79,7 @@ class TaskDetailsFragment : BaseFragment<FragmentTaskDetailsBinding>(
         requireActivity().runOnUiThread {
             with(binding) {
                 binding.toolbarDetails.setNavigationOnClickListener {
-                    replaceFragment(HomeFragment())
+                    requireActivity().supportFragmentManager.popBackStack()
                 }
                 taskTitle.text = task.title
                 taskStatusButton.text = statusMap[task.status]
