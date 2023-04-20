@@ -8,6 +8,20 @@ import com.example.taskaty.domain.repositories.tasks.TeamTasksRepository
 class TeamTaskInteractor(
 	private val teamTasksRepository: TeamTasksRepository,
 ) {
+
+	fun getTeamTasksData(callback: RepoCallback<List<TeamTask>>) {
+		teamTasksRepository.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
+			override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
+				val teamTask = response.data
+				callback.onSuccess(RepoResponse.Success(teamTask))
+			}
+
+			override fun onError(response: RepoResponse.Error<List<TeamTask>>) {
+				callback.onError(RepoResponse.Error(response.message))
+			}
+		})
+	}
+
 	fun getTeamTaskById(teamTaskId: String, callback: RepoCallback<TeamTask>) {
 		teamTasksRepository.getAllTeamTasks(object : RepoCallback<List<TeamTask>> {
 			override fun onSuccess(response: RepoResponse.Success<List<TeamTask>>) {
