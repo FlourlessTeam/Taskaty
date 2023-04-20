@@ -17,8 +17,7 @@ class NewTaskBottomSheetFragment(private val selectedTabPosition: Int) : BottomS
     RepoCallback<Unit> {
 
     private lateinit var binding: FragmentAddTaskBottomSheetBinding
-    private val presenter: NewTaskPresenter = NewTaskPresenter()
-
+    private val presenter = NewTaskPresenter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -32,8 +31,6 @@ class NewTaskBottomSheetFragment(private val selectedTabPosition: Int) : BottomS
         setupAddTaskBottomSheet()
     }
     private fun setupAddTaskBottomSheet() {
-        //selectedTabPosition when equal 0 means we in personal task fragment
-        //selectedTabPosition when equal 1 means we in team task fragment
 
         binding.newTaskBtn.setOnClickListener {
             presenter.onCreateBtnClicked(
@@ -54,6 +51,7 @@ class NewTaskBottomSheetFragment(private val selectedTabPosition: Int) : BottomS
     }
     override fun onSuccess(response: RepoResponse.Success<Unit>) {
       requireActivity().runOnUiThread {
+
           Toast.makeText(requireContext(), "Task Created Successfully", Toast.LENGTH_SHORT).show()
           dismiss()
       }
