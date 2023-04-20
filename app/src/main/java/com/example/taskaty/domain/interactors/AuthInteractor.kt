@@ -72,7 +72,7 @@ class AuthInteractor(
         }
     }
 
-    private fun removeTokenFromLocal() {
+     fun removeTokenFromLocal() {
         authRepository.updateToken("", "")
     }
 

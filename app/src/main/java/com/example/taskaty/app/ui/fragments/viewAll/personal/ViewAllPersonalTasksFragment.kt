@@ -69,7 +69,7 @@ class ViewAllPersonalTasksFragment :
 
             })
             adapter.submitList(tasks)
-            binding.toolbar.title = getStatusNames(state)
+            binding.textState.text = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
         }
     }

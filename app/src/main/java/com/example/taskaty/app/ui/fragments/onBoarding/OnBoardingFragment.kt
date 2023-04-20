@@ -1,5 +1,6 @@
 package com.example.taskaty.app.ui.fragments.onBoarding
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -15,6 +16,7 @@ class OnBoardingFragment :
         super.onViewCreated(view, savedInstanceState)
         activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.primary_color)
         setup()
+        setOnBoardingShown()
     }
 
     private fun setup() {
@@ -24,6 +26,11 @@ class OnBoardingFragment :
             }
         }
     }
+    fun setOnBoardingShown() {
+        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean("onBoardingShown", true).apply()
+    }
+
 
 
     private fun navigateToLoginScreen() {

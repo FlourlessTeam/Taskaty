@@ -27,6 +27,10 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
     private val tasksApiClient by lazy { TasksApiClient(okHttpClient) }
     private var cachedPersonalTasks: List<PersonalTask> = listOf()
     private var cachedTeamTasks: List<TeamTask> = listOf()
+    override fun clearCashedData() {
+        cachedPersonalTasks = listOf()
+        cachedTeamTasks = listOf()
+    }
 
 
     override fun getAllPersonalTasks(callback: RepoCallback<List<PersonalTask>>) {
@@ -153,6 +157,9 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
                 instance = AllTasksRepositoryImpl()
             }
             return instance!!
+        }
+        fun clearInstance() {
+            instance = null
         }
     }
 }
