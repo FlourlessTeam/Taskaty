@@ -1,6 +1,7 @@
 package com.example.taskaty.app.ui.fragments.auth.login
 
 import android.os.Bundle
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -39,6 +40,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             }
             textGoSignup.setOnClickListener {
                 navigateToSignupScreen()
+            }
+            imageShowPassword.setOnClickListener {
+                if(editTextPassword.transformationMethod == null) {
+                    imageShowPassword.setImageResource(R.drawable.baseline_visibility_off_24)
+                    editTextPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                } else {
+                    imageShowPassword.setImageResource(R.drawable.baseline_visibility_24)
+                    editTextPassword.transformationMethod = null
+                }
             }
         }
     }
