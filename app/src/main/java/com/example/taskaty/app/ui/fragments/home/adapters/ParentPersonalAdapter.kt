@@ -148,9 +148,9 @@ class ParentPersonalAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
-            upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.size == 1) {
+                upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
@@ -159,6 +159,7 @@ class ParentPersonalAdapter(
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
             } else if (Upcoming.size >= 2) {
+                upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -171,7 +172,7 @@ class ParentPersonalAdapter(
                     outputDateFormat.format(inputDateFormat.parse(secondItem.creationTime))
                 timeTextSecond.text =
                     outputTimeFormat.format(inputDateFormat.parse(secondItem.creationTime))
-                firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
+                firstCard.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 secondCard.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
             } else {
                 firstCard.visibility = View.GONE
@@ -185,9 +186,9 @@ class ParentPersonalAdapter(
         val outputDateFormat = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.getDefault())
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
         holder.binding.apply {
-            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
             if (Done.size == 1) {
+                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
@@ -196,6 +197,7 @@ class ParentPersonalAdapter(
                     outputTimeFormat.format(inputDateFormat.parse(firstItem.creationTime))
                 cardDoneSecond.visibility = View.GONE
             } else if (Done.size >= 2) {
+                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title

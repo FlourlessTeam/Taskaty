@@ -147,12 +147,12 @@ class ParentTeamAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
-            linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.isEmpty()) {
                 upcomingFirstCard.visibility = View.GONE
                 upcomingSecondCard.visibility = View.GONE
             } else if (Upcoming.size == 1) {
+                linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
@@ -162,6 +162,7 @@ class ParentTeamAdapter(
                 upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
                 upcomingSecondCard.visibility = View.GONE
             } else {
+                linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -187,12 +188,12 @@ class ParentTeamAdapter(
         val outputTimeFormat = SimpleDateFormat(OUTPUT_TIME_PATTERN, Locale.getDefault())
 
         holder.binding.apply {
-            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
             if (Done.isEmpty()) {
                 firstCard.visibility = View.GONE
                 secondCard.visibility = View.GONE
             } else if (Done.size == 1) {
+                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text =
@@ -202,6 +203,7 @@ class ParentTeamAdapter(
                 firstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
                 secondCard.visibility = View.GONE
             } else {
+                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
