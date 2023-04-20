@@ -3,7 +3,6 @@ package com.example.taskaty.data.mappers
 import com.example.taskaty.domain.entities.PersonalTask
 import com.example.taskaty.domain.entities.TeamTask
 import com.google.gson.Gson
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 
 object TaskMappers {
@@ -21,7 +20,7 @@ object TaskMappers {
         return tasks
     }
 
-     fun jsonToTeamTask(json: JsonObject): TeamTask {
+    private fun jsonToTeamTask(json: JsonObject): TeamTask {
         val gson = Gson()
         val taskJson = gson.fromJson(json, TeamTask::class.java)
 
@@ -36,20 +35,20 @@ object TaskMappers {
 
     }
 
-     fun jsonToTasks(json: String): List<PersonalTask> {
+    fun jsonToTasks(json: String): List<PersonalTask> {
         val gson = Gson()
-        val tasksJson = gson.fromJson(json, JsonElement::class.java)
+        val tasksJson = gson.fromJson(json, JsonObject::class.java)
         val tasksArray = tasksJson.asJsonObject.getAsJsonArray("value")
         val tasksList = mutableListOf<PersonalTask>()
 
         tasksArray.forEach { taskJson ->
-            tasksList.add(jsonToTask(taskJson.toString()))
+            tasksList.add(mapToTask(taskJson.toString()))
         }
 
         return tasksList
     }
 
-     fun jsonToTask(json: String): PersonalTask {
+    private fun mapToTask(json: String): PersonalTask {
         val gson = Gson()
         val taskJson = gson.fromJson(json, PersonalTask::class.java)
 
@@ -59,6 +58,37 @@ object TaskMappers {
             taskJson.description,
             taskJson.status,
             taskJson.creationTime
+        )
+    }
+
+    fun jsonToPersonalTask(json: String): PersonalTask {
+        val gson = Gson()
+        val responseJson = gson.fromJson(json, JsonObject::class.java)
+
+        val taskJson = responseJson.getAsJsonObject("value")
+
+        return PersonalTask(
+            taskJson.get("id").asString,
+            taskJson.get("title").asString,
+            taskJson.get("description").asString,
+            taskJson.get("status").asInt,
+            taskJson.get("creationTime").asString
+        )
+    }
+
+    fun jsonToTeamTask(json: String): TeamTask {
+        val gson = Gson()
+        val responseJson = gson.fromJson(json, JsonObject::class.java)
+
+        val taskJson = responseJson.getAsJsonObject("value")
+
+        return TeamTask(
+            id = taskJson.get("id").asString,
+            title = taskJson.get("title").asString,
+            description = taskJson.get("description").asString,
+            assignee = taskJson.get("assignee").asString,
+            status = taskJson.get("status").asInt,
+            creationTime = taskJson.get("creationTime").asString
         )
     }
 }

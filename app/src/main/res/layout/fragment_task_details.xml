@@ -24,7 +24,7 @@
             android:fontFamily="@font/poppins"
             android:text="@string/task_details"
             android:textColor="@color/text_color_60"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/submit"
@@ -37,15 +37,24 @@
             android:gravity="center"
             android:paddingHorizontal="8dp"
             android:text="@string/submit"
-            android:textColor="@color/black"
+            android:textColor="@color/submit_text_color"
             android:textSize="12sp" />
     </androidx.appcompat.widget.Toolbar>
 
+    <View
+        android:id="@+id/viewSperator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/task_card_color"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_details">
+        app:layout_constraintTop_toBottomOf="@id/viewSperator">
 
         <LinearLayout
             android:id="@+id/task_data_layout"
@@ -103,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="8dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_color_50"
                         android:textSize="12sp"
                         app:drawableStartCompat="@drawable/calendar_icon"
                         tools:ignore="TextContrastCheck"
@@ -116,7 +125,7 @@
                         android:layout_marginStart="32dp"
                         android:drawablePadding="8dp"
                         android:fontFamily="@font/poppins_medium"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_color_50"
                         android:textSize="12sp"
                         app:drawableStartCompat="@drawable/clock_icon"
                         tools:ignore="TextContrastCheck"
@@ -157,21 +166,22 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:visibility="visible"
-        app:lottie_speed="1.5"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/progress_bar"
+        app:lottie_speed="1.5" />
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_details"
-        tools:visibility="gone"
-        >
+        tools:visibility="gone">
+
         <include
             layout="@layout/loading_task_details"
             android:layout_width="match_parent"

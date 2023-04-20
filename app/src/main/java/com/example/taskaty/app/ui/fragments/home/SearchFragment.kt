@@ -27,11 +27,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
     }
 
     private fun setup() {
-        with(binding) {
-        backButton.setOnClickListener{
-            replaceFragment(HomeFragment())
-        }
-            searchViewResult.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            binding.appbar.setNavigationOnClickListener { requireActivity().onBackPressed() }
+            binding.searchViewResult.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return true
                 }
@@ -53,7 +51,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(FragmentSearchBinding
                 }
             })
         }
-    }
+
 
    override fun onClick(task: Task) {
         replaceFragment(TaskDetailsFragment.newInstance(task.id))

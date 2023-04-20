@@ -17,14 +17,14 @@ import com.example.taskaty.domain.interactors.SizeInteractor
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
-    private val TasksSize = SizeInteractor(AllTasksRepositoryImpl.getInstance())
+    private val taskSize = SizeInteractor(AllTasksRepositoryImpl.getInstance())
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setup()
     }
 
     private fun setup() {
-        TasksSize.sizeTasks(object : RepoCallback<List<Task>> {
+        taskSize.sizeTasks(object : RepoCallback<List<Task>> {
             override fun onSuccess(response: RepoResponse.Success<List<Task>>) {
                 requireActivity().runOnUiThread {
                     binding.ActiveTasksCount.text = response.data.size.toString().plus(" Active Tasks")
@@ -34,7 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
             }
         })
-        binding.searchViewHome.setOnQueryTextFocusChangeListener { _, _ ->
+        binding.searchViewHome.setOnClickListener {
             replaceFragment(SearchFragment())
         }
         binding.viewPager.adapter = HomePagerAdapter(this)
