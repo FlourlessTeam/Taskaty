@@ -3,7 +3,10 @@ package com.example.taskaty.app.ui.fragments.viewAll.personal
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
+import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
+import com.example.taskaty.app.ui.fragments.home.adapters.OnTaskClickListener
 import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.databinding.FragmentViewAllPersonalTasksBinding
 import com.example.taskaty.domain.entities.Task
@@ -54,7 +57,14 @@ class ViewAllPersonalTasksFragment :
 
     override fun viewAllPersonalTasksStatus(state:Int,tasks: List<Task>) {
         requireActivity().runOnUiThread {
-            val adapter = ViewAllPersonalTasksAdapter()
+            val adapter = ViewAllPersonalTasksAdapter(object : OnTaskClickListener {
+                override fun onTaskClick(task: Task) {
+                    val frag = TaskDetailsFragment.newInstance(task.id)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+                }
+
+            })
             adapter.submitList(tasks)
             binding.toolbar.title = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
