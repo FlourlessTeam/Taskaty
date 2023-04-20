@@ -9,7 +9,6 @@ import com.example.taskaty.databinding.FragmentViewAllPersonalTasksBinding
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
 
-
 class ViewAllPersonalTasksFragment :
     BaseFragment<FragmentViewAllPersonalTasksBinding>(FragmentViewAllPersonalTasksBinding::inflate),
     ViewAllPersonalTasksView {
@@ -20,12 +19,11 @@ class ViewAllPersonalTasksFragment :
         presenter = ViewAllPersonalTasksPresenter(
             PersonalTaskInteractor(AllTasksRepositoryImpl.getInstance()), this
         )
-        setup()
+        setup(requireArguments().getInt(TASK_TYPE_ARG))
     }
 
-    private fun setup() {
-        val status = arguments?.getInt("key")
-        presenter.getPersonalTasks(0)
+    private fun setup(status: Int) {
+        presenter.getPersonalTasks(status)
     }
 
     private fun getStatusNames(status: Int?): String {
@@ -61,6 +59,15 @@ class ViewAllPersonalTasksFragment :
             binding.toolbar.title = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
         }
+    }
+    companion object {
+        private const val TASK_TYPE_ARG = "task_type"
+        fun newInstance(taskType: Int) =
+            ViewAllPersonalTasksFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(TASK_TYPE_ARG, taskType)
+                }
+            }
     }
 
 }

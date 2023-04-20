@@ -1,15 +1,16 @@
 package com.example.taskaty.app.ui.fragments.home.adapters
 
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.taskaty.databinding.ItemInprogressPersonalCardBinding
 import com.example.taskaty.domain.entities.PersonalTask
-import java.text.SimpleDateFormat
 import java.util.*
 
-class ChildPersonalInProgressAdapter(private val items: List<PersonalTask>) :
+class ChildPersonalInProgressAdapter(private val items: List<PersonalTask>,
+                                     private val onTaskClickListener: ParentPersonalAdapter.OnPersonalTaskClickListener) :
     Adapter<ChildPersonalInProgressAdapter.InProgressViewHolder>() {
 
 
@@ -31,10 +32,11 @@ class ChildPersonalInProgressAdapter(private val items: List<PersonalTask>) :
         val outputTimeFormat = SimpleDateFormat(outputTimePattern, Locale.getDefault())
 
         holder.binding.apply {
+            root.setOnClickListener { onTaskClickListener.onTaskClick(item) }
             taskCardHeaderInProgress.text = item.title
             taskCardDescriptionInProgress.text = item.description
-            taskCardDateInProgress.text = outputDateFormat.format(inputDateFormat.parse(item.creationTime)!!)
-            timeTextInProgress.text = outputTimeFormat.format(inputDateFormat.parse(item.creationTime)!!)
+            taskCardDateInProgress.text = outputDateFormat.format(inputDateFormat.parse(item.creationTime))
+            timeTextInProgress.text = outputTimeFormat.format(inputDateFormat.parse(item.creationTime))
         }
     }
 

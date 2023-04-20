@@ -19,7 +19,9 @@
     <color name="loading_card_background_color">#E7E6E6</color>
     <color name="loading_card_content_color">#DDDDDD</color>
     <color name="search_hint_text_color">#4D49454F</color>
-    <color name="search_bar_stroke_color">#FAFAFA</color>
+    <color name="search_bar_stroke_color">#F5F5F5</color>
     <color name="submit_text_color">#01704F</color>
     <color name="back_icon">#000000</color>
+    <color name="search_background_color">#FFFFFF</color>
+
 </resources>

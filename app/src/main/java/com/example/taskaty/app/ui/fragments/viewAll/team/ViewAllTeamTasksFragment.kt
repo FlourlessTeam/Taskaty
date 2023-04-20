@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.View
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
-
 import com.example.taskaty.databinding.FragmentViewAllTeamTasksBinding
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
@@ -19,13 +18,12 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
             TeamTaskInteractor(AllTasksRepositoryImpl.getInstance()), this
         )
 
-        setup()
+        setup(requireArguments().getInt(TASK_TYPE_ARG))
 
     }
 
-    private fun setup() {
-        val status = arguments?.getInt("key")
-        presenter.getTeamTaskData(0)
+    private fun setup(status: Int) {
+        presenter.getTeamTaskData(status)
     }
 
     private fun getStatusNames(status: Int?): String {
@@ -54,7 +52,7 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
         Log.d("TAG", "showErrorMessage: $message")
     }
 
-    override fun viewAllTeamTasksStatus(state:Int,teamTasks: List<TeamTask>) {
+    override fun viewAllTeamTasksStatus(state: Int, teamTasks: List<TeamTask>) {
         requireActivity().runOnUiThread {
             val adapter = ViewAllTeamTasksAdapter()
             adapter.submitList(teamTasks)
@@ -63,8 +61,13 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
         }
     }
 
-
+    companion object {
+        private const val TASK_TYPE_ARG = "task_type"
+        fun newInstance(taskType: Int) =
+            ViewAllTeamTasksFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(TASK_TYPE_ARG, taskType)
+                }
+            }
+    }
 }
-
-
-
