@@ -50,4 +50,5 @@
     <string name="something_has_an_error_check_your_internet_connection_then_try_again">something has an error check your internet connection then try again</string>
     <string name="bottom_sheet_button">bottom sheet button</string>
     <string name="show_password">show password</string>
+    <string name="text_input_type">abcdelfhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,0123456789</string>
 </resources>

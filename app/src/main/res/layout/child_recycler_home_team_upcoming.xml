@@ -148,16 +148,15 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
+                android:id="@+id/top_assignee_count_circle"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/circle"
-                android:paddingStart="5dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="5dp"
                 android:text="@string/Team_member_circle"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_8"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.953"
@@ -246,14 +245,13 @@
                 tools:ignore="TextContrastCheck" />
 
             <TextView
+                android:id="@+id/bottom_assignee_count_circle"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/circle"
-                android:paddingStart="5dp"
-                android:paddingTop="3dp"
-                android:paddingEnd="5dp"
                 android:text="@string/Team_member_circle"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_8"
                 app:layout_constraintBottom_toBottomOf="parent"

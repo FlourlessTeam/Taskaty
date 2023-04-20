@@ -63,7 +63,7 @@ class NewTaskBottomSheetFragment :
 						presenter.addNewPersonalTask(title, description)
 					}
 					TEAM_TAB_ID -> {
-						presenter.addNewTeamTask(title, assignee, description)
+						presenter.addNewTeamTask(title, description, assignee)
 					}
 				}
 				enableButton(false)

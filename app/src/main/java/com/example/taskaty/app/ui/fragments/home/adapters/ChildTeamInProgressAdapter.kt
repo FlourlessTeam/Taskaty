@@ -35,6 +35,7 @@ class ChildTeamInProgressAdapter(
             taskCardHeaderInProgressTeam.text = item.title
             dateTextTeam.text = DateTimeUtils.toDateFormat(item.creationTime)
             timeTextTeam.text = DateTimeUtils.toTimeFormat(item.creationTime)
+            assigneeCountCircle.text = item.assignee.split(",").size.toString()
         }
     }
 
