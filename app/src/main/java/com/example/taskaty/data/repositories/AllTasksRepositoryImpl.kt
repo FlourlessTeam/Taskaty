@@ -44,7 +44,11 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
             callback.onSuccess(RepoResponse.Success(cachedPersonalTasks))
     }
 
-    override fun createPersonalTask(title: String, description: String, callback: RepoCallback<Unit>) {
+    override fun createPersonalTask(
+        title: String,
+        description: String,
+        callback: RepoCallback<Unit>
+    ) {
         tasksApiClient.addPersonalTask(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))
@@ -94,9 +98,11 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
             callback.onSuccess(RepoResponse.Success(cachedTeamTasks))
     }
 
-    override fun createTeamTask(title: String,
-                                description: String,
-                                assignee: String, callback: RepoCallback<Unit>) {
+    override fun createTeamTask(
+        title: String,
+        description: String,
+        assignee: String, callback: RepoCallback<Unit>
+    ) {
         tasksApiClient.addTeamTask(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 callback.onError(RepoResponse.Error(e.toString()))
@@ -108,7 +114,7 @@ class AllTasksRepositoryImpl private constructor() : AllTasksRepository {
 //                cachedTeamTasks = cachedTeamTasks + createdTask
                 callback.onSuccess(RepoResponse.Success(Unit))
             }
-        }, title,description,assignee)
+        }, title, description, assignee)
     }
 
     override fun updateTeamTaskState(
