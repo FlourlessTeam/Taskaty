@@ -132,10 +132,12 @@ class ParentPersonalAdapter(
     private fun bindInProgress(holder: InProgressViewHolder) {
         val adapter = ChildPersonalInProgressAdapter(InProgress, onTaskClickListener)
         holder.binding.apply {
+            tasksNumber.text = InProgress.size.toString()
             if (InProgress.isNotEmpty()) {
                 inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
                 childRecycler.adapter = adapter
-                tasksNumber.text = InProgress.size.toString()
+            }else{
+                childRecycler.visibility = View.GONE
             }
         }
     }
@@ -172,7 +174,8 @@ class ParentPersonalAdapter(
                 firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 secondCard.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
             } else {
-                root.visibility = View.GONE
+                firstCard.visibility = View.GONE
+                secondCard.visibility = View.GONE
             }
         }
     }
@@ -208,7 +211,8 @@ class ParentPersonalAdapter(
                 cardDoneFirst.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 cardDoneSecond.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
             } else {
-                root.visibility = View.GONE
+                cardDoneFirst.visibility = View.GONE
+                cardDoneSecond.visibility = View.GONE
             }
 
         }

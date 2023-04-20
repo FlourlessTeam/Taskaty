@@ -130,13 +130,13 @@ class ParentTeamAdapter(
 
     private fun bindInProgress(holder: InProgressViewHolder) {
         holder.binding.apply {
+            tasksNumber.text = InProgress.size.toString()
             if (InProgress.isEmpty()) {
-                root.visibility = View.GONE
+                childRecycler.visibility = View.GONE
             } else {
                 val adapter = ChildTeamInProgressAdapter(InProgress, onTeamTaskClickListener)
                 inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
                 childRecycler.adapter = adapter
-                tasksNumber.text = InProgress.size.toString()
             }
         }
     }
@@ -150,7 +150,8 @@ class ParentTeamAdapter(
             linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.isEmpty()) {
-                root.visibility = View.GONE
+                upcomingFirstCard.visibility = View.GONE
+                upcomingSecondCard.visibility = View.GONE
             } else if (Upcoming.size == 1) {
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -189,7 +190,8 @@ class ParentTeamAdapter(
             doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
             if (Done.isEmpty()) {
-                root.visibility = View.GONE
+                firstCard.visibility = View.GONE
+                secondCard.visibility = View.GONE
             } else if (Done.size == 1) {
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
