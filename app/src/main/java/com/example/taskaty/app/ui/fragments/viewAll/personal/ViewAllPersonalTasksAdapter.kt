@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskaty.R
+import com.example.taskaty.app.ui.fragments.home.adapters.OnTaskClickListener
 import com.example.taskaty.databinding.ItemInViewAllBinding
 import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.app.utils.DateTimeUtils
 
 
-class ViewAllPersonalTasksAdapter :
+class ViewAllPersonalTasksAdapter(private val onTaskClickListener: OnTaskClickListener) :
     ListAdapter<Task, ViewAllPersonalTasksAdapter.ViewAllHolder>(TaskDiffCallback1()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewAllHolder {
@@ -25,6 +26,7 @@ class ViewAllPersonalTasksAdapter :
     override fun onBindViewHolder(holder: ViewAllHolder, position: Int) {
         val item = getItem(position)
         holder.binding.apply {
+            root.setOnClickListener { onTaskClickListener.onTaskClick(item) }
             textTitle.text = item.title
             textContent.text = item.description
             textState.text = getStatusNames(item.status)

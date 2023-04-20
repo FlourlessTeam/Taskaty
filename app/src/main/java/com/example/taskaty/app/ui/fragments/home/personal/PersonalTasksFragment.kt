@@ -7,6 +7,8 @@ import androidx.core.view.isVisible
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.details.personal.TaskDetailsFragment
+import com.example.taskaty.app.ui.fragments.home.adapters.OnTaskClickListener
+import com.example.taskaty.app.ui.fragments.home.adapters.OnViewAllClickListener
 import com.example.taskaty.app.ui.fragments.home.adapters.ParentPersonalAdapter
 import com.example.taskaty.app.ui.fragments.viewAll.personal.ViewAllPersonalTasksFragment
 import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
@@ -14,6 +16,7 @@ import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentPersonalTasksBinding
 import com.example.taskaty.domain.entities.PersonalTask
+import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.interactors.CardDataInteractor
 
 
@@ -61,14 +64,14 @@ class PersonalTasksFragment :
     }
 
     private fun initViews() {
-        val adapter = ParentPersonalAdapter(inProgressTasks, upcomingTasks, doneTasks, object : ParentPersonalAdapter.OnViewAllClickListener {
+        val adapter = ParentPersonalAdapter(inProgressTasks, upcomingTasks, doneTasks, object : OnViewAllClickListener {
             override fun onViewAllClick(taskType: Int) {
                 val frag = ViewAllPersonalTasksFragment.newInstance(taskType)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .add(R.id.container_fragment, frag).addToBackStack(null).commit()
             }
-        }, object : ParentPersonalAdapter.OnPersonalTaskClickListener {
-            override fun onTaskClick(task: PersonalTask) {
+        }, object : OnTaskClickListener {
+            override fun onTaskClick(task: Task) {
                 val frag = TaskDetailsFragment.newInstance(task.id)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .add(R.id.container_fragment, frag).addToBackStack(null).commit()

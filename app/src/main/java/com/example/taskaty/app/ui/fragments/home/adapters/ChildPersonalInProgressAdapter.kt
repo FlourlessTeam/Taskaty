@@ -11,7 +11,7 @@ import java.util.*
 
 class ChildPersonalInProgressAdapter(
     private val items: List<PersonalTask>,
-    private val onTaskClickListener: ParentPersonalAdapter.OnPersonalTaskClickListener
+    private val onTaskClickListener: OnTaskClickListener
 ) :
     Adapter<ChildPersonalInProgressAdapter.InProgressViewHolder>() {
 

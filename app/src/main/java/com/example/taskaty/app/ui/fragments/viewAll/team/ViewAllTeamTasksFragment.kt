@@ -3,9 +3,13 @@ package com.example.taskaty.app.ui.fragments.viewAll.team
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
+import com.example.taskaty.app.ui.fragments.details.team.TeamTaskDetailsFragment
+import com.example.taskaty.app.ui.fragments.home.adapters.OnTaskClickListener
 import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.databinding.FragmentViewAllTeamTasksBinding
+import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.TeamTaskInteractor
 
@@ -54,7 +58,14 @@ class ViewAllTeamTasksFragment : BaseFragment<FragmentViewAllTeamTasksBinding>
 
     override fun viewAllTeamTasksStatus(state: Int, teamTasks: List<TeamTask>) {
         requireActivity().runOnUiThread {
-            val adapter = ViewAllTeamTasksAdapter()
+            val adapter = ViewAllTeamTasksAdapter(object : OnTaskClickListener {
+                override fun onTaskClick(task: Task) {
+                    val frag = TeamTaskDetailsFragment.getInstance(task.id)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .add(R.id.container_fragment, frag).addToBackStack(null).commit()
+                }
+
+            })
             adapter.submitList(teamTasks)
             binding.toolbar.title = getStatusNames(state)
             binding.recyclerViewInViewAll.adapter = adapter
