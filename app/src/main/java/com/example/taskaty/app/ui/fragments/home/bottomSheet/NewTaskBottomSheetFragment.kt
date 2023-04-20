@@ -17,7 +17,7 @@ class NewTaskBottomSheetFragment(private val selectedTabPosition: Int) : BottomS
     RepoCallback<Unit> {
 
     private lateinit var binding: FragmentAddTaskBottomSheetBinding
-    private val presenter = NewTaskPresenter()
+    private val presenter = NewTaskPresenters()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {

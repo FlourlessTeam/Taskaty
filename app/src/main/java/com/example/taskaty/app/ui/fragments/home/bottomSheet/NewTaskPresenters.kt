@@ -7,7 +7,7 @@ import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.repositories.remote.TasksDataSource
 import com.example.taskaty.domain.repositories.remote.TeamTasksDataSource
 
-class NewTaskPresenter {
+class NewTaskPresenters {
 
     private val personalTaskDataSource: TasksDataSource = RemoteTasksRepository.getInstance()
     private val teamTaskDataSource: TeamTasksDataSource = RemoteTasksRepository.getInstance()
