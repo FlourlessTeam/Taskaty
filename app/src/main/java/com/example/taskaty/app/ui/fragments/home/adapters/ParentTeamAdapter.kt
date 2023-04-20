@@ -108,6 +108,7 @@ class ParentTeamAdapter(
             chart.setCenterTextSize(11F)
             chart.description.isEnabled = false
             chart.legend.isEnabled = false
+            chartTitle.text = "Team Todo States"
             val entries = ArrayList<PieEntry>()
             entries.add(PieEntry(Upcoming.size * 1f, "Todo"))
             entries.add(PieEntry(Done.size * 1f, "Done"))
