@@ -22,6 +22,7 @@ class NewTaskPresenter(
 			override fun onSuccess(response: RepoResponse.Success<Unit>) {
 				newTaskView.showMessage("Personal Task Created Successfully")
 				newTaskView.closeBottomSheet()
+				newTaskView.navigateToHome()
 			}
 
 			override fun onError(response: RepoResponse.Error<Unit>) {
@@ -43,6 +44,7 @@ class NewTaskPresenter(
 				override fun onSuccess(response: RepoResponse.Success<Unit>) {
 					newTaskView.showMessage("Team Task Created Successfully")
 					newTaskView.closeBottomSheet()
+					newTaskView.navigateToHome()
 				}
 
 				override fun onError(response: RepoResponse.Error<Unit>) {

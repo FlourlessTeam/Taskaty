@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.taskaty.R
+import com.example.taskaty.app.ui.fragments.home.HomeFragment
 import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.databinding.FragmentAddTaskBottomSheetBinding
 import com.example.taskaty.domain.interactors.PersonalTaskInteractor
@@ -111,6 +112,13 @@ class NewTaskBottomSheetFragment :
         }
 
         return isValid
+    }
+
+    override fun navigateToHome() {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.container_fragment, HomeFragment())
+        transaction.commit()
     }
 
     override fun showMessage(message: String) {

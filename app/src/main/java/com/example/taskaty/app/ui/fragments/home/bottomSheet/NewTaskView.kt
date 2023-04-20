@@ -5,5 +5,5 @@ interface NewTaskView {
 	fun showMessage(message: String)
 	fun enableButton(isEnabled: Boolean)
 	fun closeBottomSheet()
-
+	fun navigateToHome()
 }
