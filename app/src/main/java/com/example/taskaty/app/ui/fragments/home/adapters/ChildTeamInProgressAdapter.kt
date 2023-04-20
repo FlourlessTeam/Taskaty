@@ -33,6 +33,7 @@ class ChildTeamInProgressAdapter(
             root.setOnClickListener { onTaskClickListener.onTaskClick(item) }
             timeTextTeam.text = item.creationTime
             taskCardHeaderInProgressTeam.text = item.title
+            taskDetailsTeam.text = item.description
             dateTextTeam.text = DateTimeUtils.toDateFormat(item.creationTime)
             timeTextTeam.text = DateTimeUtils.toTimeFormat(item.creationTime)
             assigneeCountCircle.text = item.assignee.split(",").size.toString()
