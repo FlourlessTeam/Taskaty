@@ -25,7 +25,7 @@ class ParentTeamAdapter(
     private val Upcoming: List<TeamTask>,
     private val Done: List<TeamTask>,
     private val onViewAllClickListener: OnViewAllClickListener,
-    private val onTeamTaskClickListener: OnTeamTaskClickListener
+    private val onTaskClickListener: OnTaskClickListener
 ) : Adapter<ParentTeamAdapter.BaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -130,28 +130,31 @@ class ParentTeamAdapter(
 
 
     private fun bindInProgress(holder: InProgressViewHolder) {
-        val adapter = ChildTeamInProgressAdapter(InProgress, onTeamTaskClickListener)
         holder.binding.apply {
-            inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
-            childRecycler.adapter = adapter
             tasksNumber.text = InProgress.size.toString()
+            if(InProgress.isNotEmpty()){
+                val adapter = ChildTeamInProgressAdapter(InProgress, onTaskClickListener)
+                inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
+                childRecycler.adapter = adapter
+            }
         }
     }
 
     private fun bindUpcoming(holder: UpcomingViewHolder) {
         holder.binding.apply {
-            linearLayout.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.isEmpty()) {
                 disappearCards(upcomingFirstCard, upcomingSecondCard, false)
             } else if (Upcoming.size == 1) {
+                upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text = formatDate(firstItem.creationTime, true)
                 timeTextFirst.text = formatDate(firstItem.creationTime, false)
-                upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
+                upcomingFirstCard.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 disappearCards(upcomingFirstCard, upcomingSecondCard, true)
             } else {
+                upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -160,30 +163,27 @@ class ParentTeamAdapter(
                 taskHeaderSecond.text = secondItem.title
                 dateTextSecond.text = formatDate(secondItem.creationTime, true)
                 timeTextSecond.text = formatDate(secondItem.creationTime, false)
-                upcomingFirstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
-                upcomingSecondCard.setOnClickListener {
-                    onTeamTaskClickListener.onTaskClick(
-                        secondItem
-                    )
-                }
+                upcomingFirstCard.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
+                upcomingSecondCard.setOnClickListener {onTaskClickListener.onTaskClick(secondItem) }
             }
         }
     }
 
     private fun bindDone(holder: DoneViewHolder) {
         holder.binding.apply {
-            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
             if (Done.isEmpty()) {
                 disappearCards(firstCard, secondCard, false)
             } else if (Done.size == 1) {
+                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text = formatDate(firstItem.creationTime, true)
                 timeTextFirst.text = formatDate(firstItem.creationTime, false)
-                firstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
+                firstCard.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 disappearCards(firstCard, secondCard, true)
             } else {
+                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -192,8 +192,8 @@ class ParentTeamAdapter(
                 taskHeaderSecond.text = secondItem.title
                 dateTextSecond.text = formatDate(secondItem.creationTime, true)
                 timeTextSecond.text = formatDate(secondItem.creationTime, false)
-                firstCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(firstItem) }
-                secondCard.setOnClickListener { onTeamTaskClickListener.onTaskClick(secondItem) }
+                firstCard.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
+                secondCard.setOnClickListener { onTaskClickListener.onTaskClick(secondItem) }
             }
         }
     }
@@ -265,10 +265,4 @@ class ParentTeamAdapter(
         const val OUTPUT_TIME_PATTERN = "HH:mm"
     }
 
-    interface OnViewAllClickListener {
-        fun onViewAllClick(taskType: Int)
-    }
-    interface OnTeamTaskClickListener {
-        fun onTaskClick(task: TeamTask)
-    }
 }

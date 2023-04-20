@@ -11,7 +11,7 @@ import java.util.*
 
 class ChildTeamInProgressAdapter(
     private val items: List<TeamTask>,
-    private val onTeamTaskClickListener: ParentTeamAdapter.OnTeamTaskClickListener
+    private val onTaskClickListener: OnTaskClickListener
 ) :
     Adapter<ChildTeamInProgressAdapter.InProgressViewHolder>() {
 
@@ -36,7 +36,7 @@ class ChildTeamInProgressAdapter(
         val outputDateFormat = SimpleDateFormat(outputDatePattern, Locale.getDefault())
         val outputTimeFormat = SimpleDateFormat(outputTimePattern, Locale.getDefault())
         holder.binding.apply {
-            root.setOnClickListener { onTeamTaskClickListener.onTaskClick(item) }
+            root.setOnClickListener { onTaskClickListener.onTaskClick(item) }
             timeTextTeam.text = item.creationTime
             taskCardHeaderInProgressTeam.text = item.title
             dateTextTeam.text = outputDateFormat.format(inputDateFormat.parse(item.creationTime))

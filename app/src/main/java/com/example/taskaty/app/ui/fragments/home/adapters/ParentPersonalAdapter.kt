@@ -25,7 +25,7 @@ class ParentPersonalAdapter(
     private val Upcoming: List<PersonalTask>,
     private val Done: List<PersonalTask>,
     private val onViewAllClickListener: OnViewAllClickListener,
-    private val onTaskClickListener: OnPersonalTaskClickListener
+    private val onTaskClickListener: OnTaskClickListener
 
 ) :
     Adapter<ParentPersonalAdapter.BaseViewHolder>() {
@@ -131,21 +131,23 @@ class ParentPersonalAdapter(
     }
 
     private fun bindInProgress(holder: InProgressViewHolder) {
-        val adapter = ChildPersonalInProgressAdapter(InProgress, onTaskClickListener)
         holder.binding.apply {
-            inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
-            childRecycler.adapter = adapter
             tasksNumber.text = InProgress.size.toString()
+            if(InProgress.isNotEmpty()) {
+                inProgressViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(1) }
+                val adapter = ChildPersonalInProgressAdapter(InProgress, onTaskClickListener)
+                childRecycler.adapter = adapter
+            }
         }
     }
 
     private fun bindUpcoming(holder: UpcomingViewHolder) {
         holder.binding.apply {
-            upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
             tasksNumber.text = Upcoming.size.toString()
             if (Upcoming.isEmpty()) {
                 disappearCards(firstCard, secondCard, false)
             } else if (Upcoming.size == 1) {
+                upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text = formatDate(firstItem.creationTime, true)
@@ -153,6 +155,7 @@ class ParentPersonalAdapter(
                 firstConstraint.setOnClickListener { onTaskClickListener.onTaskClick(firstItem) }
                 disappearCards(firstCard, secondCard, true)
             } else {
+                upcomingViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(0) }
                 val firstItem = Upcoming[FIRST_ITEM]
                 val secondItem = Upcoming[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -169,17 +172,18 @@ class ParentPersonalAdapter(
 
     private fun bindDone(holder: DoneViewHolder) {
         holder.binding.apply {
-            doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
             tasksNumber.text = Done.size.toString()
             if (Done.isEmpty()) {
                 disappearCards(cardDoneFirst, cardDoneSecond, false)
             } else if (Done.size == 1) {
+                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 taskHeaderFirst.text = firstItem.title
                 dateTextFirst.text = formatDate(firstItem.creationTime, true)
                 timeTextFirst.text = formatDate(firstItem.creationTime, false)
                 disappearCards(cardDoneFirst, cardDoneSecond, true)
             } else {
+                doneViewAll.setOnClickListener { onViewAllClickListener.onViewAllClick(2) }
                 val firstItem = Done[FIRST_ITEM]
                 val secondItem = Done[SECOND_ITEM]
                 taskHeaderFirst.text = firstItem.title
@@ -259,10 +263,4 @@ class ParentPersonalAdapter(
         const val OUTPUT_TIME_PATTERN = "HH:mm"
     }
 
-    interface OnViewAllClickListener {
-        fun onViewAllClick(taskType: Int)
-    }
-    interface OnPersonalTaskClickListener {
-        fun onTaskClick(task: PersonalTask)
-    }
 }

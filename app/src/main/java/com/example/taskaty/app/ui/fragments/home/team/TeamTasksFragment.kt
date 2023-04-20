@@ -7,15 +7,17 @@ import androidx.core.view.isVisible
 import com.example.taskaty.R
 import com.example.taskaty.app.ui.fragments.abstractFragments.BaseFragment
 import com.example.taskaty.app.ui.fragments.details.team.TeamTaskDetailsFragment
+import com.example.taskaty.app.ui.fragments.home.adapters.OnTaskClickListener
+import com.example.taskaty.app.ui.fragments.home.adapters.OnViewAllClickListener
 import com.example.taskaty.app.ui.fragments.home.adapters.ParentTeamAdapter
 import com.example.taskaty.app.ui.fragments.viewAll.team.ViewAllTeamTasksFragment
 import com.example.taskaty.data.repositories.AllTasksRepositoryImpl
 import com.example.taskaty.data.response.RepoCallback
 import com.example.taskaty.data.response.RepoResponse
 import com.example.taskaty.databinding.FragmentTeamTasksBinding
+import com.example.taskaty.domain.entities.Task
 import com.example.taskaty.domain.entities.TeamTask
 import com.example.taskaty.domain.interactors.CardDataInteractor
-import com.example.taskaty.domain.repositories.tasks.AllTasksRepository
 
 class TeamTasksFragment :
     BaseFragment<FragmentTeamTasksBinding>(FragmentTeamTasksBinding::inflate) {
@@ -58,14 +60,14 @@ class TeamTasksFragment :
     }
 
     private fun initViews() {
-        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks, object : ParentTeamAdapter.OnViewAllClickListener {
+        val adapter = ParentTeamAdapter(inProgressTasks, upcomingTasks, doneTasks, object : OnViewAllClickListener {
             override fun onViewAllClick(taskType: Int) {
                 val frag = ViewAllTeamTasksFragment.newInstance(taskType)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .add(R.id.container_fragment, frag).addToBackStack(null).commit()
             }
-        }, object : ParentTeamAdapter.OnTeamTaskClickListener {
-            override fun onTaskClick(task: TeamTask) {
+        }, object : OnTaskClickListener {
+            override fun onTaskClick(task: Task) {
                 val frag = TeamTaskDetailsFragment.getInstance(task.id)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .add(R.id.container_fragment, frag).addToBackStack(null).commit()
