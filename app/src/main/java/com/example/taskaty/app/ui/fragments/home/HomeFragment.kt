@@ -17,7 +17,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun setup() {
-        binding.searchViewHome.setOnClickListener {
+
+        binding.searchViewHome.setOnQueryTextFocusChangeListener { _, _ ->
             replaceFragment(SearchFragment())
         }
         binding.viewPager.adapter = HomePagerAdapter(this)
@@ -38,7 +39,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val bottomSheet = NewTaskBottomSheetFragment(binding.tabLayout.selectedTabPosition)
         bottomSheet.show(childFragmentManager, "tag")
     }
-    fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = requireActivity().supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.container_fragment, fragment)
